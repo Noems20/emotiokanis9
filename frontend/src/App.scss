@@ -1,0 +1,131 @@
+// FONT VARIABLES
+$font-display: 'Encode Sans Expanded', sans-serif;
+
+:root {
+  --color-primary: #0e79bb;
+  --color-primary-light: #1e98e4;
+  --color-primary-dark: #0064a1;
+
+  --color-secondary: #57a80b;
+  --color-secondary-light: #64c00d;
+  --color-secondary-dark: #4f970b;
+
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, 0.06);
+
+  --line: 1px solid var(--color-grey-light-2);
+}
+
+*,
+*::before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 50px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 50px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-light);
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  }
+  box-sizing: border-box;
+  font-size: 10px; /* 1 rem = 10px - 62.5%*/
+
+  @media only screen and (min-width: 1996px) {
+    font-size: 16px; /* 16px - 100%*/
+  }
+
+  @media only screen and (min-width: 1572px) {
+    font-size: 12.8px; /* 12.8px - 80%*/
+  }
+
+  @media only screen and (max-width: 992px) {
+    font-size: 9.12px; /* 9.12px - 57%*/
+  }
+
+  @media only screen and (max-width: 478px) {
+    font-size: 8px; /* 8px - 50%*/
+  }
+
+  @media only screen and (max-width: 430px) {
+    font-size: 6.4px; /* 6.4px - 40%*/
+  }
+
+  // @media only screen and (max-width: 326px) {
+  //   font-size: 5.92px; /* 5.92px - 37%*/
+  // }
+}
+
+body {
+  font-family: $font-display;
+  -webkit-text-size-adjust: none;
+}
+
+input,
+textarea,
+button,
+select,
+svg,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+// .my-masonry-grid_column > div {
+/* change div to reference your elements you put in <Masonry> */
+// background: grey;
+// margin-bottom: 30px;
+// }

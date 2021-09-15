@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import { auth } from '../../firebase/firebase.utils';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-
-import { RiMenu2Line } from 'react-icons/ri';
-import { AiOutlineClose } from 'react-icons/ai';
-
-import logoB from './images/logoB.svg';
-import logo from './images/logo.svg';
 
 import { HeaderItems } from './header.items';
 
+// REDUX
+import { useSelector } from 'react-redux';
+
+// STYLES
 import {
   MobileIcon,
   Nav,
@@ -28,10 +21,20 @@ import {
   NavLetterLogo,
 } from './header.styles';
 
-const Header = ({ history, currentUser }) => {
+import logoB from './images/logoB.svg';
+import logo from './images/logo.svg';
+
+// ICONS
+import { RiMenu2Line } from 'react-icons/ri';
+import { AiOutlineClose } from 'react-icons/ai';
+
+const Header = ({ history }) => {
   const [clicked, setClicked] = useState(false);
   const [scrollNav, setScrollNav] = useState();
   const [image, setImage] = useState();
+
+  const userData = useSelector((state) => state.user);
+  const { user, userLoaded } = userData;
 
   useEffect(() => {
     // ------------------ DETECTAR PAGINA PARA FONDO TRANSPARENTE ------
@@ -88,67 +91,63 @@ const Header = ({ history, currentUser }) => {
         <MobileIcon scrollnav={scrollNav ? 1 : 0} onClick={handleClick}>
           {clicked ? <AiOutlineClose /> : <RiMenu2Line />}
         </MobileIcon>
-        <NavMenu clicked={clicked}>
-          {HeaderItems.map((item, index) => {
-            return (
-              <NavItem key={index} onClick={handleClick}>
-                <NavLinks
-                  activeClassName='is-active'
-                  to={item.url}
-                  exact
-                  scrollnav={scrollNav ? 1 : 0}
-                >
-                  {item.title}
-                </NavLinks>
-              </NavItem>
-            );
-          })}
+        {userLoaded && (
+          <NavMenu clicked={clicked}>
+            {HeaderItems.map((item, index) => {
+              return (
+                <NavItem key={index} onClick={handleClick}>
+                  <NavLinks
+                    activeClassName='is-active'
+                    to={item.url}
+                    exact
+                    scrollnav={scrollNav ? 1 : 0}
+                  >
+                    {item.title}
+                  </NavLinks>
+                </NavItem>
+              );
+            })}
 
-          {/* Boton para iniciar sesión o cerrar dependiendo de usuario */}
-          {currentUser ? (
-            [
-              <NavItem key={5} onClick={handleClick}>
-                <NavLinks
+            {/* Boton para iniciar sesión o cerrar dependiendo de usuario */}
+            {user ? (
+              [
+                <NavItem key={5} onClick={handleClick}>
+                  <NavLinks
+                    activeClassName='is-active'
+                    to='/citas'
+                    exact
+                    scrollnav={scrollNav ? 1 : 0}
+                  >
+                    Citas
+                  </NavLinks>
+                </NavItem>,
+                <NavItem key={6}>
+                  <CloseSessionBtn
+                    // onClick={() => auth.signOut()}
+                    scrollnav={scrollNav ? 1 : 0}
+                  >
+                    Cerrar sesión
+                  </CloseSessionBtn>
+                </NavItem>,
+              ]
+            ) : (
+              <NavItem>
+                <SessionBtn
+                  onClick={handleClick}
                   activeClassName='is-active'
-                  to='/citas'
+                  to='/login'
                   exact
                   scrollnav={scrollNav ? 1 : 0}
                 >
-                  Citas
-                </NavLinks>
-              </NavItem>,
-              <NavItem key={6}>
-                <CloseSessionBtn
-                  onClick={() => auth.signOut()}
-                  scrollnav={scrollNav ? 1 : 0}
-                >
-                  Cerrar sesión
-                </CloseSessionBtn>
-              </NavItem>,
-            ]
-          ) : (
-            <NavItem>
-              <SessionBtn
-                onClick={handleClick}
-                activeClassName='is-active'
-                to='/login'
-                exact
-                scrollnav={scrollNav ? 1 : 0}
-              >
-                Iniciar sesión
-              </SessionBtn>
-            </NavItem>
-          )}
-        </NavMenu>
+                  Iniciar sesión
+                </SessionBtn>
+              </NavItem>
+            )}
+          </NavMenu>
+        )}
       </NavContainer>
     </Nav>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  // const mapStateToProps = (state) => ({
-  // currentUser: selectCurrentUser(state), )}
-});
-
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(Header);

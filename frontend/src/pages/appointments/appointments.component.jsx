@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { selectModalType } from '../../redux/modal/modal.selectors';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
+// COMPONENTS
 import CreateAppointment from '../../components/create-appointment/create-appointment.component';
 import UserAppointments from '../../components/user-appointments/user-appointments.component';
 import ContactSection from '../../components/contact-section/contact-section.component';
@@ -11,6 +10,11 @@ import TextAreaInput from '../../components/text-area-input/text-area-input.comp
 import Modal from '../../components/modal/modal.component';
 import Alert from '../../components/alert/alert.component';
 
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { setModalType } from '../../redux/modal/modal.actions';
+
+// STYLES
 import {
   Grid,
   Sidebar,
@@ -20,11 +24,11 @@ import {
   Button,
 } from './appointments.styles';
 
+// ICONS
 import { BsFillCalendarFill, BsPeopleCircle } from 'react-icons/bs';
 import { MdContactPhone } from 'react-icons/md';
-import { createStructuredSelector } from 'reselect';
 
-const Appointments = ({ modalType }) => {
+const Appointments = () => {
   const [contactInfo, setContactInfo] = useState({
     subject: '',
     message: '',
@@ -32,6 +36,16 @@ const Appointments = ({ modalType }) => {
 
   const [tab, setTab] = useState(null);
   const { subject, message } = contactInfo;
+
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal);
+  const { modalType } = modal;
+
+  useEffect(() => {
+    return function cleanup() {
+      dispatch(setModalType(null));
+    };
+  }, [dispatch]);
 
   const renderSwitch = (tab) => {
     switch (tab) {
@@ -156,8 +170,4 @@ const Appointments = ({ modalType }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  modalType: selectModalType,
-});
-
-export default connect(mapStateToProps)(Appointments);
+export default Appointments;

@@ -7,10 +7,13 @@ import {
   login,
   protect,
   restrictTo,
+  isLoggedIn,
 } from '../controllers/authController.js';
 
 const router = express.Router();
+
 router.route('/login').post(login);
+router.route('/logged').get(isLoggedIn);
 router
   .route('/')
   .post(signup)

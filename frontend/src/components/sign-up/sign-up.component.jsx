@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
-
+// COMPONENTS
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
+// STYLES
 import {
   SignUpTitle,
   SignUpSubtitle,
@@ -30,28 +30,6 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserProfileDocument(user, { displayName });
-      // Limpiar formulario
-      setUserCredentials({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (

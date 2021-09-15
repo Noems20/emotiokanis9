@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
+// COMPONENTS
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
+// REDUX
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/user/userActions';
+
+// STYLES
 import {
   SignInTitle,
   SignInSubtitle,
@@ -19,15 +24,12 @@ const SignIn = () => {
   });
   const { email, password } = userCredentials;
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      setUserCredentials({ email: '', password: '' });
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(login(email, password));
   };
 
   const handleChange = (event) => {
@@ -61,7 +63,7 @@ const SignIn = () => {
           <CustomButton type='submit' primary>
             Iniciar Sesión
           </CustomButton>
-          <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>
+          <CustomButton type='button' isGoogleSignIn>
             Google
           </CustomButton>
         </ButtonsContainer>

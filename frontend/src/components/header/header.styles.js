@@ -50,6 +50,7 @@ export const NavContainer = styled.div`
   align-self: stretch;
   align-items: center;
   width: 100vw;
+  margin: 0 13rem;
 
   & > * {
     cursor: pointer;
@@ -62,6 +63,8 @@ export const NavContainer = styled.div`
     }
   }
   @media screen and (max-width: 992px) {
+    margin: 0 0rem;
+
     justify-content: space-between;
     width: 100%;
     flex-wrap: wrap;
@@ -287,6 +290,7 @@ export const CloseSessionBtn = styled.button`
 `;
 
 export const NavLogoLink = styled(Link)`
+  margin-right: auto;
   @media screen and (max-width: 992px) {
     display: none;
     visibility: hidden;

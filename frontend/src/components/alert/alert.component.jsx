@@ -1,9 +1,11 @@
 import React from 'react';
 import { RiCloseCircleFill, RiCheckboxCircleFill } from 'react-icons/ri';
 
-import { connect } from 'react-redux';
+// REDUX
+import { useDispatch } from 'react-redux';
 import { setModalType } from '../../redux/modal/modal.actions';
 
+// STYLES
 import {
   Container,
   Icon,
@@ -15,7 +17,9 @@ import {
   CloseIcon,
 } from './alert.styles';
 
-const Alert = ({ title, text, button, type, setModalType }) => {
+const Alert = ({ title, text, button, type }) => {
+  const dispatch = useDispatch();
+
   const renderIcon = (type) => {
     switch (type) {
       case 'error':
@@ -36,15 +40,11 @@ const Alert = ({ title, text, button, type, setModalType }) => {
           <AlertText>{text}</AlertText>
           <Button type={type}>{button}</Button>
         </AlertContent>
-        <CloseIcon onClick={() => setModalType(null)} />
+        <CloseIcon onClick={() => dispatch(setModalType(null))} />
         <Decoration />
       </Container>
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setModalType: (modal) => dispatch(setModalType(modal)),
-});
-
-export default connect(null, mapDispatchToProps)(Alert);
+export default Alert;

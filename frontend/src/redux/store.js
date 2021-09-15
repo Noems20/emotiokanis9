@@ -1,12 +1,24 @@
 import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger'; //Middleware atrapa la "action" antes de llegar al "root-reducer"
-// logger es un middleware que muestra la "action" en consola
-import { persistStore } from 'redux-persist';
-
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './root-reducer';
 
-const middlewares = [logger];
+// const userInfoFromStorage = localStorage.getItem('userInfo')
+//   ? JSON.parse(localStorage.getItem('userInfo'))
+//   : null;
 
-export const store = createStore(rootReducer, applyMiddleware(...middlewares));
+const initialState = {};
 
-export const persistor = persistStore(store);
+// const initialState = {
+//   user: { userInfo: userInfoFromStorage },
+// };
+
+const middlewares = [thunk];
+
+export const store = createStore(
+  rootReducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middlewares))
+);
+
+export default store;

@@ -1,16 +1,9 @@
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
-import userReducer from './user/user.reducer';
 import awardsReducer from './awards/awards.reducer';
 import modalReducer from './modal/modal.reducer';
-
-const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['user'],
-};
+import userReducer from './user/userReducer';
+import uiReducer from './ui/uiReducer';
 
 // Eso hace combine reducers
 // {
@@ -23,9 +16,10 @@ const persistConfig = {
 // }
 
 const rootReducer = combineReducers({
-  user: userReducer,
   awards: awardsReducer,
   modal: modalReducer,
+  user: userReducer,
+  ui: uiReducer,
 });
 
-export default persistReducer(persistConfig, rootReducer);
+export default rootReducer;

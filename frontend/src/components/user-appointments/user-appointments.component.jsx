@@ -13,6 +13,8 @@ import {
 const UserAppointments = ({ setTab }) => {
   const [citas, setCitas] = useState(true);
   const [citasActiva, setCitasActiva] = useState(true);
+  // setCitas(true);
+  // setCitasActiva(true);
 
   const containerVariants = {
     hidden: {

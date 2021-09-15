@@ -21,7 +21,8 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRES * 60 * 1000
+      // Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
   };
@@ -36,9 +37,7 @@ const createSendToken = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: 'success',
     token,
-    data: {
-      user,
-    },
+    user,
   });
 };
 
@@ -132,6 +131,46 @@ export const restrictTo = (...roles) => {
 
     next();
   };
+};
+
+// --------------------- CHECK IF USER IS LOGGED IN -----------------------------------------
+// Only for rendered pages, no errors!
+export const isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      // 1) verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2) Check if user still exists
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        // return next();
+        console.log('Usuario no existe');
+      }
+
+      // 3) Check if user changed password after the token was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        // return next();
+        console.log('Contaseña cambiada');
+      }
+
+      // THERE IS A LOGGED IN USER
+      res.status(200).json({
+        user: currentUser,
+      });
+    } catch (err) {
+      res.status(400).json({
+        error: 'No token',
+      });
+    }
+  } else {
+    res.status(200).json({
+      user: null,
+    });
+  }
 };
 
 // --------------------- FORGOT PASSWORD -----------------------------------------

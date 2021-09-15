@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { motion } from 'framer-motion';
-
-import { selectCurrentAwards } from '../../redux/awards/awards.selectors';
-import { selectModalType } from '../../redux/modal/modal.selectors';
-
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import Masonry from 'react-masonry-css';
 
-import logo from './images/logo.svg';
-
+// COMPONENTS
 import GalleryCard from '../../components/gallery-card/gallery-card.component';
 import Modal from '../../components/modal/modal.component';
 
-import Masonry from 'react-masonry-css';
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { setModalType } from '../../redux/modal/modal.actions';
 
+// STYLES
 import {
   Grid,
   SectionHeading,
@@ -25,13 +22,23 @@ import {
   SectionText,
   Gallery,
 } from './about.styles';
+import logo from './images/logo.svg';
 
-const About = ({ awards, modalType }) => {
+const About = () => {
   const [selectedImg, setSelectedImg] = useState(null);
+
+  const dispatch = useDispatch();
+  const modal = useSelector((state) => state.modal);
+  const awards = useSelector((state) => state.awards);
+  const { modalType } = modal;
 
   useEffect(() => {
     Aos.init({ duration: 1000 });
-  }, []);
+
+    return function cleanup() {
+      dispatch(setModalType(null));
+    };
+  }, [dispatch]);
 
   const breakpoints = {
     default: 3,
@@ -131,9 +138,4 @@ const About = ({ awards, modalType }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  awards: selectCurrentAwards,
-  modalType: selectModalType,
-});
-
-export default connect(mapStateToProps)(About);
+export default About;

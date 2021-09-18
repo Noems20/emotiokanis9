@@ -3,7 +3,8 @@ import React from 'react';
 import { HeaderItems } from './footer.items';
 
 // REDUX
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/user/userActions';
 
 // STYLES
 import {
@@ -25,6 +26,7 @@ import './waves.css';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
   const { user, userLoaded } = userData;
 
@@ -72,9 +74,7 @@ const Footer = () => {
                   </FooterLinks>
                   ,
                   <FooterLinks>
-                    <CloseSessionButton
-                    // onClick={() => auth.signOut()}
-                    >
+                    <CloseSessionButton onClick={() => dispatch(logout())}>
                       Cerrar Sesión
                     </CloseSessionButton>
                   </FooterLinks>

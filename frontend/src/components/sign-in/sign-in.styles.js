@@ -1,5 +1,20 @@
 import styled from 'styled-components';
 import tokens from '../../tokens';
+import Alert from '../alert/alert.component';
+
+export const Message = styled(Alert)`
+  margin-bottom: 4rem;
+  padding-top: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+
+  /* & div h1 {
+    font-size: 1.5rem;
+  }
+  & div p {
+    font-size: 1.6rem;
+  } */
+`;
 
 export const Container = styled.div`
   display: grid;

@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'No puede estar vacio'],
+    required: [true, 'No puede estar vacío'],
     trim: true,
     minlength: [3, 'Necesita ser mayor a 2 caracteres'],
     maxlength: [35, 'Necesita ser menor a 36 caracteres'],
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'No puede estar vacío'],
     unique: true,
-    validate: [validator.isEmail, 'No es un email valido'],
+    validate: [validator.isEmail, 'Debe ser un email valido'],
   },
   photo: { type: String, default: 'default.jpg' },
   role: {
@@ -30,13 +30,13 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'No puede estar vacio'],
+    required: [true, 'No puede estar vacío'],
     minLength: [8, 'Debe ser mayor a 7 caracteres'],
     select: false,
   },
   passwordConfirm: {
     type: String,
-    required: [true, 'No puede estar vacio'],
+    required: [true, 'No puede estar vacío'],
     validate: {
       // Only works with CREATE and SAVE
       validator: function (el) {

@@ -14,12 +14,12 @@ export const validateLoginData = (email, password) => {
   let errors = {};
 
   if (isEmpty(email)) {
-    errors.email = 'No debe estar vacio';
+    errors.email = 'No puede estar vacío';
   } else if (!isEmail(email)) {
-    errors.email = 'Debe ser un Email valido';
+    errors.email = 'Debe ser un email valido';
   }
 
-  if (isEmpty(password)) errors.password = 'No debe estar vacio';
+  if (isEmpty(password)) errors.password = 'No puede estar vacío';
 
   return {
     errors,

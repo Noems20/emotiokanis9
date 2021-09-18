@@ -12,6 +12,7 @@ import { login } from '../../redux/user/userActions';
 import {
   SignInTitle,
   SignInSubtitle,
+  Message,
   Container,
   FormContainer,
   ButtonsContainer,
@@ -52,7 +53,14 @@ const SignIn = () => {
   return (
     <Container>
       <SignInTitle>Ya tengo una cuenta</SignInTitle>
-      <SignInSubtitle>Inicia sesión con tu correo y contraseña.</SignInSubtitle>
+      <SignInSubtitle>Inicia sesión con tu email y contraseña.</SignInSubtitle>
+      {uiErrors.login.general && (
+        <Message
+          title='Error'
+          text='Email o contraseña incorrectos'
+          type='error'
+        />
+      )}
       <FormContainer onSubmit={handleSubmit}>
         <FormInput
           name='email'

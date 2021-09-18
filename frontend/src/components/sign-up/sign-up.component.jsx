@@ -54,7 +54,7 @@ const SignUp = () => {
   return (
     <Container>
       <SignUpTitle>No tengo una cuenta</SignUpTitle>
-      <SignUpSubtitle>Registrate con tu correo y contraseña.</SignUpSubtitle>
+      <SignUpSubtitle>Registrate con tu email y contraseña.</SignUpSubtitle>
       <FormContainer onSubmit={handleSubmit}>
         <FormInput
           name='name'

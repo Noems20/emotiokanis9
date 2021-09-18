@@ -17,7 +17,7 @@ import {
   CloseIcon,
 } from './alert.styles';
 
-const Alert = ({ title, text, button, type }) => {
+const Alert = ({ title, text, button, type, className }) => {
   const dispatch = useDispatch();
 
   const renderIcon = (type) => {
@@ -32,18 +32,16 @@ const Alert = ({ title, text, button, type }) => {
   };
 
   return (
-    <>
-      <Container type={type}>
-        <Icon>{renderIcon(type)} </Icon>
-        <AlertContent>
-          <AlertTitle>{title}</AlertTitle>
-          <AlertText>{text}</AlertText>
-          <Button type={type}>{button}</Button>
-        </AlertContent>
-        <CloseIcon onClick={() => dispatch(setModalType(null))} />
-        <Decoration />
-      </Container>
-    </>
+    <Container type={type} className={className}>
+      <Icon>{renderIcon(type)} </Icon>
+      <AlertContent>
+        <AlertTitle>{title}</AlertTitle>
+        <AlertText>{text}</AlertText>
+        {button && <Button type={type}>{button}</Button>}
+      </AlertContent>
+      {button && <CloseIcon onClick={() => dispatch(setModalType(null))} />}
+      <Decoration />
+    </Container>
   );
 };
 

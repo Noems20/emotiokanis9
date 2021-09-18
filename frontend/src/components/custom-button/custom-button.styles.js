@@ -77,6 +77,10 @@ export const CustomButtonContainer = styled(motion.button)`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   @media screen and (min-width: 992px) {
     &:active {
       transform: translateY(2px);

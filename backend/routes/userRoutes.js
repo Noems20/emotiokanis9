@@ -5,6 +5,7 @@ import { getAllUsers } from '../controllers/userController.js';
 import {
   signup,
   login,
+  logout,
   protect,
   restrictTo,
   isLoggedIn,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.route('/login').post(login);
 router.route('/logged').get(isLoggedIn);
+router.route('/logout').get(logout);
 router
   .route('/')
   .post(signup)

@@ -75,6 +75,15 @@ export const login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+// --------------------- LOG OUT -----------------------------------------
+export const logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success', user: null });
+};
+
 // --------------------- PROTECT ROUTES -----------------------------------------
 export const protect = catchAsync(async (req, res, next) => {
   // 1) Gettting token and check of it's there
@@ -147,14 +156,17 @@ export const isLoggedIn = async (req, res, next) => {
       // 2) Check if user still exists
       const currentUser = await User.findById(decoded.id);
       if (!currentUser) {
-        // return next();
-        console.log('Usuario no existe');
+        return res.status(200).json({
+          user: null,
+        });
       }
 
       // 3) Check if user changed password after the token was issued
       if (currentUser.changedPasswordAfter(decoded.iat)) {
         // return next();
-        console.log('Contaseña cambiada');
+        return res.status(401).json({
+          user: null,
+        });
       }
 
       // THERE IS A LOGGED IN USER
@@ -162,8 +174,9 @@ export const isLoggedIn = async (req, res, next) => {
         user: currentUser,
       });
     } catch (err) {
-      res.status(400).json({
-        error: 'No token',
+      // TOKEN WASN'T VALIDATED
+      res.status(200).json({
+        user: null,
       });
     }
   } else {

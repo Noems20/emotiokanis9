@@ -4,6 +4,7 @@ const users = [
     name: 'Jonas Schmedtmann',
     email: 'admin@natours.io',
     role: 'admin',
+    photo: 'user-1.jpg',
     password: '$2a$12$Q0grHjH9PXc6SxivC8m12.2mZJ9BbKcgFpwSG4Y1ZEII8HJVzWeyS',
   },
   {
@@ -11,6 +12,7 @@ const users = [
     name: 'Lourdes Browning',
     email: 'loulou@example.com',
     role: 'user',
+    photo: 'user-2.jpg',
     password: '$2a$12$hP1h2pnNp7wgyZNRwPsOTeZuNzWBv7vHmsR3DT/OaPSUBQT.y0S..',
   },
   {
@@ -18,6 +20,7 @@ const users = [
     name: 'Sophie Louise Hart',
     email: 'sophie@example.com',
     role: 'user',
+    photo: 'user-3.jpg',
     password: '$2a$12$9nFqToiTmjgfFVJiQvjmreLt4k8X4gGYCETGapSZOb2hHa55t0dDq',
   },
   {
@@ -25,6 +28,7 @@ const users = [
     name: 'Ayla Cornell',
     email: 'ayls@example.com',
     role: 'user',
+    photo: 'user-4.jpg',
     password: '$2a$12$tm33.M/4pfEbZF64WbFuHuVFv85v4qEhi.ik8njbud7yaoqCZpjiy',
   },
   {
@@ -32,6 +36,7 @@ const users = [
     name: 'Leo Gillespie',
     email: 'leo@example.com',
     role: 'employee',
+    photo: 'user-5.jpg',
     password: '$2a$12$OOPr90tBEBF1Iho3ox0Jde0O/WXUR0VLA5xdh6tWcu7qb.qOCvSg2',
   },
   {
@@ -39,6 +44,7 @@ const users = [
     name: 'Jennifer Hardy',
     email: 'jennifer@example.com',
     role: 'employee',
+    photo: 'user-6.jpg',
     password: '$2a$12$XCXvvlhRBJ8CydKH09v1v.jpg0hB9gVVfMVEoz4MsxqL9zb5PrF42',
   },
   {
@@ -46,6 +52,7 @@ const users = [
     name: 'Kate Morrison',
     email: 'kate@example.com',
     role: 'employee',
+    photo: 'user-7.jpg',
     password: '$2a$12$II1F3aBSFDF3Xz7iB4rk/.a2dogwkClMN5gGCWrRlILrG1xtJG7q6',
   },
   {
@@ -53,6 +60,7 @@ const users = [
     name: 'Eliana Stout',
     email: 'eliana@example.com',
     role: 'user',
+    photo: 'user-8.jpg',
     password: '$2a$12$Jb/ILhdDV.ZpnPMu19xfe.NRh5ntE2LzNMNcsty05QWwRbmFFVMKO',
   },
   {
@@ -60,6 +68,7 @@ const users = [
     name: 'Cristian Vega',
     email: 'chris@example.com',
     role: 'user',
+    photo: 'user-9.jpg',
     password: '$2a$12$r7/jtdWtzNfrfC7zw3uS.eDJ3Bs.8qrO31ZdbMljL.lUY0TAsaAL6',
   },
   {
@@ -67,6 +76,7 @@ const users = [
     name: 'Steve T. Scaife',
     email: 'steve@example.com',
     role: 'employee',
+    photo: 'user-10.jpg',
     password: '$2a$12$q7v9dm.S4DvqhAeBc4KwduedEDEkDe2GGFGzteW6xnHt120oRpkqm',
   },
   {
@@ -74,6 +84,7 @@ const users = [
     name: 'Aarav Lynn',
     email: 'aarav@example.com',
     role: 'employee',
+    photo: 'user-11.jpg',
     password: '$2a$12$lKWhzujFvQwG4m/X3mnTneOB3ib9IYETsOqQ8aN5QEWDjX6X2wJJm',
   },
   {
@@ -81,6 +92,7 @@ const users = [
     name: 'Miyah Myles',
     email: 'miyah@example.com',
     role: 'employee',
+    photo: 'user-12.jpg',
     password: '$2a$12$.XIvvmznHQSa9UOI639yhe4vzHKCYO1vpTUZc4d45oiT4GOZQe1kS',
   },
   {
@@ -88,6 +100,7 @@ const users = [
     name: 'Ben Hadley',
     email: 'ben@example.com',
     role: 'user',
+    photo: 'user-13.jpg',
     password: '$2a$12$D3fyuS9ETdBBw5lOwceTMuZcDTyVq28ieeGUAanIuLMcSDz6bpfIe',
   },
   {
@@ -95,6 +108,7 @@ const users = [
     name: 'Laura Wilson',
     email: 'laura@example.com',
     role: 'user',
+    photo: 'user-14.jpg',
     password: '$2a$12$VPYaAAOsI44uhq11WbZ5R.cHT4.fGdlI9gKJd95jmYw3.sAsmbvBq',
   },
   {
@@ -102,6 +116,7 @@ const users = [
     name: 'Max Smith',
     email: 'max@example.com',
     role: 'user',
+    photo: 'user-15.jpg',
     password: '$2a$12$l5qamwqcqC2NlgN6o5A5..9Fxzr6X.bjx/8j3a9jYUHWGOL99oXlm',
   },
   {
@@ -109,6 +124,7 @@ const users = [
     name: 'Isabel Kirkland',
     email: 'isabel@example.com',
     role: 'user',
+    photo: 'user-16.jpg',
     password: '$2a$12$IUnwPH0MGFeMuz7g4gtfvOll.9wgLyxG.9C3TKlttfLtCQWEE6GIu',
   },
   {
@@ -116,6 +132,7 @@ const users = [
     name: 'Alexander Jones',
     email: 'alex@example.com',
     role: 'user',
+    photo: 'user-17.jpg',
     password: '$2a$12$NnclhoYFNcSApoQ3ML8kk.b4B3gbpOmZJLfqska07miAnXukOgK6y',
   },
   {
@@ -123,6 +140,7 @@ const users = [
     name: 'Eduardo Hernandez',
     email: 'edu@example.com',
     role: 'user',
+    photo: 'user-18.jpg',
     password: '$2a$12$uB5H1OxLMOqDYTuTlptAoewlovENJvjrLwzsL1wUZ6OkAIByPPBGq',
   },
   {
@@ -130,6 +148,7 @@ const users = [
     name: 'John Riley',
     email: 'john@example.com',
     role: 'user',
+    photo: 'user-19.jpg',
     password: '$2a$12$11JElTatQlAFo1Obw/dwd..vuVmQyYS7MT14pkl3lRvVPjGA00G8O',
   },
   {
@@ -137,6 +156,7 @@ const users = [
     name: 'Lisa Brown',
     email: 'lisa@example.com',
     role: 'user',
+    photo: 'user-20.jpg',
     password: '$2a$12$uA9FsDw63v6dkJKGlLQ/8ufYBs8euB7kqIQewyYlZXU5azEKeLEky',
   },
 ];

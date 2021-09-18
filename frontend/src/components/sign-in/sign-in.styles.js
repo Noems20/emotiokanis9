@@ -34,8 +34,19 @@ export const FormContainer = styled.form`
 `;
 
 export const ButtonsContainer = styled.div`
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  width: ${({ loading }) => (loading ? 'auto' : '100%')};
+  margin: 0 auto;
+  /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
+  /* margin: ${({ loading }) => (loading ? '0 auto' : '0')}; */
+  /* transition: max-width 5s ease-out; */
+
+  & button {
+    width: 100%;
+    /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
+
+    &:hover {
+      background-color: ${({ loading }) =>
+        loading ? 'var(--color-primary)' : '#fff'};
+    }
+  }
 `;

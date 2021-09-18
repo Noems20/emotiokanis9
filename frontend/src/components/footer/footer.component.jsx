@@ -25,7 +25,8 @@ import './waves.css';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
-  const user = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
+  const { user, userLoaded } = userData;
 
   return (
     <>
@@ -63,24 +64,28 @@ const Footer = () => {
                 </FooterLinks>
               );
             })}
-            {user ? (
-              [
-                <FooterLinks key={5}>
-                  <FooterLink to='/citas'>Citas</FooterLink>
-                </FooterLinks>,
-                <FooterLinks key={6}>
-                  <CloseSessionButton
-                  // onClick={() => auth.signOut()}
-                  >
-                    Cerrar Sesión
-                  </CloseSessionButton>
-                </FooterLinks>,
-              ]
-            ) : (
-              <FooterLinks>
-                <FooterLink to='/login'>Iniciar sesión</FooterLink>
-              </FooterLinks>
-            )}
+            {userLoaded ? (
+              user ? (
+                <>
+                  <FooterLinks>
+                    <FooterLink to='/citas'>Citas</FooterLink>
+                  </FooterLinks>
+                  ,
+                  <FooterLinks>
+                    <CloseSessionButton
+                    // onClick={() => auth.signOut()}
+                    >
+                      Cerrar Sesión
+                    </CloseSessionButton>
+                  </FooterLinks>
+                  ,
+                </>
+              ) : (
+                <FooterLinks>
+                  <FooterLink to='/login'>Iniciar sesión</FooterLink>
+                </FooterLinks>
+              )
+            ) : null}
           </LinksContainer>
           <SocialLinksContainer>
             <FooterSocialLinks>

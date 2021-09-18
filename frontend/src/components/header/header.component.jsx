@@ -4,7 +4,11 @@ import { withRouter } from 'react-router-dom';
 import { HeaderItems } from './header.items';
 
 // REDUX
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/user/userActions';
+
+// COMPONENTS
+import DropDown from '../dropdown/dropdown.component';
 
 // STYLES
 import {
@@ -13,6 +17,7 @@ import {
   NavContainer,
   NavMenu,
   NavItem,
+  UserImage,
   NavLogo,
   NavLogoLink,
   NavLinks,
@@ -21,19 +26,24 @@ import {
   NavLetterLogo,
 } from './header.styles';
 
+import { NoLinkContainer, DropDownItem } from '../dropdown/dropdown.styles';
+
 import logoB from './images/logoB.svg';
 import logo from './images/logo.svg';
 
 // ICONS
-import { RiMenu2Line } from 'react-icons/ri';
+import { RiMenu2Line, RiLogoutCircleLine } from 'react-icons/ri';
 import { AiOutlineClose } from 'react-icons/ai';
+import { FaUser } from 'react-icons/fa';
 
 const Header = ({ history }) => {
+  const [open, setOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [scrollNav, setScrollNav] = useState();
   const [image, setImage] = useState();
 
   const userData = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { user, userLoaded } = userData;
 
   useEffect(() => {
@@ -64,6 +74,10 @@ const Header = ({ history }) => {
         setImage(logo);
       }
     });
+
+    return function cleanup() {
+      setOpen(false);
+    };
   }, [history]);
 
   const handleClick = () => {
@@ -110,8 +124,8 @@ const Header = ({ history }) => {
 
             {/* Boton para iniciar sesión o cerrar dependiendo de usuario */}
             {user ? (
-              [
-                <NavItem key={5} onClick={handleClick}>
+              <>
+                <NavItem onClick={handleClick}>
                   <NavLinks
                     activeClassName='is-active'
                     to='/citas'
@@ -120,16 +134,39 @@ const Header = ({ history }) => {
                   >
                     Citas
                   </NavLinks>
-                </NavItem>,
-                <NavItem key={6}>
-                  <CloseSessionBtn
-                    // onClick={() => auth.signOut()}
+                </NavItem>
+                <NavItem>
+                  <NoLinkContainer
                     scrollnav={scrollNav ? 1 : 0}
+                    onClick={() => setOpen(!open)}
                   >
-                    Cerrar sesión
-                  </CloseSessionBtn>
-                </NavItem>,
-              ]
+                    {scrollNav && (
+                      <UserImage
+                        src={
+                          require(`../../../../backend/data/img/users/${user.photo}`)
+                            .default
+                        }
+                      />
+                    )}
+                    {user.name.split(' ')[0]}
+                    <DropDown open={open}>
+                      <DropDownItem
+                        onClick={() => {
+                          history.push('/perfil');
+                        }}
+                      >
+                        <FaUser />
+                        <p>Perfil</p>
+                      </DropDownItem>
+                      <DropDownItem onClick={() => dispatch(logout())}>
+                        <RiLogoutCircleLine />
+                        <p>Cerrar Sesión</p>
+                      </DropDownItem>
+                    </DropDown>
+                  </NoLinkContainer>
+                </NavItem>
+                ,
+              </>
             ) : (
               <NavItem>
                 <SessionBtn

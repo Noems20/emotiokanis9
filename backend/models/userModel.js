@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [validator.isEmail, 'No es un email valido'],
   },
+  photo: { type: String, default: 'default.jpg' },
   role: {
     type: String,
     enum: ['user', 'employee', 'admin'],

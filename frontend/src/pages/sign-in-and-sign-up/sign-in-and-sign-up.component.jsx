@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // REDUX
+import { useDispatch } from 'react-redux';
+import { clearUiErrors } from '../../redux/ui/uiActions';
 
 // COMPONENTS
 import SignIn from '../../components/sign-in/sign-in.component';
@@ -9,6 +11,8 @@ import SignUp from '../../components/sign-up/sign-up.component';
 import { Grid, Container } from './sign-in-and-sign-up.styles';
 
 const SignInAndSignUpPage = () => {
+  const dispatch = useDispatch();
+
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -23,6 +27,13 @@ const SignInAndSignUpPage = () => {
       opacity: 0,
     },
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearUiErrors());
+    };
+  }, [dispatch]);
+
   return (
     <>
       <Grid

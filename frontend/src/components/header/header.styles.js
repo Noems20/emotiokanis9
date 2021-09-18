@@ -163,6 +163,15 @@ export const NavItem = styled.li`
   display: flex;
   align-self: stretch;
   align-items: center;
+
+  position: relative;
+`;
+
+export const UserImage = styled.img`
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 50%;
+  margin-right: 1rem;
 `;
 
 export const NavLinks = styled(NavLink)`

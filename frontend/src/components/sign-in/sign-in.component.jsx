@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 // REDUX
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/user/userActions';
 
 // STYLES
@@ -25,6 +25,17 @@ const SignIn = () => {
   const { email, password } = userCredentials;
 
   const dispatch = useDispatch();
+  const ui = useSelector((state) => state.ui);
+  const { uiErrors, loading } = ui;
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: 'SET_UI_LOADING',
+        payload: { login: false },
+      });
+    };
+  }, [dispatch]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,7 +60,7 @@ const SignIn = () => {
           handleChange={handleChange}
           value={email}
           label='Email'
-          required
+          error={uiErrors.login.email}
         />
         <FormInput
           name='password'
@@ -57,15 +68,20 @@ const SignIn = () => {
           handleChange={handleChange}
           value={password}
           label='Contraseña'
-          required
+          error={uiErrors.login.password}
         />
-        <ButtonsContainer>
-          <CustomButton type='submit' primary>
-            Iniciar Sesión
+        <ButtonsContainer loading={loading.login}>
+          <CustomButton
+            type='submit'
+            loading={loading.login}
+            disabled={loading.login || loading.register}
+            primary
+          >
+            {loading.login ? '' : 'Iniciar Sesión'}
           </CustomButton>
-          <CustomButton type='button' isGoogleSignIn>
+          {/* <CustomButton type='button' isGoogleSignIn>
             Google
-          </CustomButton>
+          </CustomButton> */}
         </ButtonsContainer>
       </FormContainer>
     </Container>

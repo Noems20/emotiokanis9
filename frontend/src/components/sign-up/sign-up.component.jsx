@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+// REDUX
+import { useDispatch, useSelector } from 'react-redux';
+import { signUp } from '../../redux/user/userActions';
 
 // COMPONENTS
 import FormInput from '../form-input/form-input.component';
@@ -15,12 +19,25 @@ import {
 
 const SignUp = () => {
   const [userCredentials, setUserCredentials] = useState({
-    displayName: '',
+    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    passwordConfirm: '',
   });
-  const { displayName, email, password, confirmPassword } = userCredentials;
+  const { name, email, password, passwordConfirm } = userCredentials;
+
+  const dispatch = useDispatch();
+  const ui = useSelector((state) => state.ui);
+  const { uiErrors, loading } = ui;
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: 'SET_UI_LOADING',
+        payload: { register: false },
+      });
+    };
+  }, [dispatch]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +47,8 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    dispatch(signUp(name, email, password, passwordConfirm));
   };
 
   return (
@@ -38,12 +57,12 @@ const SignUp = () => {
       <SignUpSubtitle>Registrate con tu correo y contraseña.</SignUpSubtitle>
       <FormContainer onSubmit={handleSubmit}>
         <FormInput
-          name='displayName'
+          name='name'
           type='text'
           handleChange={handleChange}
-          value={displayName}
+          value={name}
           label='Nombre'
-          required
+          error={uiErrors.register.name}
         />
         <FormInput
           name='email'
@@ -51,7 +70,7 @@ const SignUp = () => {
           handleChange={handleChange}
           value={email}
           label='Email'
-          required
+          error={uiErrors.register.email}
         />
         <FormInput
           name='password'
@@ -59,19 +78,24 @@ const SignUp = () => {
           handleChange={handleChange}
           value={password}
           label='Contraseña'
-          required
+          error={uiErrors.register.password}
         />
         <FormInput
-          name='confirmPassword'
+          name='passwordConfirm'
           type='password'
           handleChange={handleChange}
-          value={confirmPassword}
+          value={passwordConfirm}
           label='Confirmar contraseña'
-          required
+          error={uiErrors.register.passwordConfirm}
         />
-        <ButtonsContainer>
-          <CustomButton type='submit' primary>
-            Crear cuenta
+        <ButtonsContainer loading={loading.register}>
+          <CustomButton
+            type='submit'
+            loading={loading.register}
+            disabled={loading.login || loading.register}
+            primary
+          >
+            {loading.register ? '' : 'Crear cuenta'}
           </CustomButton>
         </ButtonsContainer>
       </FormContainer>

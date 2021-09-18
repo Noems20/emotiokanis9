@@ -1,13 +1,19 @@
 import React from 'react';
-import { FcGoogle } from 'react-icons/fc';
 
+// COMPONENTS
+import Loader from '../loaders/loader/loader.component';
+
+// STYLES
 import {
   CustomButtonContainer,
   ChildrenContainer,
   GoogleContainer,
 } from './custom-button.styles';
 
-const CustomButton = ({ children, isGoogleSignIn, ...props }) => {
+// ICONS
+import { FcGoogle } from 'react-icons/fc';
+
+const CustomButton = ({ children, isGoogleSignIn, loading, ...props }) => {
   return (
     <CustomButtonContainer isGoogleSignIn={isGoogleSignIn} {...props}>
       {isGoogleSignIn
@@ -18,6 +24,7 @@ const CustomButton = ({ children, isGoogleSignIn, ...props }) => {
             <ChildrenContainer key={2}>{children}</ChildrenContainer>,
           ]
         : children}
+      {loading ? <Loader /> : null}
     </CustomButtonContainer>
   );
 };

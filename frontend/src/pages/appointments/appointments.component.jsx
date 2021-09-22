@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 
 // COMPONENTS
 import CreateAppointment from '../../components/create-appointment/create-appointment.component';
-import UserAppointments from '../../components/user-appointments/user-appointments.component';
+import UserAppointmentsHistory from '../../components/user-appointments/user-appointments-history.component';
 import ContactSection from '../../components/contact-section/contact-section.component';
 import FormInput from '../../components/form-input/form-input.component';
 import TextAreaInput from '../../components/text-area-input/text-area-input.component';
@@ -17,15 +17,16 @@ import { setModalType } from '../../redux/modal/modal.actions';
 // STYLES
 import {
   Grid,
-  Sidebar,
-  SidebarContainer,
-  SidebarItem,
-  SidebarText,
+  SideBar,
+  SideBarContainer,
+  SideBarItem,
+  SideBarContent,
+  SideBarText,
   Button,
 } from './appointments.styles';
 
 // ICONS
-import { BsFillCalendarFill, BsPeopleCircle } from 'react-icons/bs';
+import { BsFillCalendarFill, BsClockHistory } from 'react-icons/bs';
 import { MdContactPhone } from 'react-icons/md';
 
 const Appointments = () => {
@@ -49,16 +50,17 @@ const Appointments = () => {
 
   const renderSwitch = (tab) => {
     switch (tab) {
+      case 'activeAppointments':
+        return <activeAppointments setTab={setTab} key={1} />;
       case 'myAppointments':
-        return <UserAppointments setTab={setTab} key={1} />;
-
+        return <UserAppointmentsHistory setTab={setTab} key={2} />;
       case 'makeAppointment':
-        return <CreateAppointment key={2} />;
+        return <CreateAppointment key={3} />;
 
       case 'contact':
         return (
           <ContactSection
-            key={3}
+            key={4}
             initial={{ x: '-100vw' }}
             animate={{ x: 0 }}
             exit={{ x: '100vw' }}
@@ -87,7 +89,7 @@ const Appointments = () => {
           </ContactSection>
         );
       default:
-        return <UserAppointments setTab={setTab} key={1} />;
+        return <UserAppointmentsHistory setTab={setTab} key={1} />;
     }
   };
 
@@ -126,22 +128,37 @@ const Appointments = () => {
         animate='visible'
         exit='exit'
       >
-        <Sidebar>
-          <SidebarContainer>
-            <SidebarItem onClick={() => setTab('myAppointments')}>
-              <BsPeopleCircle />
-              <SidebarText>Mis citas</SidebarText>
-            </SidebarItem>
-            <SidebarItem onClick={() => setTab('makeAppointment')}>
-              <BsFillCalendarFill />
-              <SidebarText>Agendar cita</SidebarText>
-            </SidebarItem>
-            <SidebarItem onClick={() => setTab('contact')}>
-              <MdContactPhone />
-              <SidebarText>Contacto</SidebarText>
-            </SidebarItem>
-          </SidebarContainer>
-        </Sidebar>
+        <SideBar>
+          <SideBarContainer>
+            <SideBarItem
+              onClick={() => setTab('makeAppointment')}
+              className={tab === 'makeAppointment' ? 'active' : ''}
+            >
+              <SideBarContent>
+                <BsFillCalendarFill />
+                <SideBarText>Agendar</SideBarText>
+              </SideBarContent>
+            </SideBarItem>
+            <SideBarItem
+              onClick={() => setTab('myAppointments')}
+              className={tab === 'myAppointments' ? 'active' : ''}
+            >
+              <SideBarContent>
+                <BsClockHistory />
+                <SideBarText>Historial</SideBarText>
+              </SideBarContent>
+            </SideBarItem>
+            <SideBarItem
+              onClick={() => setTab('contact')}
+              className={tab === 'contact' ? 'active' : ''}
+            >
+              <SideBarContent>
+                <MdContactPhone />
+                <SideBarText>Contacto</SideBarText>
+              </SideBarContent>
+            </SideBarItem>
+          </SideBarContainer>
+        </SideBar>
 
         <AnimatePresence exitBeforeEnter>{renderSwitch(tab)}</AnimatePresence>
       </Grid>

@@ -190,12 +190,12 @@ export const NavLinks = styled(NavLink)`
 
   &:hover,
   &.is-active {
-    color: #000;
+    color: #333;
   }
 
   @media screen and (min-width: 992px) {
     font-size: 1.8rem;
-    color: ${({ scrollnav }) => (scrollnav ? '#000' : '#fff')};
+    color: ${({ scrollnav }) => (scrollnav ? '#333' : '#fff')};
     text-align: center;
 
     display: ${({ scrollnav }) => (scrollnav ? 'flex' : 'inline')};
@@ -250,7 +250,7 @@ export const SessionBtn = styled(NavLink)`
     padding: 0.8rem 2rem;
     color: #fff;
     background: ${({ scrollnav }) =>
-      scrollnav ? '#000' : 'var(--color-primary-light)'};
+      scrollnav ? '#333' : 'var(--color-primary-light)'};
     &:hover {
       background-color: ${({ scrollnav }) =>
         scrollnav ? 'var(--color-primary)' : '#fff'};
@@ -287,7 +287,7 @@ export const CloseSessionBtn = styled.button`
     padding: 0.8rem 2rem;
     color: #fff;
     background: ${({ scrollnav }) =>
-      scrollnav ? '#000' : 'var(--color-primary-light)'};
+      scrollnav ? '#333' : 'var(--color-primary-light)'};
     &:hover {
       background-color: ${({ scrollnav }) =>
         scrollnav ? 'var(--color-primary)' : '#fff'};

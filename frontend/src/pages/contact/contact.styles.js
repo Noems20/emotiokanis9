@@ -1,19 +1,10 @@
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import { PageGrid } from '../../components/general.styles';
 import tokens from '../../tokens';
 import img from './images/img1.jpg';
 
-export const Grid = styled(motion.div)`
-  display: grid;
-
-  grid-template-columns:
-    [full-start] minmax(6rem, 1fr) [center-start] repeat(
-      8,
-      [col-start] minmax(min-content, 14rem) [col-end]
-    )
-    [center-end] minmax(6rem, 1fr) [full-end];
-
+export const Grid = styled(PageGrid)`
   grid-template-rows: repeat(2, calc(100vh - 8rem)) max-content;
 
   @media only screen and (max-width: 1200px) {
@@ -100,8 +91,10 @@ export const MapContainer = styled.div`
 `;
 
 export const MapTitle = styled.h1`
-  /* font-family: ${tokens.fontPrimary}; */
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
   font-size: 2.5rem;
+  letter-spacing: 1px;
   color: var(--color-primary);
   text-transform: uppercase;
   text-align: center;
@@ -112,7 +105,6 @@ export const MapTitle = styled.h1`
   grid-gap: 1.5rem;
   align-items: center;
   font-style: 1.6rem;
-  color: $color-grey-light-2;
 
   &::before,
   &::after {

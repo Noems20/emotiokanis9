@@ -61,7 +61,7 @@ export const DropDownItem = styled.div`
 
   & * {
     text-decoration: none;
-    color: #000;
+    color: #333;
     font-size: 1.6rem;
     cursor: pointer;
   }
@@ -81,12 +81,12 @@ export const NoLinkContainer = styled.div`
 
   &:hover,
   &.is-active {
-    color: #000;
+    color: #333;
   }
 
   @media screen and (min-width: 992px) {
     font-size: 1.8rem;
-    color: ${({ scrollnav }) => (scrollnav ? '#000' : '#fff')};
+    color: ${({ scrollnav }) => (scrollnav ? '#333' : '#fff')};
     text-align: center;
 
     display: ${({ scrollnav }) => (scrollnav ? 'flex' : 'inline')};

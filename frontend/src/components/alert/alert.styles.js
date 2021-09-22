@@ -74,8 +74,9 @@ export const AlertContent = styled.div`
   grid-row: 1 / 3;
 `;
 export const AlertTitle = styled.h1`
-  font-family: ${tokens.fontDisplay};
-  font-weight: 700;
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
+  letter-spacing: 0.5px;
   color: #fff;
   margin-bottom: 1rem;
 

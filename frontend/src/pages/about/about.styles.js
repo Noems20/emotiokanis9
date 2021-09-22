@@ -1,27 +1,16 @@
 import styled from 'styled-components';
 import tokens from '../../tokens';
-import { motion } from 'framer-motion';
+import { PageGrid } from '../../components/general.styles';
 
-export const Grid = styled(motion.div)`
+export const Grid = styled(PageGrid)`
   overflow-x: hidden;
-  display: grid;
   grid-template-rows:
-    calc(100vh - 8rem) max-content calc(100vh - 8rem) max-content calc(
-      100vh - 8rem
-    )
+    calc(100vh - 8rem) max-content calc(100vh - 8rem)
     max-content;
-  grid-template-columns:
-    [full-start] minmax(6rem, 1fr) [center-start] repeat(
-      8,
-      [col-start] minmax(min-content, 14rem) [col-end]
-    )
-    [center-end] minmax(6rem, 1fr) [full-end];
 
   @media only screen and (max-width: 800px) {
     grid-template-rows:
-      calc(100vh - 5.5rem) max-content calc(100vh - 5.5rem) max-content calc(
-        100vh - 5.5rem
-      )
+      calc(100vh - 5.5rem) max-content calc(100vh - 5.5rem)
       max-content;
   }
   /* @media only screen and (max-width: 600px) {
@@ -55,7 +44,7 @@ export const SectionTitle = styled.h1`
 
   & span {
     font-family: ${tokens.fontHand};
-    color: #000;
+    color: #333;
   }
 
   @media only screen and (max-width: 1000px) {

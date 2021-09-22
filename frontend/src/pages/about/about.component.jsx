@@ -87,22 +87,6 @@ const About = () => {
           </SectionText>
         </SectionDescription>
         <SectionHeading>
-          <SectionTitle data-aos='flip-right'>
-            LA MISIÓN
-            <br /> DE <span>EmotioKanis9</span>
-          </SectionTitle>
-        </SectionHeading>
-        <SectionDescription>
-          <SectionText data-aos='fade-right'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda,
-            iste veritatis repellat rem quidem tenetur culpa sint a tempore
-            accusantium beatae nulla officia iure reprehenderit accusamus? Id
-            aperiam officia voluptatem! Cupiditate quia fuga adipisci facilis,
-            quaerat dicta commodi. Optio eos magnam rem, facere obcaecati
-            cupiditate iste ducimus reprehenderit possimus ad temporibus omnis
-          </SectionText>
-        </SectionDescription>
-        <SectionHeading>
           <SectionTitle data-aos='flip-left'>
             PREMIOS
             <br /> DE <span>EmotioKanis9</span>

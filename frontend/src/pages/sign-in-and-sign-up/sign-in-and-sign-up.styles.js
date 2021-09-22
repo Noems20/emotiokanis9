@@ -1,15 +1,7 @@
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { PageGrid } from '../../components/general.styles';
 
-export const Grid = styled(motion.div)`
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(6rem, 1fr) [center-start] repeat(
-      8,
-      [col-start] minmax(min-content, 14rem) [col-end]
-    )
-    [center-end] minmax(6rem, 1fr) [full-end];
-
+export const Grid = styled(PageGrid)`
   grid-template-rows: calc(100vh - 8rem);
 
   @media only screen and (max-width: 1024px) {

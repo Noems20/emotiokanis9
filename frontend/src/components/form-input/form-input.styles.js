@@ -1,13 +1,12 @@
 import styled, { css } from 'styled-components';
 
 const subColor = 'grey';
-const mainColor = 'black';
+// const mainColor = 'black';
 const errorColor = '#ff3333';
 
 const shrinkLabelStyles = css`
   top: -1.4rem;
   font-size: 1.4rem;
-  color: ${({ error }) => (error ? `${errorColor}` : `${mainColor}`)};
 
   @media only screen and (max-width: 430px) {
     font-size: 2rem;

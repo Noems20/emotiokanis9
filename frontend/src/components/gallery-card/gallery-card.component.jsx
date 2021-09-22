@@ -34,7 +34,7 @@ const GalleryCard = ({ title, description, url, alt, setSelectedImg }) => {
       <CardContainer data-aos='zoom-in-up' onClick={handleClick}>
         <CardImage src={url} alt={alt} />
         <CardDescription>
-          <CardTitle>{title.toUpperCase()}</CardTitle>
+          <CardTitle>{title}</CardTitle>
           <CardText>{description}</CardText>
         </CardDescription>
       </CardContainer>

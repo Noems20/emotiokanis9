@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import zac from './images/zac.jpg';
 import { motion } from 'framer-motion';
+import tokens from '../../tokens';
 
 export const ContactContainer = styled(motion.div)`
   grid-column: center-start / center-end;
@@ -59,6 +60,9 @@ export const InfoContainer = styled.div`
 `;
 
 export const InfoContainerTitle = styled.h1`
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 
   color: #fff;
@@ -124,6 +128,9 @@ export const ContactFormContainer = styled.div`
 `;
 
 export const ContactFormTitle = styled.h1`
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 
   @media only screen and (max-width: 700px) {

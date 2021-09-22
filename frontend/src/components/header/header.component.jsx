@@ -22,7 +22,6 @@ import {
   NavLogoLink,
   NavLinks,
   SessionBtn,
-  CloseSessionBtn,
   NavLetterLogo,
 } from './header.styles';
 

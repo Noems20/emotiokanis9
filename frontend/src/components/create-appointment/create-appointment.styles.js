@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import tokens from '../../tokens';
 
 import CustomButton from '../custom-button/custom-button.component';
+import { TitleSm } from '../general.styles';
 
 export const Container = styled(motion.div)`
   grid-column: center-start / center-end;
@@ -38,13 +38,7 @@ export const ContentWrapper = styled.div`
   grid-template-rows: repeat(3, max-content);
 `;
 
-export const Title = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  font-size: 3rem;
-  color: var(--color-primary);
-  justify-self: center;
-`;
+export const Title = styled(TitleSm)``;
 
 export const FormContainer = styled.form`
   display: grid;

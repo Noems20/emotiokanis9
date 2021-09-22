@@ -30,9 +30,11 @@ export const CardDescription = styled.div`
 `;
 
 export const CardTitle = styled.h1`
-  font-family: ${tokens.fontHand};
   color: var(--color-primary);
-  font-size: 3rem;
+  font-family: ${tokens.fontPrimary};
+  font-weight: 100;
+  font-size: 2.7rem;
+  margin-bottom: 1rem;
 `;
 export const CardText = styled.p`
   font-size: 1.6rem;

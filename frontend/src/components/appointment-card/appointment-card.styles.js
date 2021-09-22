@@ -1,4 +1,4 @@
-import tokens from '../../tokens';
+// import tokens from '../../tokens';
 
 import { motion } from 'framer-motion';
 import { AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 export const Container = styled(motion.div)`
   margin: 2rem 1rem;
-  padding: 2rem;
+  padding: 3rem 2rem;
   border-radius: 10px;
 
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
@@ -21,7 +21,7 @@ export const Container = styled(motion.div)`
 export const CardHeading = styled.div`
   /* margin: 2rem 2rem 0 2rem; */
   padding-bottom: 2rem;
-  border-bottom: 3px solid var(--color-primary);
+  border-bottom: 1px solid var(--color-grey-light-4);
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -29,9 +29,7 @@ export const CardHeading = styled.div`
   align-items: center;
 `;
 export const CardHeadingTitle = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  text-transform: uppercase;
+  font-weight: 700;
   color: var(--color-primary);
 
   margin-right: 3rem;
@@ -39,15 +37,16 @@ export const CardHeadingTitle = styled.h1`
   justify-self: start;
 `;
 export const CardHeadingDate = styled.h2`
-  font-family: ${tokens.fontDisplay};
-  /* font-weight: 300; */
+  font-size: 1.5rem;
+  font-weight: 400;
   text-align: center;
   letter-spacing: 1px;
-  color: #fff;
+  color: var(--color-primary);
 
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 10px;
-  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  background-color: transparent;
 `;
 
 export const CardIcons = styled.div`
@@ -113,9 +112,7 @@ export const CardBody = styled.div`
 `;
 
 export const CardBodyTitle = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  text-transform: uppercase;
+  font-weight: 400;
   color: var(--color-primary);
 
   margin-bottom: 1rem;

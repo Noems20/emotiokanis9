@@ -11,14 +11,15 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { checkLogged } from './redux/user/userActions';
 
-import Home from './pages/homepage/homepage.component';
-import Services from './pages/services/services.component';
-import About from './pages/about/about.component';
-import Contact from './pages/contact/contact.component';
-import Appointments from './pages/appointments/appointments.component';
-import Profile from './pages/profile/Profile.page';
+// PAGES
+import Home from './pages/homepage/homepage.page';
+import Services from './pages/services/services.page';
+import About from './pages/about/about.page';
+import Contact from './pages/contact/contact.page';
+import Appointments from './pages/appointments/appointments.page';
+import Profile from './pages/profile/profile.page';
 import NotFound from './pages/NotFound/not-found.component';
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page';
 
 //  COMPONENTS
 import Header from './components/header/header.component';

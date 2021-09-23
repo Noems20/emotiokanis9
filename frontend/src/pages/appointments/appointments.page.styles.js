@@ -38,9 +38,11 @@ export const Grid = styled(motion.div)`
 
 export const SideBar = styled(Sidebar)`
   grid-column: sidebar-start / sidebar-end;
+  border-radius: 0 0 10px 0;
 
   @media only screen and (max-width: 1200px) {
     grid-column: full-start / full-end;
+    border-radius: 0 0 10px 10px;
   }
 `;
 

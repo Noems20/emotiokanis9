@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-
+import { withRouter, NavLink } from 'react-router-dom';
 import { HeaderItems } from './header.items';
 
 // REDUX
@@ -13,19 +12,19 @@ import DropDown from '../dropdown/dropdown.component';
 // STYLES
 import {
   MobileIcon,
-  Nav,
-  NavContainer,
-  NavMenu,
-  NavItem,
+  HeaderNav,
+  HeaderContainer,
+  HeaderMenu,
+  HeaderItem,
   UserImage,
-  NavLogo,
-  NavLogoLink,
-  NavLinks,
+  HeaderLogo,
+  HeaderLogoLink,
+  HeaderLink,
   SessionBtn,
-  NavLetterLogo,
+  HeaderLetterLogo,
 } from './header.styles';
 
-import { NoLinkContainer, DropDownItem } from '../dropdown/dropdown.styles';
+import { DropDownItem } from '../dropdown/dropdown.styles';
 
 import logoB from './images/logoB.svg';
 import logo from './images/logo.svg';
@@ -95,47 +94,49 @@ const Header = ({ history }) => {
   };
 
   return (
-    <Nav scrollnav={scrollNav ? 1 : 0}>
-      <NavContainer>
-        <NavLogoLink to='/'>
-          <NavLogo src={image} scrollnav={scrollNav ? 1 : 0} />
-        </NavLogoLink>
-        <NavLetterLogo to='/'>K9</NavLetterLogo>
+    <HeaderNav scrollnav={scrollNav ? 1 : 0}>
+      <HeaderContainer>
+        <HeaderLogoLink to='/'>
+          <HeaderLogo src={image} scrollnav={scrollNav ? 1 : 0} />
+        </HeaderLogoLink>
+        <HeaderLetterLogo to='/'>K9</HeaderLetterLogo>
         <MobileIcon scrollnav={scrollNav ? 1 : 0} onClick={handleClick}>
           {clicked ? <AiOutlineClose /> : <RiMenu2Line />}
         </MobileIcon>
         {userLoaded && (
-          <NavMenu clicked={clicked}>
+          <HeaderMenu clicked={clicked}>
             {HeaderItems.map((item, index) => {
               return (
-                <NavItem key={index} onClick={handleClick}>
-                  <NavLinks
-                    activeClassName='is-active'
+                <HeaderItem key={index} onClick={handleClick}>
+                  <HeaderLink
+                    as={NavLink}
                     to={item.url}
                     exact
+                    activeClassName='is-active'
                     scrollnav={scrollNav ? 1 : 0}
                   >
                     {item.title}
-                  </NavLinks>
-                </NavItem>
+                  </HeaderLink>
+                </HeaderItem>
               );
             })}
 
             {/* Boton para iniciar sesión o cerrar dependiendo de usuario */}
             {user ? (
               <>
-                <NavItem onClick={handleClick}>
-                  <NavLinks
-                    activeClassName='is-active'
+                <HeaderItem onClick={handleClick}>
+                  <HeaderLink
+                    as={NavLink}
                     to='/citas'
                     exact
+                    activeClassName='is-active'
                     scrollnav={scrollNav ? 1 : 0}
                   >
                     Citas
-                  </NavLinks>
-                </NavItem>
-                <NavItem>
-                  <NoLinkContainer
+                  </HeaderLink>
+                </HeaderItem>
+                <HeaderItem>
+                  <HeaderLink
                     scrollnav={scrollNav ? 1 : 0}
                     onClick={() => setOpen(!open)}
                   >
@@ -162,27 +163,28 @@ const Header = ({ history }) => {
                         <p>Cerrar Sesión</p>
                       </DropDownItem>
                     </DropDown>
-                  </NoLinkContainer>
-                </NavItem>
+                  </HeaderLink>
+                </HeaderItem>
                 ,
               </>
             ) : (
-              <NavItem>
+              <HeaderItem>
                 <SessionBtn
                   onClick={handleClick}
-                  activeClassName='is-active'
+                  as={NavLink}
                   to='/login'
                   exact
+                  activeClassName='is-active'
                   scrollnav={scrollNav ? 1 : 0}
                 >
                   Iniciar sesión
                 </SessionBtn>
-              </NavItem>
+              </HeaderItem>
             )}
-          </NavMenu>
+          </HeaderMenu>
         )}
-      </NavContainer>
-    </Nav>
+      </HeaderContainer>
+    </HeaderNav>
   );
 };
 

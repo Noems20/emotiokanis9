@@ -23,7 +23,7 @@ import {
   SideBarContent,
   SideBarText,
   Button,
-} from './appointments.styles';
+} from './appointments.page.styles';
 
 // ICONS
 import { BsFillCalendarFill, BsClockHistory } from 'react-icons/bs';

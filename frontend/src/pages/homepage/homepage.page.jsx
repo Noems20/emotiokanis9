@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
+// COMPONENTS
 import Hero from '../../components/hero/hero.component';
 import Section from '../../components/section/section.component';
 

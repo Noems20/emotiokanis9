@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from './services.styles';
+import { Grid } from './services.page.styles';
 
 import Service from '../../components/service/service.component';
 

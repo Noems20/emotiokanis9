@@ -21,7 +21,7 @@ import {
   Logo,
   SectionText,
   Gallery,
-} from './about.styles';
+} from './about.page.styles';
 import logo from './images/logo.svg';
 
 const About = () => {

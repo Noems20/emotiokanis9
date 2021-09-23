@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import tokens from '../../tokens';
 
 export const MobileIcon = styled.div`
@@ -21,7 +21,7 @@ export const MobileIcon = styled.div`
   }
 `;
 
-export const Nav = styled.nav`
+export const HeaderNav = styled.nav`
   background-color: ${({ scrollnav }) => (scrollnav ? '#fff' : 'transparent')};
   box-shadow: ${({ scrollnav }) =>
     scrollnav ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px' : 'none'};
@@ -44,7 +44,7 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavContainer = styled.div`
+export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-self: stretch;
@@ -154,12 +154,12 @@ const getNavMenuStyles = ({ clicked }) => {
   return clicked ? clickedNavMenu : notClickedNavMenu;
 };
 
-export const NavMenu = styled.ul`
+export const HeaderMenu = styled.ul`
   list-style: none;
   ${getNavMenuStyles}
 `;
 
-export const NavItem = styled.li`
+export const HeaderItem = styled.li`
   display: flex;
   align-self: stretch;
   align-items: center;
@@ -174,7 +174,7 @@ export const UserImage = styled.img`
   margin-right: 1rem;
 `;
 
-export const NavLinks = styled(NavLink)`
+export const HeaderLink = styled.div`
   font-family: ${tokens.fontPrimary};
   color: var(--color-primary);
   text-transform: uppercase;
@@ -298,7 +298,7 @@ export const CloseSessionBtn = styled.button`
   }
 `;
 
-export const NavLogoLink = styled(Link)`
+export const HeaderLogoLink = styled(Link)`
   margin-right: auto;
   @media screen and (max-width: 992px) {
     display: none;
@@ -306,7 +306,7 @@ export const NavLogoLink = styled(Link)`
   }
 `;
 
-export const NavLogo = styled.img`
+export const HeaderLogo = styled.img`
   margin-top: ${({ scrollnav }) => (scrollnav ? '0' : '8rem')};
   height: ${({ scrollnav }) => (scrollnav ? '90%' : '13rem')};
   transition: all 0.15s ease-in-out;
@@ -317,7 +317,7 @@ export const NavLogo = styled.img`
   }
 `;
 
-export const NavLetterLogo = styled(Link)`
+export const HeaderLetterLogo = styled(Link)`
   text-decoration: none;
   font-family: ${tokens.fontPrimary};
   font-weight: 600;

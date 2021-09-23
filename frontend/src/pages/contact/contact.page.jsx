@@ -7,7 +7,7 @@ import {
   MapContainer,
   MapTitle,
   Button,
-} from './contact.styles';
+} from './contact.page.styles';
 import ContactSection from '../../components/contact-section/contact-section.component';
 import FormInput from '../../components/form-input/form-input.component';
 import TextAreaInput from '../../components/text-area-input/text-area-input.component';

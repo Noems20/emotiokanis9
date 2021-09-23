@@ -61,12 +61,6 @@ export const Sidebar = styled.div`
   z-index: 10;
 
   @media only screen and (max-width: 1200px) {
-    background: linear-gradient(
-      180deg,
-      rgba(30, 152, 228, 1) 0%,
-      rgba(14, 121, 187, 1) 50%,
-      rgba(0, 100, 161, 1) 100%
-    );
     border-radius: 0 0 10px 10px;
   }
 `;
@@ -85,6 +79,103 @@ export const SidebarContainer = styled.div`
 `;
 
 const sidebarItemColor = '#fff';
+
+export const SidebarAdmin = styled.div`
+  margin-top: 3.5rem;
+
+  @media only screen and (max-width: 1200px) {
+    margin-top: 0;
+    grid-column: 1 / 4;
+
+    & div div {
+      display: grid;
+      grid-template-columns: max-content max-content;
+    }
+
+    & div div p {
+      display: inline-block;
+    }
+  }
+`;
+
+export const SidebarAdminItems = styled(motion.div)`
+  overflow: hidden;
+
+  & div {
+    // SidebarItem
+    @media only screen and (max-width: 1200px) {
+      transition: background-color 0.3s ease;
+      border-radius: 10px;
+      border-right: 0px solid transparent !important;
+      padding: 2rem 0;
+      margin: 0 5rem;
+
+      &:last-child {
+        margin-bottom: 1rem;
+      }
+
+      &.active,
+      &:hover,
+      &:active {
+        background-color: rgba(30, 152, 228, 0.5);
+      }
+
+      & div {
+        // SidebarContent
+        padding: 0 !important;
+        margin: 0 2rem !important;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+`;
+
+export const SidebarAdminText = styled.p`
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: ${sidebarItemColor};
+  text-transform: uppercase;
+  margin: 1rem 5rem;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #fff;
+
+  position: relative;
+
+  @media only screen and (max-width: 1200px) {
+    cursor: pointer;
+    margin-top: 1rem;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: ${(props) =>
+        props.open
+          ? '0 0.7rem 0.7rem  0.7rem'
+          : '0.7rem 0.7rem 0 0.7rem'}; // Right and left center the arrow form and bottom creates the arrow
+      border-color: ${({ open }) =>
+        open
+          ? 'transparent transparent white transparent'
+          : 'white transparent transparent transparent'}; // Arrow up -> border bottom show
+      /* -webkit-filter: drop-shadow(0px -2px 1px rgba(0, 0, 0, 0.75)); */
+      /* filter: drop-shadow(0px -3px 3px rgba(0, 0, 0, 0.04));
+      transition: border-width 0.6s linear; */
+
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      z-index: 10;
+    }
+  }
+`;
 
 export const SidebarItem = styled.div`
   position: relative;
@@ -109,9 +200,16 @@ export const SidebarItem = styled.div`
   }
 
   @media only screen and (max-width: 1200px) {
+    transition: background-color 0.3s ease;
+
+    &:not(:nth-child(3n)) {
+      border-right: 1px solid rgba(51, 51, 51, 0.1);
+    }
+
     &.active,
     &:hover,
     &:active {
+      background-color: rgba(30, 152, 228, 0.5);
       border-left: 0px solid #fff;
       & div {
         -webkit-transform: translateX(0px);
@@ -132,9 +230,10 @@ export const SidebarContent = styled.div`
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: min-content max-content;
+  align-items: center;
 
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
 
   @media only screen and (max-width: 1200px) {
     justify-content: center;
@@ -147,7 +246,7 @@ export const SidebarContent = styled.div`
 
 export const SidebarText = styled.p`
   text-transform: uppercase;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: ${sidebarItemColor};
   z-index: 3;
   @media only screen and (max-width: 700px) {

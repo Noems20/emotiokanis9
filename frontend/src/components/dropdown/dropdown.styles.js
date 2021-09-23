@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import tokens from '../../tokens';
 import { motion } from 'framer-motion';
 
 export const Container = styled(motion.div)`
@@ -68,50 +67,5 @@ export const DropDownItem = styled.div`
 
   &:hover {
     background-color: #f9f9f9;
-  }
-`;
-
-export const NoLinkContainer = styled.div`
-  font-family: ${tokens.fontPrimary};
-  color: var(--color-primary);
-  text-transform: uppercase;
-  font-size: 2.2rem;
-  text-decoration: none;
-  transition: all 0.15s ease-in-out;
-
-  &:hover,
-  &.is-active {
-    color: #333;
-  }
-
-  @media screen and (min-width: 992px) {
-    font-size: 1.8rem;
-    color: ${({ scrollnav }) => (scrollnav ? '#333' : '#fff')};
-    text-align: center;
-
-    display: ${({ scrollnav }) => (scrollnav ? 'flex' : 'inline')};
-    align-self: ${({ scrollnav }) => (scrollnav ? 'stretch' : 'auto')};
-    align-items: center;
-
-    padding: 0 2rem;
-    &:hover,
-    &.is-active {
-      background-color: ${({ scrollnav }) =>
-        scrollnav ? 'var(--color-grey-light-1)' : 'none'};
-      color: ${({ scrollnav }) =>
-        scrollnav ? 'var(--color-primary)' : '#fff'};
-    }
-    &:after {
-      display: block;
-      content: '';
-      border-bottom: solid 3px #fff;
-      transform: scaleX(0);
-      transition: transform 250ms ease-in-out;
-    }
-
-    &:hover:after,
-    &.is-active {
-      transform: scaleX(1);
-    }
   }
 `;

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 // REDUX
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateMe, updateMyPassword } from '../../redux/user/userActions';
+import { clearUiErrors } from '../../redux/ui/uiActions';
 
 // COMPONENTS
 import FormInput from '../../components/form-input/form-input.component';
@@ -71,24 +73,25 @@ const Profile = () => {
   const [credentials, setCredentials] = useState({
     name: '',
     email: '',
-    currentPassword: '',
+    passwordCurrent: '',
     password: '',
-    confirmPassword: '',
+    passwordConfirm: '',
   });
 
-  const { email, name, currentPassword, password, confirmPassword } =
+  const { email, name, passwordCurrent, password, passwordConfirm } =
     credentials;
 
-  const userData = useSelector((state) => state.user);
-  const { user } = userData;
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { uiErrors, loading } = useSelector((state) => state.ui);
 
   useEffect(() => {
     setCredentials({
       name: user.name,
       email: user.email,
-      currentPassword: '',
+      passwordCurrent: '',
       password: '',
-      confirmPassword: '',
+      passwordConfirm: '',
     });
 
     if (window.innerWidth <= 1200) {
@@ -100,19 +103,32 @@ const Profile = () => {
     function handleResize() {
       if (window.innerWidth > 1200) {
         setOpen(true);
+      } else {
+        setOpen(false);
       }
     }
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      dispatch(clearUiErrors());
     };
-  }, [setCredentials, user]);
+  }, [setCredentials, user, dispatch]);
 
   const toggleOpen = () => {
     if (window.innerWidth <= 1200) {
       setOpen(!open);
     }
+  };
+
+  const handleDetailsSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateMe(email, name));
+  };
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateMyPassword(passwordCurrent, password, passwordConfirm));
   };
 
   const handleChange = (event) => {
@@ -221,14 +237,14 @@ const Profile = () => {
         <Content>
           <Settings>
             <Title>Configuración de cuenta</Title>
-            <form>
+            <form onSubmit={handleDetailsSubmit}>
               <FormInput
                 name='name'
                 type='text'
                 handleChange={handleChange}
                 value={name}
                 label='Nombre'
-                // error={uiErrors.login.name}
+                error={uiErrors.detailsChange.name}
               />
               <FormInput
                 name='email'
@@ -236,7 +252,7 @@ const Profile = () => {
                 handleChange={handleChange}
                 value={email}
                 label='Email'
-                // error={uiErrors.login.email}
+                error={uiErrors.detailsChange.email}
               />
               <ChangeImage>
                 <UserImage
@@ -247,20 +263,27 @@ const Profile = () => {
                 />
                 <ImageButton>Elige una nueva foto</ImageButton>
               </ChangeImage>
-              <Button primary>Guardar configuración</Button>
+              <Button
+                type='submit'
+                loading={loading.firstLoader}
+                disabled={loading.firstLoader || loading.secondLoader}
+                primary
+              >
+                {loading.firstLoader ? '' : 'Guardar configuración'}
+              </Button>
             </form>
           </Settings>
           <Line />
           <Settings>
             <Title>Cambiar contraseña</Title>
-            <form>
+            <form onSubmit={handlePasswordSubmit}>
               <FormInput
-                name='currentPassword'
+                name='passwordCurrent'
                 type='password'
                 handleChange={handleChange}
-                value={currentPassword}
+                value={passwordCurrent}
                 label='Contraseña actual'
-                // error={uiErrors.login.name}
+                error={uiErrors.passwordChange.passwordCurrent}
               />
               <FormInput
                 name='password'
@@ -268,17 +291,24 @@ const Profile = () => {
                 handleChange={handleChange}
                 value={password}
                 label='Nueva contraseña'
-                // error={uiErrors.login.name}
+                error={uiErrors.passwordChange.password}
               />
               <FormInput
-                name='confirmPassword'
+                name='passwordConfirm'
                 type='password'
                 handleChange={handleChange}
-                value={confirmPassword}
+                value={passwordConfirm}
                 label='Confirmar contraseña'
-                // error={uiErrors.login.email}
+                error={uiErrors.passwordChange.passwordConfirm}
               />
-              <Button primary>Cambiar contraseña</Button>
+              <Button
+                type='submit'
+                loading={loading.secondLoader}
+                disabled={loading.secondLoader || loading.firstLoader}
+                primary
+              >
+                {loading.secondLoader ? '' : 'Cambiar contraseña'}
+              </Button>
             </form>
           </Settings>
         </Content>

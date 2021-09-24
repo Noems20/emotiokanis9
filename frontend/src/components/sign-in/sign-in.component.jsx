@@ -33,7 +33,7 @@ const SignIn = () => {
     return () => {
       dispatch({
         type: 'SET_UI_LOADING',
-        payload: { login: false },
+        payload: { firstLoader: false },
       });
     };
   }, [dispatch]);
@@ -78,14 +78,14 @@ const SignIn = () => {
           label='Contraseña'
           error={uiErrors.login.password}
         />
-        <ButtonsContainer loading={loading.login}>
+        <ButtonsContainer loading={loading.firstLoader}>
           <CustomButton
             type='submit'
-            loading={loading.login}
-            disabled={loading.login || loading.register}
+            loading={loading.firstLoader}
+            disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            {loading.login ? '' : 'Iniciar Sesión'}
+            {loading.firstLoader ? '' : 'Iniciar Sesión'}
           </CustomButton>
           {/* <CustomButton type='button' isGoogleSignIn>
             Google

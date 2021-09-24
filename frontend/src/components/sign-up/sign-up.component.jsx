@@ -34,7 +34,7 @@ const SignUp = () => {
     return () => {
       dispatch({
         type: 'SET_UI_LOADING',
-        payload: { register: false },
+        payload: { secondLoader: false },
       });
     };
   }, [dispatch]);
@@ -88,14 +88,14 @@ const SignUp = () => {
           label='Confirmar contraseña'
           error={uiErrors.register.passwordConfirm}
         />
-        <ButtonsContainer loading={loading.register}>
+        <ButtonsContainer loading={loading.secondLoader}>
           <CustomButton
             type='submit'
-            loading={loading.register}
-            disabled={loading.login || loading.register}
+            loading={loading.secondLoader}
+            disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            {loading.register ? '' : 'Crear cuenta'}
+            {loading.secondLoader ? '' : 'Crear cuenta'}
           </CustomButton>
         </ButtonsContainer>
       </FormContainer>

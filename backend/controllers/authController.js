@@ -186,6 +186,28 @@ export const isLoggedIn = async (req, res, next) => {
   }
 };
 
+// --------------------- UPDATE PASSWORD -----------------------------------------
+export const updatePassword = catchAsync(async (req, res, next) => {
+  // 1) Get user from collection
+  const user = await User.findById(req.user.id).select('+password');
+  // 1) Check if posted current password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent))) {
+    return next(
+      new AppError('Incorrect password, please try again', 401, {
+        passwordCurrent: 'Contraseña incorrecta',
+      })
+    );
+  }
+  // 1) If so, update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  // User.findByIdAndUpdate will NOT work as intended!
+
+  // 1) Log user in, send JWT
+  createSendToken(user, 200, res);
+});
+
 // --------------------- FORGOT PASSWORD -----------------------------------------
 export const forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email

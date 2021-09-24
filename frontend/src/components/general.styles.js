@@ -88,12 +88,9 @@ export const SidebarAdmin = styled.div`
     grid-column: 1 / 4;
 
     & div div {
-      display: grid;
-      grid-template-columns: max-content max-content;
-    }
-
-    & div div p {
-      display: inline-block;
+      // SidebarItem
+      display: flex;
+      justify-items: flex-start;
     }
   }
 `;
@@ -104,26 +101,20 @@ export const SidebarAdminItems = styled(motion.div)`
   & div {
     // SidebarItem
     @media only screen and (max-width: 1200px) {
-      transition: background-color 0.3s ease;
-      border-radius: 10px;
-      border-right: 0px solid transparent !important;
       padding: 2rem 0;
       margin: 0 5rem;
+      border-right: 0px solid transparent !important;
+      border-radius: 10px;
 
       &:last-child {
         margin-bottom: 1rem;
-      }
-
-      &.active,
-      &:hover,
-      &:active {
-        background-color: rgba(30, 152, 228, 0.5);
       }
 
       & div {
         // SidebarContent
         padding: 0 !important;
         margin: 0 2rem !important;
+        margin-right: 0 !important;
 
         &:hover {
           background-color: transparent;
@@ -162,9 +153,6 @@ export const SidebarAdminText = styled.p`
         open
           ? 'transparent transparent white transparent'
           : 'white transparent transparent transparent'}; // Arrow up -> border bottom show
-      /* -webkit-filter: drop-shadow(0px -2px 1px rgba(0, 0, 0, 0.75)); */
-      /* filter: drop-shadow(0px -3px 3px rgba(0, 0, 0, 0.04));
-      transition: border-width 0.6s linear; */
 
       position: absolute;
       top: 0;
@@ -181,7 +169,6 @@ export const SidebarItem = styled.div`
   position: relative;
   padding: 2rem 5rem;
   cursor: pointer;
-  border-left: 0px solid #fff;
 
   & svg {
     font-size: 2.5rem;
@@ -201,6 +188,7 @@ export const SidebarItem = styled.div`
 
   @media only screen and (max-width: 1200px) {
     transition: background-color 0.3s ease;
+    border-radius: 0 0 10px 10px;
 
     &:not(:nth-child(3n)) {
       border-right: 1px solid rgba(51, 51, 51, 0.1);

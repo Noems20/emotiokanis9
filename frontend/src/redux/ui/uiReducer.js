@@ -2,12 +2,14 @@ import { SET_UI_LOADING, SET_UI_ERRORS, CLEAR_UI_ERRORS } from './uiTypes';
 
 const initialState = {
   loading: {
-    login: false,
-    register: false,
+    firstLoader: false,
+    secondLoader: false,
   },
   uiErrors: {
     login: {},
     register: {},
+    detailsChange: {},
+    passwordChange: {},
   },
 };
 

@@ -27,7 +27,8 @@ import {
   Line,
   ChangeImage,
   UserImage,
-  ImageButton,
+  ImageInputLabel,
+  ImageInput,
   Button,
 } from './profile.page.styles';
 
@@ -77,6 +78,7 @@ const Profile = () => {
     password: '',
     passwordConfirm: '',
   });
+  const [selectedFile, setSelectedFile] = useState('');
 
   const { email, name, passwordCurrent, password, passwordConfirm } =
     credentials;
@@ -123,7 +125,8 @@ const Profile = () => {
 
   const handleDetailsSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateMe(email, name));
+    dispatch(updateMe(email, name, selectedFile));
+    setSelectedFile('');
   };
 
   const handlePasswordSubmit = (e) => {
@@ -135,6 +138,11 @@ const Profile = () => {
     const { name, value } = event.target;
 
     setCredentials({ ...credentials, [name]: value });
+  };
+
+  const handleFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+    // console.log(e.target.files[0]);
   };
 
   return (
@@ -261,7 +269,14 @@ const Profile = () => {
                       .default
                   }
                 />
-                <ImageButton>Elige una nueva foto</ImageButton>
+                <ImageInputLabel htmlFor='photo'>Cambiar foto</ImageInputLabel>
+                <ImageInput
+                  type='file'
+                  accept='image/*'
+                  // name='photo'
+                  id='photo'
+                  onChange={handleFile}
+                />
               </ChangeImage>
               <Button
                 type='submit'

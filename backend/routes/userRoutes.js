@@ -1,7 +1,13 @@
 import express from 'express';
 
 // Controllers
-import { getAllUsers, updateMe } from '../controllers/userController.js';
+import {
+  getAllUsers,
+  updateMe,
+  uploadUserPhoto,
+  resizeUserPhoto,
+} from '../controllers/userController.js';
+
 import {
   signup,
   login,
@@ -25,7 +31,7 @@ router.use(protect);
 
 router.patch('/updateMyPassword', updatePassword);
 // router.get('/me', getMe, getUser);
-router.patch('/updateMe', updateMe);
+router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
 // router.delete('/deleteMe', deleteMe);
 
 // ----------- GENERIC ROUTES --------

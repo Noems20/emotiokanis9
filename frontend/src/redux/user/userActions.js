@@ -99,26 +99,27 @@ export const checkLogged = () => async (dispatch) => {
 };
 
 // ------------------------ UPDATE USER (name, email) ---------------------------
-export const updateMe = (email, name) => async (dispatch) => {
+export const updateMe = (email, name, photo) => async (dispatch) => {
   try {
     dispatch({
       type: SET_UI_LOADING,
       payload: { firstLoader: true },
     });
+
+    const form = new FormData();
+
+    form.append('email', email);
+    form.append('name', name);
+    form.append('photo', photo);
+
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     };
 
-    const { data } = await axios.patch(
-      '/api/v1/users/updateMe',
-      {
-        name,
-        email,
-      },
-      config
-    );
+    const { data } = await axios.patch('/api/v1/users/updateMe', form, config);
+
     dispatch({
       type: SET_UI_LOADING,
       payload: { firstLoader: false },

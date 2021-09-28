@@ -29,6 +29,7 @@ const UserSettings = () => {
     password: '',
     passwordConfirm: '',
   });
+  const [userPhoto, setUserPhoto] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
 
   const { email, name, passwordCurrent, password, passwordConfirm } =
@@ -46,6 +47,14 @@ const UserSettings = () => {
       password: '',
       passwordConfirm: '',
     });
+
+    try {
+      setUserPhoto(
+        require(`../../../../../backend/public/img/users/${user.photo}`).default
+      );
+    } catch {
+      setUserPhoto(require(`../../../public/img/users/default.jpg`).default);
+    }
 
     return () => {
       dispatch(clearUiErrors());
@@ -95,12 +104,7 @@ const UserSettings = () => {
             error={uiErrors.detailsChange.email}
           />
           <ChangeImage>
-            <UserImage
-              src={
-                require(`../../../../../backend/data/img/users/${user.photo}`)
-                  .default
-              }
-            />
+            <UserImage src={userPhoto} />
             <ImageInputLabel htmlFor='photo'>Cambiar foto</ImageInputLabel>
             <ImageInput
               type='file'

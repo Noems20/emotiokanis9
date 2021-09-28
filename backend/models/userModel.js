@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 // Validators run in: findByIdAndUpdate, create, save
 
@@ -75,6 +76,14 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// ------------ CHANGE PASSWORD changedAt ------
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 // --------------------------------------- METHODS -----------------------------------------------
 
 // --------------- CHECK PASSWORD -----------------
@@ -92,6 +101,21 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
   // False mean NOT changed
   return false;
+};
+// --------------- CREATE PASSWORD RESET TOKEN -----------------
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  console.log({ resetToken }, this.passwordResetToken);
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);

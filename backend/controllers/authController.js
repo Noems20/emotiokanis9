@@ -8,6 +8,7 @@ import User from '../models/userModel.js';
 // Utils
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
+import sendEmail from '../utils/email.js';
 import { validateLoginData } from '../utils/validators.js';
 
 const signToken = (id) => {
@@ -214,7 +215,11 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return next(new AppError('There is no user with this email address.', 404));
+    return next(
+      new AppError('There is no user with this email address.', 404, {
+        email: 'No existe cuenta con este email',
+      })
+    );
   }
 
   // 2) Generate the random reset token
@@ -236,6 +241,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
       message,
     });
   } catch (error) {
+    console.log(error);
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
@@ -252,4 +258,34 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'Token send to email',
   });
+});
+
+// --------------------- RESET PASSWORD -----------------------------------------
+export const resetPassword = catchAsync(async (req, res, next) => {
+  // 1) Get user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+
+  // 2) If token has not expired, and there is user, set the new password
+  if (!user) {
+    return next(new AppError('Token is invalid or has expired', 400));
+  }
+
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  // 3) Update changedPasswordAt property for the user
+
+  // 4) Log the user and send JWT to client
+  createSendToken(user, 200, res);
 });

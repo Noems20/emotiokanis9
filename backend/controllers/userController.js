@@ -50,7 +50,7 @@ export const resizeUserPhoto = (req, res, next) => {
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`backend/data/img/users/${req.file.filename}`);
+    .toFile(`backend/public/img/users/${req.file.filename}`);
 
   next();
 };

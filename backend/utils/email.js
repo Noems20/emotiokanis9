@@ -1,28 +1,67 @@
 import nodemailer from 'nodemailer';
+import pug from 'pug';
+import { htmlToText } from 'html-to-text';
 
-const sendEmail = async (options) => {
-  // 1) Create transporter
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-    // Activate in gmail "less secure app" option
-  });
+// Dirname
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  // 2) Define the email options
-  const mailOptions = {
-    from: 'Noe Muñoz <hello@noe.io>',
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-    //html:
-  };
+// new Email(user, url).sendWelcome();
 
-  // 3) Send email
-  await transporter.sendMail(mailOptions);
-};
+class Email {
+  constructor(user, url) {
+    this.to = user.email;
+    this.firstName = user.name.split(' ')[0];
+    this.url = url;
+    this.from = `EmotioKanis9 <${process.env.EMAIL_FROM}>`;
+  }
 
-export default sendEmail;
+  // ------------------- CREATE TRANSPORT -------------------
+  newTransport() {
+    if (process.env.NODE_ENV === 'production') {
+      // Sendgrid
+      return 1;
+    }
+
+    // 1) Create transporter
+    return nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+      // Activate in gmail "less secure app" option
+    });
+  }
+
+  // ------------------- SEND EMAIL -------------------
+  async send(template, subject) {
+    // 1) Render HTML based on a pug template
+    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
+
+    // 2) Define the email options
+    const mailOptions = {
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text: htmlToText(html),
+    };
+
+    // 3) Create a transport and send email
+    await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendWelcome() {
+    await this.send('welcome', '¡Bienvenido a la familia de EmotioKanis9!');
+  }
+}
+
+export default Email;

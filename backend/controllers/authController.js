@@ -8,7 +8,7 @@ import User from '../models/userModel.js';
 // Utils
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
-import sendEmail from '../utils/email.js';
+import Email from '../utils/email.js';
 import { validateLoginData } from '../utils/validators.js';
 
 const signToken = (id) => {
@@ -45,6 +45,9 @@ const createSendToken = (user, statusCode, res) => {
 // --------------------- SIGN UP ---------------------------------------
 export const signup = catchAsync(async (req, res) => {
   const newUser = await User.create(req.body);
+  // const url = `${req.protocol}://${req.get('host')}/perfil`;
+  const url = `${req.protocol}://localhost:3000/perfil`;
+  await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
 });
 
@@ -235,11 +238,11 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   \n If you did not forget your password, please ignore this email.`;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset token (Valid for 10 min)',
-      message,
-    });
+    // await sendEmail({
+    //   email: user.email,
+    //   subject: 'Your password reset token (Valid for 10 min)',
+    //   message,
+    // });
   } catch (error) {
     console.log(error);
     user.passwordResetToken = undefined;

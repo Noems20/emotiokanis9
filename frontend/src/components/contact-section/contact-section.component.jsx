@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MdLocationOn, MdPhoneInTalk, MdMail } from 'react-icons/md';
-import { BiWorld } from 'react-icons/bi';
+import { FaFacebook } from 'react-icons/fa';
 
 // import FormInput from '../form-input/form-input.component';
 // import TextAreaInput from '../text-area-input/text-area-input.component';
@@ -18,8 +18,9 @@ import {
   ContactFormTitle,
   ContactForm,
 } from './contact-section.styles';
+import TabLoader from '../loaders/tab-loader/tab-loader.component';
 
-const ContactSection = ({ children, ...otherProps }) => {
+const ContactSection = ({ children, loading, ...otherProps }) => {
   return (
     <>
       <ContactContainer {...otherProps}>
@@ -47,25 +48,32 @@ const ContactSection = ({ children, ...otherProps }) => {
                 Email: <br />
                 contacto@emotio.com
               </InfoText>
-              <InfoImgContainer>
+              {/* <InfoImgContainer>
                 <BiWorld />
               </InfoImgContainer>
               <InfoText>
                 Sitio web: <br />
                 emotiokanis9.com
-              </InfoText>
-              {/* <InfoImgContainer>
+              </InfoText> */}
+              <InfoImgContainer>
                 <FaFacebook />
               </InfoImgContainer>
               <InfoText>
-                Address: 198 West 21th Street, Suite 721 New York NY 10016
-              </InfoText> */}
+                Página: <br />
+                EmotioKanis9
+              </InfoText>
             </Info>
           </InfoContainer>
         </ContactInfoContainer>
         <ContactFormContainer>
-          <ContactFormTitle> Contáctanos</ContactFormTitle>
-          <ContactForm>{children}</ContactForm>
+          {!loading ? (
+            <TabLoader />
+          ) : (
+            <>
+              <ContactFormTitle>Contáctanos</ContactFormTitle>
+              <ContactForm>{children}</ContactForm>
+            </>
+          )}
         </ContactFormContainer>
       </ContactContainer>
     </>

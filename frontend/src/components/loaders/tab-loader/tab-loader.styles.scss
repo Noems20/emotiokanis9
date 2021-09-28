@@ -1,0 +1,111 @@
+#dots1 {
+  display: block;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 50px;
+  width: 13rem;
+
+  & h1 {
+    font-family: 'Fredoka One', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 45px;
+  }
+
+  @media only screen and (max-width: 430px) {
+    width: 13.7rem;
+  }
+}
+
+#dots1 span {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(var(--color-primary), 0.25);
+  border-radius: 50%;
+  -webkit-animation: dots1 1s infinite ease-in-out;
+  animation: dots1 1s infinite ease-in-out;
+}
+
+#dots1 span:nth-child(1) {
+  left: 0px;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+#dots1 span:nth-child(2) {
+  left: 3.8rem;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+
+  @media only screen and (max-width: 430px) {
+    left: 4.1rem;
+  }
+}
+
+#dots1 span:nth-child(3) {
+  left: 7.6rem;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+
+  @media only screen and (max-width: 430px) {
+    left: 8.2rem;
+  }
+}
+
+#dots1 span:nth-child(4) {
+  left: 11.4rem;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+
+  @media only screen and (max-width: 430px) {
+    left: 12.3rem;
+  }
+}
+
+@keyframes dots1 {
+  0% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background: rgba(var(--color-primary), 0.25);
+  }
+  50% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+    background: var(--color-primary);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background: rgba(var(--color-primary), 0.25);
+  }
+}
+@-webkit-keyframes dots1 {
+  0% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background: rgba(var(--color-primary), 0.25);
+  }
+  50% {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+    background: var(--color-primary);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    background: rgba(var(--color-primary), 0.25);
+  }
+}

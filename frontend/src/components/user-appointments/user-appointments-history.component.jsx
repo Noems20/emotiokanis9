@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
+
+// COMPONENTS
+import TabLoader from '../loaders/tab-loader/tab-loader.component';
 import AppointmentCard from '../appointment-card/appointment-card.component';
 
+// STYLES
 import {
   Container,
   AppointmentsContainer,
@@ -9,7 +13,7 @@ import {
   NotAppointments,
 } from './user-appointments-history.styles';
 
-const UserAppointments = () => {
+const UserAppointments = ({ loading }) => {
   const [citas, setCitas] = useState(true);
   const containerVariants = {
     hidden: {
@@ -79,25 +83,29 @@ const UserAppointments = () => {
         animate='visible'
         exit='exit'
       >
-        <AppointmentsContainer variants={childVariants}>
-          <Title variants={titleVariants}>Historial de citas</Title>
-          {citas ? (
-            <>
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-              <AppointmentCard variants={cardVariants} />
-            </>
-          ) : (
-            <NotAppointments variants={cardVariants}>
-              No tienes citas
-            </NotAppointments>
-          )}
-        </AppointmentsContainer>
+        {!loading ? (
+          <TabLoader />
+        ) : (
+          <AppointmentsContainer variants={childVariants}>
+            <Title variants={titleVariants}>Historial de citas</Title>
+            {citas ? (
+              <>
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+                <AppointmentCard variants={cardVariants} />
+              </>
+            ) : (
+              <NotAppointments variants={cardVariants}>
+                No tienes citas
+              </NotAppointments>
+            )}
+          </AppointmentsContainer>
+        )}
       </Container>
     </>
   );

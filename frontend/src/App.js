@@ -58,7 +58,7 @@ const App = () => {
       <Header />
       <ScrollToTop />
       <BackToTop />
-      {userLoaded ? (
+      {userLoaded.general ? (
         <>
           <AnimatePresence exitBeforeEnter>
             <Switch location={location} key={location.key}>

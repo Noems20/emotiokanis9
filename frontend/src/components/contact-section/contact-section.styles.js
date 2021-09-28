@@ -117,6 +117,7 @@ export const ContactFormContainer = styled.div`
   display: grid;
   align-content: center;
   justify-content: center;
+  position: relative;
 
   grid-template-rows: min-content 1fr;
   grid-template-columns: 1fr;

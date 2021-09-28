@@ -1,9 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 
+// COMPONENTS
 import FormInput from '../form-input/form-input.component';
 import TextAreaInput from '../text-area-input/text-area-input.component';
+import TabLoader from '../loaders/tab-loader/tab-loader.component';
 
+// STYLES
 import {
   Container,
   ContentWrapper,
@@ -11,9 +14,10 @@ import {
   FormContainer,
   ButtonContainer,
   Button,
+  LoaderContainer,
 } from './create-appointment.styles';
 
-const CreateAppointment = () => {
+const CreateAppointment = ({ loading, className }) => {
   const [appointmentInfo, setAppointmentInfo] = useState({
     subject: '',
     date: '',
@@ -62,41 +66,49 @@ const CreateAppointment = () => {
         exit='exit'
       >
         <ContentWrapper>
-          <Title>Agendar cita</Title>
-          <FormContainer>
-            <FormInput
-              name='subject'
-              type='text'
-              handleChange={handleChange}
-              value={subject}
-              label='Asunto'
-              required
-            />
-            <FormInput
-              name='date'
-              type='datetime-local'
-              handleChange={handleChange}
-              value={date}
-              min='2017-06-01T08:30'
-              max='2017-06-30T16:30'
-              label='Fecha y hora'
-              required
-            />
-            <TextAreaInput
-              name='description'
-              type='text'
-              handleChange={handleChange}
-              value={description}
-              label='Descripción'
-              rows={5}
-              required
-            />
-          </FormContainer>
-          <ButtonContainer>
-            <Button primary type='submit' onClick={handleSubmit}>
-              Agendar
-            </Button>
-          </ButtonContainer>
+          {!loading ? (
+            <LoaderContainer>
+              <TabLoader className={className} />
+            </LoaderContainer>
+          ) : (
+            <>
+              <Title>Agendar cita</Title>
+              <FormContainer>
+                <FormInput
+                  name='subject'
+                  type='text'
+                  handleChange={handleChange}
+                  value={subject}
+                  label='Asunto'
+                  required
+                />
+                <FormInput
+                  name='date'
+                  type='datetime-local'
+                  handleChange={handleChange}
+                  value={date}
+                  min='2017-06-01T08:30'
+                  max='2017-06-30T16:30'
+                  label='Fecha y hora'
+                  required
+                />
+                <TextAreaInput
+                  name='description'
+                  type='text'
+                  handleChange={handleChange}
+                  value={description}
+                  label='Descripción'
+                  rows={5}
+                  required
+                />
+              </FormContainer>
+              <ButtonContainer>
+                <Button primary type='submit' onClick={handleSubmit}>
+                  Agendar
+                </Button>
+              </ButtonContainer>
+            </>
+          )}
         </ContentWrapper>
       </Container>
     </>

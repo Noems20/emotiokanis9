@@ -13,6 +13,7 @@ import Alert from '../../components/alert/alert.component';
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalType } from '../../redux/modal/modal.actions';
+import { checkUser } from '../../redux/user/userActions';
 
 // STYLES
 import {
@@ -35,32 +36,38 @@ const Appointments = () => {
     message: '',
   });
 
-  const [tab, setTab] = useState(null);
+  const [tab, setTab] = useState('activeAppointments');
   const { subject, message } = contactInfo;
 
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal);
+  const { userLoaded } = useSelector((state) => state.user);
   const { modalType } = modal;
 
   useEffect(() => {
+    dispatch(checkUser());
     return function cleanup() {
       dispatch(setModalType(null));
     };
-  }, [dispatch]);
+  }, [tab, dispatch]);
 
   const renderSwitch = (tab) => {
     switch (tab) {
       case 'activeAppointments':
-        return <activeAppointments setTab={setTab} key={1} />;
+        return <CreateAppointment loading={userLoaded.tab} key={1} />;
       case 'myAppointments':
-        return <UserAppointmentsHistory setTab={setTab} key={2} />;
-      case 'makeAppointment':
-        return <CreateAppointment key={3} />;
-
+        return (
+          <UserAppointmentsHistory
+            loading={userLoaded.tab}
+            setTab={setTab}
+            key={2}
+          />
+        );
       case 'contact':
         return (
           <ContactSection
             key={4}
+            loading={userLoaded.tab}
             initial={{ x: '-100vw' }}
             animate={{ x: 0 }}
             exit={{ x: '100vw' }}
@@ -89,7 +96,13 @@ const Appointments = () => {
           </ContactSection>
         );
       default:
-        return <UserAppointmentsHistory setTab={setTab} key={1} />;
+        return (
+          <UserAppointmentsHistory
+            loading={userLoaded.tab}
+            setTab={setTab}
+            key={1}
+          />
+        );
     }
   };
 
@@ -131,8 +144,8 @@ const Appointments = () => {
         <SideBar>
           <SideBarContainer>
             <SideBarItem
-              onClick={() => setTab('makeAppointment')}
-              className={tab === 'makeAppointment' ? 'active' : ''}
+              onClick={() => setTab('activeAppointments')}
+              className={tab === 'activeAppointments' ? 'active' : ''}
             >
               <SideBarContent>
                 <BsFillCalendarFill />

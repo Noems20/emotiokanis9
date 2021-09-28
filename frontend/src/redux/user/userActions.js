@@ -85,7 +85,7 @@ export const logout = () => async (dispatch) => {
 export const checkLogged = () => async (dispatch) => {
   dispatch({
     type: SET_USER_LOADED,
-    payload: false,
+    payload: { general: false },
   });
   const { data } = await axios.get('/api/v1/users/logged');
   dispatch({
@@ -94,7 +94,24 @@ export const checkLogged = () => async (dispatch) => {
   });
   dispatch({
     type: SET_USER_LOADED,
-    payload: true,
+    payload: { general: true },
+  });
+};
+
+// ------------------------ CHECK USER ---------------------------
+export const checkUser = () => async (dispatch) => {
+  dispatch({
+    type: SET_USER_LOADED,
+    payload: { tab: false },
+  });
+  const { data } = await axios.get('/api/v1/users/logged');
+  dispatch({
+    type: SET_USER,
+    payload: data.user,
+  });
+  dispatch({
+    type: SET_USER_LOADED,
+    payload: { tab: true },
   });
 };
 

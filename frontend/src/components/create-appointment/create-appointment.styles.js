@@ -4,6 +4,13 @@ import { motion } from 'framer-motion';
 import CustomButton from '../custom-button/custom-button.component';
 import { TitleSm } from '../general.styles';
 
+export const LoaderContainer = styled.div`
+  margin: 20rem 0;
+  @media only screen and (max-width: 700px) {
+    margin: 25rem 0;
+  }
+`;
+
 export const Container = styled(motion.div)`
   grid-column: center-start / center-end;
   border-radius: 5px;

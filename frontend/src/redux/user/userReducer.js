@@ -2,7 +2,10 @@ import { SET_USER, SET_USER_LOADED } from './userTypes';
 
 const initialState = {
   user: null,
-  userLoaded: false,
+  userLoaded: {
+    general: false,
+    tab: false,
+  },
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,7 +13,10 @@ const userReducer = (state = initialState, action) => {
     case SET_USER:
       return { ...state, user: action.payload };
     case SET_USER_LOADED:
-      return { ...state, userLoaded: action.payload };
+      return {
+        ...state,
+        userLoaded: { ...state.userLoaded, ...action.payload },
+      };
     default:
       return state;
   }

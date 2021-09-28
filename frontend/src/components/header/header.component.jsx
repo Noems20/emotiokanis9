@@ -30,7 +30,8 @@ import logoB from './images/logoB.svg';
 import logo from './images/logo.svg';
 
 // ICONS
-import { RiMenu2Line, RiLogoutCircleLine } from 'react-icons/ri';
+import { RiMenu2Line } from 'react-icons/ri';
+import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 
@@ -103,7 +104,7 @@ const Header = ({ history }) => {
         <MobileIcon scrollnav={scrollNav ? 1 : 0} onClick={handleClick}>
           {clicked ? <AiOutlineClose /> : <RiMenu2Line />}
         </MobileIcon>
-        {userLoaded && (
+        {userLoaded.general && (
           <HeaderMenu clicked={clicked}>
             {HeaderItems.map((item, index) => {
               return (
@@ -159,7 +160,7 @@ const Header = ({ history }) => {
                         <p>Perfil</p>
                       </DropDownItem>
                       <DropDownItem onClick={() => dispatch(logout())}>
-                        <RiLogoutCircleLine />
+                        <FiLogOut />
                         <p>Cerrar Sesión</p>
                       </DropDownItem>
                     </DropDown>

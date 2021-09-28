@@ -11,6 +11,8 @@ export const Container = styled(motion.div)`
   -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
 
+  position: relative;
+
   display: grid;
   justify-content: center;
   align-content: center;

@@ -1,6 +1,13 @@
 import { SET_USER, SET_USER_LOADED } from './userTypes';
-import { CLEAR_UI_ERRORS, SET_UI_ERRORS, SET_UI_LOADING } from '../ui/uiTypes';
+import {
+  CLEAR_UI_ERRORS,
+  SET_SUCCESS,
+  SET_UI_ERRORS,
+  SET_UI_LOADING,
+} from '../ui/uiTypes';
 import axios from 'axios';
+
+import { batch } from 'react-redux';
 
 // ------------------------ LOG IN ---------------------------
 export const login = (email, password) => async (dispatch) => {
@@ -31,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
     });
     dispatch({
       type: SET_UI_ERRORS,
-      payload: { login: error.response.data.uiErrors },
+      payload: { errorsOne: error.response.data.uiErrors },
     });
   }
 };
@@ -68,7 +75,7 @@ export const signUp =
       });
       dispatch({
         type: SET_UI_ERRORS,
-        payload: { register: error.response.data.uiErrors },
+        payload: { errorsTwo: error.response.data.uiErrors },
       });
     }
   };
@@ -137,16 +144,18 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
 
     const { data } = await axios.patch('/api/v1/users/updateMe', form, config);
 
-    dispatch({
-      type: SET_UI_LOADING,
-      payload: { firstLoader: false },
-    });
-    dispatch({
-      type: CLEAR_UI_ERRORS,
-    });
-    dispatch({
-      type: SET_USER,
-      payload: data.user,
+    batch(() => {
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: false },
+      });
+      dispatch({
+        type: CLEAR_UI_ERRORS,
+      });
+      dispatch({
+        type: SET_USER,
+        payload: data.user,
+      });
     });
   } catch (error) {
     dispatch({
@@ -155,7 +164,7 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
     });
     dispatch({
       type: SET_UI_ERRORS,
-      payload: { detailsChange: error.response.data.uiErrors },
+      payload: { errorsOne: error.response.data.uiErrors },
     });
   }
 };
@@ -183,16 +192,18 @@ export const updateMyPassword =
         },
         config
       );
-      dispatch({
-        type: SET_UI_LOADING,
-        payload: { secondLoader: false },
-      });
-      dispatch({
-        type: CLEAR_UI_ERRORS,
-      });
-      dispatch({
-        type: SET_USER,
-        payload: data.user,
+      batch(() => {
+        dispatch({
+          type: SET_UI_LOADING,
+          payload: { secondLoader: false },
+        });
+        dispatch({
+          type: CLEAR_UI_ERRORS,
+        });
+        dispatch({
+          type: SET_USER,
+          payload: data.user,
+        });
       });
     } catch (error) {
       dispatch({
@@ -201,7 +212,58 @@ export const updateMyPassword =
       });
       dispatch({
         type: SET_UI_ERRORS,
-        payload: { passwordChange: error.response.data.uiErrors },
+        payload: { errorsTwo: error.response.data.uiErrors },
       });
     }
   };
+
+// ------------------------ FORGOT PASSWORD ---------------------------
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_UI_LOADING,
+      payload: { firstLoader: true },
+    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    await axios.post(
+      '/api/v1/users/forgotPassword',
+      {
+        email,
+      },
+      config
+    );
+    batch(() => {
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: false },
+      });
+      dispatch({
+        type: CLEAR_UI_ERRORS,
+      });
+      dispatch({
+        type: SET_SUCCESS,
+        payload: true,
+      });
+    });
+  } catch (error) {
+    batch(() => {
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: false },
+      });
+      dispatch({
+        type: SET_UI_ERRORS,
+        payload: { errorsOne: error.response.data.uiErrors },
+      });
+      dispatch({
+        type: SET_SUCCESS,
+        payload: false,
+      });
+    });
+  }
+};

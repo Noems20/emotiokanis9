@@ -32,19 +32,15 @@ export const FormContainer = styled.form`
 `;
 
 export const ButtonsContainer = styled.div`
-  width: ${({ loading }) => (loading ? 'auto' : '100%')};
+  width: ${({ loading }) => (loading === 'true' ? 'auto' : '100%')};
   margin: 0 auto;
-  /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
-  /* margin: ${({ loading }) => (loading ? '0 auto' : '0')}; */
-  /* transition: max-width 5s ease-out; */
 
   & button {
     width: 100%;
-    /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
 
     &:hover {
       background-color: ${({ loading }) =>
-        loading ? 'var(--color-primary)' : '#fff'};
+        loading === 'true' ? 'var(--color-primary)' : '#fff'};
     }
   }
 `;

@@ -79,6 +79,10 @@ export const CustomButtonContainer = styled(motion.button)`
 
   &:disabled {
     cursor: not-allowed;
+    &:hover {
+      background-color: var(--color-primary);
+      color: #fff;
+    }
   }
 
   @media screen and (min-width: 992px) {

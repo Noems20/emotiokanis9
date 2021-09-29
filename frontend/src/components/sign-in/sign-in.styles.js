@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import tokens from '../../tokens';
 import Alert from '../alert/alert.component';
+import { Link } from 'react-router-dom';
 
 export const Message = styled(Alert)`
   margin-bottom: 4rem;
@@ -48,20 +49,21 @@ export const FormContainer = styled.form`
   /* grid-template-rows: repeat(3, 1fr); */
 `;
 
+export const ForgotPasswordLink = styled(Link)`
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  text-decoration: none;
+`;
+
 export const ButtonsContainer = styled.div`
-  width: ${({ loading }) => (loading ? 'auto' : '100%')};
+  width: ${({ loading }) => (loading === 'true' ? 'auto' : '100%')};
   margin: 0 auto;
-  /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
-  /* margin: ${({ loading }) => (loading ? '0 auto' : '0')}; */
-  /* transition: max-width 5s ease-out; */
 
   & button {
     width: 100%;
-    /* max-width: ${({ loading }) => (loading ? '45px' : '100%')}; */
-
     &:hover {
       background-color: ${({ loading }) =>
-        loading ? 'var(--color-primary)' : '#fff'};
+        loading === 'true' ? 'var(--color-primary)' : '#fff'};
     }
   }
 `;

@@ -18,8 +18,9 @@ import About from './pages/about/about.page';
 import Contact from './pages/contact/contact.page';
 import Appointments from './pages/appointments/appointments.page';
 import Profile from './pages/profile/profile.page';
-import NotFound from './pages/NotFound/not-found.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page';
+import ResetPasswordEmail from './pages/reset-password/reset-password-email.page';
+import NotFound from './pages/NotFound/not-found.component';
 
 //  COMPONENTS
 import Header from './components/header/header.component';
@@ -68,6 +69,11 @@ const App = () => {
               <Route exact path='/contacto' component={Contact} />
               <Route
                 exact
+                path='/perfil'
+                render={() => (user ? <Profile /> : <Redirect to='/login' />)}
+              />
+              <Route
+                exact
                 path='/citas'
                 render={() =>
                   user ? <Appointments /> : <Redirect to='/login' />
@@ -82,8 +88,10 @@ const App = () => {
               />
               <Route
                 exact
-                path='/perfil'
-                render={() => (user ? <Profile /> : <Redirect to='/login' />)}
+                path='/restablecerContraseña'
+                render={() =>
+                  user ? <Redirect to='/perfil' /> : <ResetPasswordEmail />
+                }
               />
               <Route path='/' component={NotFound} />
             </Switch>

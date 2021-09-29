@@ -16,15 +16,18 @@ import { FcGoogle } from 'react-icons/fc';
 const CustomButton = ({ children, isGoogleSignIn, loading, ...props }) => {
   return (
     <CustomButtonContainer isGoogleSignIn={isGoogleSignIn} {...props}>
-      {isGoogleSignIn
-        ? [
-            <GoogleContainer key={1}>
-              <FcGoogle />
-            </GoogleContainer>,
-            <ChildrenContainer key={2}>{children}</ChildrenContainer>,
-          ]
-        : children}
-      {loading ? <Loader /> : null}
+      {isGoogleSignIn ? (
+        <>
+          <GoogleContainer>
+            <FcGoogle />
+          </GoogleContainer>
+          <ChildrenContainer>{children}</ChildrenContainer>,
+        </>
+      ) : loading ? (
+        <Loader />
+      ) : (
+        children
+      )}
     </CustomButtonContainer>
   );
 };

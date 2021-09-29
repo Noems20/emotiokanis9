@@ -62,6 +62,13 @@ class Email {
   async sendWelcome() {
     await this.send('welcome', '¡Bienvenido a la familia de EmotioKanis9!');
   }
+
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Su token de restablecimiento de contraseña (Valido por 10 minutos)'
+    );
+  }
 }
 
 export default Email;

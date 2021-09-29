@@ -20,7 +20,7 @@ import {
 } from './contact-section.styles';
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
 
-const ContactSection = ({ children, loading, ...otherProps }) => {
+const ContactSection = ({ children, loading = true, ...otherProps }) => {
   return (
     <>
       <ContactContainer {...otherProps}>

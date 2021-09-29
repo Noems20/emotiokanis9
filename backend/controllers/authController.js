@@ -9,7 +9,7 @@ import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import Email from '../utils/email.js';
-import { validateLoginData } from '../utils/validators.js';
+import { validateLoginData, isEmpty, isEmail } from '../utils/validators.js';
 
 const signToken = (id) => {
   // return jwt.sign({ id:id }, process.env.JWT_SECRET, {
@@ -214,7 +214,23 @@ export const updatePassword = catchAsync(async (req, res, next) => {
 
 // --------------------- FORGOT PASSWORD -----------------------------------------
 export const forgotPassword = catchAsync(async (req, res, next) => {
-  // 1) Get user based on POSTed email
+  // 1) Check email
+  if (isEmpty(req.body.email)) {
+    return next(
+      new AppError('Please provide email!', 400, {
+        email: 'No puede estar vacio',
+      })
+    );
+  }
+  if (!isEmail(req.body.email)) {
+    return next(
+      new AppError('Please provide email!', 400, {
+        email: 'Debe ser un email valido',
+      })
+    );
+  }
+
+  // 2) Get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -225,24 +241,16 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 2) Generate the random reset token
+  // 3) Generate the random reset token
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  // 3) Send it to user's email
-  const resetUrl = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetUrl}.
-  \n If you did not forget your password, please ignore this email.`;
-
+  // 4) Send it to user's email
   try {
-    // await sendEmail({
-    //   email: user.email,
-    //   subject: 'Your password reset token (Valid for 10 min)',
-    //   message,
-    // });
+    const resetUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/users/resetPassword/${resetToken}`;
+    await new Email(user, resetUrl).sendPasswordReset();
   } catch (error) {
     console.log(error);
     user.passwordResetToken = undefined;
@@ -252,7 +260,10 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'There was an error sending the email. Try again later!',
-        500
+        500,
+        {
+          email: 'Ocurrio un error enviando el email',
+        }
       )
     );
   }

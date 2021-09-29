@@ -93,7 +93,7 @@ const UserSettings = () => {
             handleChange={handleChange}
             value={name}
             label='Nombre'
-            error={uiErrors.detailsChange.name}
+            error={uiErrors.errorsOne.name}
           />
           <FormInput
             name='email'
@@ -101,7 +101,7 @@ const UserSettings = () => {
             handleChange={handleChange}
             value={email}
             label='Email'
-            error={uiErrors.detailsChange.email}
+            error={uiErrors.errorsOne.email}
           />
           <ChangeImage>
             <UserImage src={userPhoto} />
@@ -120,7 +120,7 @@ const UserSettings = () => {
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            {loading.firstLoader ? '' : 'Guardar configuración'}
+            Guardar configuración
           </Button>
         </form>
       </Settings>
@@ -134,7 +134,7 @@ const UserSettings = () => {
             handleChange={handleChange}
             value={passwordCurrent}
             label='Contraseña actual'
-            error={uiErrors.passwordChange.passwordCurrent}
+            error={uiErrors.errorsTwo.passwordCurrent}
           />
           <FormInput
             name='password'
@@ -142,7 +142,7 @@ const UserSettings = () => {
             handleChange={handleChange}
             value={password}
             label='Nueva contraseña'
-            error={uiErrors.passwordChange.password}
+            error={uiErrors.errorsTwo.password}
           />
           <FormInput
             name='passwordConfirm'
@@ -150,7 +150,7 @@ const UserSettings = () => {
             handleChange={handleChange}
             value={passwordConfirm}
             label='Confirmar contraseña'
-            error={uiErrors.passwordChange.passwordConfirm}
+            error={uiErrors.errorsTwo.passwordConfirm}
           />
           <Button
             type='submit'
@@ -158,7 +158,7 @@ const UserSettings = () => {
             disabled={loading.secondLoader || loading.firstLoader}
             primary
           >
-            {loading.secondLoader ? '' : 'Cambiar contraseña'}
+            Cambiar contraseña
           </Button>
         </form>
       </Settings>

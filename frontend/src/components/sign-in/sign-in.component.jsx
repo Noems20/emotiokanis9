@@ -15,6 +15,7 @@ import {
   Message,
   Container,
   FormContainer,
+  ForgotPasswordLink,
   ButtonsContainer,
 } from './sign-in.styles';
 
@@ -54,7 +55,7 @@ const SignIn = () => {
     <Container>
       <SignInTitle>Ya tengo una cuenta</SignInTitle>
       <SignInSubtitle>Inicia sesión con tu email y contraseña.</SignInSubtitle>
-      {uiErrors.login.general && (
+      {uiErrors.errorsOne.general && (
         <Message
           title='Error'
           text='Email o contraseña incorrectos'
@@ -68,7 +69,7 @@ const SignIn = () => {
           handleChange={handleChange}
           value={email}
           label='Email'
-          error={uiErrors.login.email}
+          error={uiErrors.errorsOne.email}
         />
         <FormInput
           name='password'
@@ -76,21 +77,24 @@ const SignIn = () => {
           handleChange={handleChange}
           value={password}
           label='Contraseña'
-          error={uiErrors.login.password}
+          error={uiErrors.errorsOne.password}
         />
-        <ButtonsContainer loading={loading.firstLoader}>
+        <ButtonsContainer loading={loading.firstLoader ? 'true' : 'false'}>
           <CustomButton
             type='submit'
             loading={loading.firstLoader}
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            {loading.firstLoader ? '' : 'Iniciar Sesión'}
+            Iniciar Sesión
           </CustomButton>
           {/* <CustomButton type='button' isGoogleSignIn>
             Google
           </CustomButton> */}
         </ButtonsContainer>
+        <ForgotPasswordLink to='/restablecerContraseña'>
+          ¿Olvidaste tu contraseña?
+        </ForgotPasswordLink>
       </FormContainer>
     </Container>
   );

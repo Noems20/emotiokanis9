@@ -62,7 +62,7 @@ const SignUp = () => {
           handleChange={handleChange}
           value={name}
           label='Nombre'
-          error={uiErrors.register.name}
+          error={uiErrors.errorsTwo.name}
         />
         <FormInput
           name='email'
@@ -70,7 +70,7 @@ const SignUp = () => {
           handleChange={handleChange}
           value={email}
           label='Email'
-          error={uiErrors.register.email}
+          error={uiErrors.errorsTwo.email}
         />
         <FormInput
           name='password'
@@ -78,7 +78,7 @@ const SignUp = () => {
           handleChange={handleChange}
           value={password}
           label='Contraseña'
-          error={uiErrors.register.password}
+          error={uiErrors.errorsTwo.password}
         />
         <FormInput
           name='passwordConfirm'
@@ -86,16 +86,16 @@ const SignUp = () => {
           handleChange={handleChange}
           value={passwordConfirm}
           label='Confirmar contraseña'
-          error={uiErrors.register.passwordConfirm}
+          error={uiErrors.errorsTwo.passwordConfirm}
         />
-        <ButtonsContainer loading={loading.secondLoader}>
+        <ButtonsContainer loading={loading.secondLoader ? 'true' : 'false'}>
           <CustomButton
             type='submit'
             loading={loading.secondLoader}
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            {loading.secondLoader ? '' : 'Crear cuenta'}
+            Crear cuenta
           </CustomButton>
         </ButtonsContainer>
       </FormContainer>

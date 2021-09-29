@@ -267,3 +267,59 @@ export const forgotPassword = (email) => async (dispatch) => {
     });
   }
 };
+
+// ------------------------ RESET PASSWORD ---------------------------
+export const resetPassword =
+  (password, passwordConfirm, token) => async (dispatch) => {
+    try {
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: true },
+      });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.patch(
+        `/api/v1/users/resetPassword/${token}`,
+        {
+          password,
+          passwordConfirm,
+        },
+        config
+      );
+      batch(() => {
+        dispatch({
+          type: SET_UI_LOADING,
+          payload: { firstLoader: false },
+        });
+        dispatch({
+          type: CLEAR_UI_ERRORS,
+        });
+        dispatch({
+          type: SET_SUCCESS,
+          payload: true,
+        });
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      batch(() => {
+        dispatch({
+          type: SET_UI_LOADING,
+          payload: { firstLoader: false },
+        });
+        dispatch({
+          type: SET_UI_ERRORS,
+          payload: { errorsOne: error.response.data.uiErrors },
+        });
+        dispatch({
+          type: SET_SUCCESS,
+          payload: false,
+        });
+      });
+    }
+  };

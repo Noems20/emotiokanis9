@@ -247,9 +247,10 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 
   // 4) Send it to user's email
   try {
-    const resetUrl = `${req.protocol}://${req.get(
-      'host'
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    const resetUrl = `${req.protocol}://localhost:3000/restablecerContraseña/${resetToken}`;
+    // const resetUrl = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/v1/users/resetPassword/${resetToken}`;
     await new Email(user, resetUrl).sendPasswordReset();
   } catch (error) {
     console.log(error);
@@ -289,7 +290,12 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(new AppError('Token is invalid or has expired', 400));
+    return next(
+      new AppError('Token is invalid or has expired', 400, {
+        general:
+          'El token no es válido o ha caducado, por favor intenta de nuevo',
+      })
+    );
   }
 
   user.password = req.body.password;

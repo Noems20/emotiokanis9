@@ -19,7 +19,8 @@ import Contact from './pages/contact/contact.page';
 import Appointments from './pages/appointments/appointments.page';
 import Profile from './pages/profile/profile.page';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page';
-import ResetPasswordEmail from './pages/reset-password/reset-password-email.page';
+import ForgotPassword from './pages/forgot-password/forgot-password.page';
+import ResetPassword from './pages/reset-password/reset-password.page';
 import NotFound from './pages/NotFound/not-found.component';
 
 //  COMPONENTS
@@ -88,9 +89,16 @@ const App = () => {
               />
               <Route
                 exact
-                path='/restablecerContraseña'
+                path='/olvidarContraseña'
                 render={() =>
-                  user ? <Redirect to='/perfil' /> : <ResetPasswordEmail />
+                  user ? <Redirect to='/perfil' /> : <ForgotPassword />
+                }
+              />
+              <Route
+                exact
+                path='/restablecerContraseña/:token'
+                render={() =>
+                  user ? <Redirect to='/perfil' /> : <ResetPassword />
                 }
               />
               <Route path='/' component={NotFound} />

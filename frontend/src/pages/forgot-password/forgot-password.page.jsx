@@ -16,12 +16,12 @@ import {
   Container,
   Title,
   Text,
-} from './reset-password-email.styles';
+} from './forgot-password.styles';
 
 // ICONS
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 
-const ResetPasswordEmail = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
 
   const dispatch = useDispatch();
@@ -85,4 +85,4 @@ const ResetPasswordEmail = () => {
   );
 };
 
-export default ResetPasswordEmail;
+export default ForgotPassword;

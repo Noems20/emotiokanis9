@@ -92,7 +92,7 @@ const SignIn = () => {
             Google
           </CustomButton> */}
         </ButtonsContainer>
-        <ForgotPasswordLink to='/restablecerContraseña'>
+        <ForgotPasswordLink to='/olvidarContraseña'>
           ¿Olvidaste tu contraseña?
         </ForgotPasswordLink>
       </FormContainer>

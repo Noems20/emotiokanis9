@@ -96,7 +96,10 @@ const Footer = () => {
                 <FaFacebook />
               </FooterSocialLink>
               <FooterSocialLink
-                to={{ pathname: 'https://www.facebook.com/Emotiokanis9' }}
+                to={{
+                  pathname:
+                    'https://www.instagram.com/escuelacaninaemotiokanis9/',
+                }}
                 target='_blank'
               >
                 <FaInstagram />

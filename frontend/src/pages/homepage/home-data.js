@@ -23,7 +23,7 @@ export const homeObjTwo = {
   topLine: 'Agenda tu cita',
   headline: 'Agenda tu cita con uno de nuestros expertos',
   description:
-    'Crea tu cuenta o inicia sesión para poder agendar tu cita desde la comodidad de tu casa.',
+    'Crea tu cuenta o inicia sesión para poder agendar una cita desde la comodidad de tu casa.',
   buttonLabel: 'Iniciar sesión',
   decoration: false,
 };

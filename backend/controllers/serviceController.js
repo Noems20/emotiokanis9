@@ -3,6 +3,10 @@ import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import multer from 'multer';
 import sharp from 'sharp';
+import fs from 'fs';
+
+// HANDLER FACTORY
+import { getAll } from './handlerFactory.js';
 
 // ----------------- FILE UPLOAD ----------------
 // Image stores as a buffer
@@ -23,25 +27,33 @@ const multerFilter = (req, file, cb) => {
 
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-export const createServiceImage = upload.single('image');
+export const uploadImage = upload.single('image');
 
-// ----------------- RESIZE SERVICE IMAGE ----------------
+// ----------------- RESIZE CREATED SERVICE IMAGE ----------------
 export const resizeServiceImage = (req, res, next) => {
-  // As we saved image in memory filename doesn't exist but updateMe needs it
-  req.file.filename = `service-${req.doc.id}.jpeg`;
+  // As we saved image in memory filename doesn't exist but update needs it
+  if (req.file) {
+    req.file.filename = `service-${req.doc.id}.jpeg`;
 
-  sharp(req.file.buffer)
-    .resize(1920, 1200)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(`backend/public/img/services/${req.file.filename}`);
+    sharp(req.file.buffer)
+      .resize(1920, 1200)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`backend/public/img/services/${req.file.filename}`);
+  }
 
-  res.status(201).json({
+  let status = 201;
+  if (req.update === true) {
+    status = 200;
+  }
+
+  res.status(status).json({
     status: 'success',
-    service: req.doc,
+    data: req.doc,
   });
 };
 
+// ----------------- CREATE SERVICE -----------------------
 export const createService = catchAsync(async (req, res, next) => {
   if (!req.file)
     return next(
@@ -52,4 +64,47 @@ export const createService = catchAsync(async (req, res, next) => {
   const doc = await Service.create(req.body);
   req.doc = doc;
   next();
+});
+
+// ------------ GET ALL SERVICES -----------------------
+export const getAllServices = getAll(Service);
+
+// ------------ UPDATE SERVICE -----------------------
+export const updateService = catchAsync(async (req, res, next) => {
+  const { id: docID } = req.params;
+  // new: true -> Is for return the updated object and not the old
+  const doc = await Service.findByIdAndUpdate(docID, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!doc) {
+    return next(new AppError('No doc found with that ID', 404));
+  }
+
+  req.doc = doc;
+  req.update = true;
+  next();
+});
+
+// ------------ DELETE SERVICE -----------------------
+export const deleteService = catchAsync(async (req, res, next) => {
+  const { id: docID } = req.params;
+  const doc = await Service.findByIdAndDelete(docID);
+  const filename = `service-${docID}.jpeg`;
+
+  if (!doc) {
+    return next(new AppError('No document found with that ID', 404));
+  }
+
+  const path = `backend/public/img/services/${filename}`;
+
+  fs.unlink(path, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+
+  res.status(204).json({ status: 'success', data: null });
 });

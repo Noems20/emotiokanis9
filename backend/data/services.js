@@ -1,4 +1,4 @@
-export const servicesData = [
+const servicesData = [
   {
     _id: '61550fa00587faad839b2e24',
     name: 'Escuela Canina',
@@ -34,3 +34,5 @@ export const servicesData = [
     image: 'service-61550fe2f37980ad0c0d520c.jpg',
   },
 ];
+
+export default servicesData;

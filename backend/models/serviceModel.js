@@ -37,7 +37,7 @@ const serviceSchema = new mongoose.Schema({
 
 // --------------- ADD SERVICE IMAGE -----------------
 serviceSchema.pre('save', async function (next) {
-  let image = `service-${this.id}`;
+  let image = `service-${this.id}.jpg`;
   this.image = image;
   next();
 });

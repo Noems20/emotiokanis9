@@ -14,7 +14,7 @@ const multerFilter = (req, file, cb) => {
   } else {
     cb(
       new AppError('Not an image! Please upload only images.', 400, {
-        photo: 'Por favor selecciona una imagen',
+        image: 'Por favor selecciona una imagen',
       }),
       false
     );
@@ -23,28 +23,33 @@ const multerFilter = (req, file, cb) => {
 
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-export const createServiceImage = upload.single('photo');
+export const createServiceImage = upload.single('image');
 
-// ----------------- RESIZE USER PHOTO ----------------
-export const resizeUserPhoto = (req, res, next) => {
-  if (!req.file) return next();
-
+// ----------------- RESIZE SERVICE IMAGE ----------------
+export const resizeServiceImage = (req, res, next) => {
   // As we saved image in memory filename doesn't exist but updateMe needs it
-  req.file.filename = `service-${req.service.id}.jpeg`;
+  req.file.filename = `service-${req.doc.id}.jpeg`;
 
   sharp(req.file.buffer)
-    // .resize(500, 500)
+    .resize(1920, 1200)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
     .toFile(`backend/public/img/services/${req.file.filename}`);
 
-  next();
+  res.status(201).json({
+    status: 'success',
+    service: req.doc,
+  });
 };
 
 export const createService = catchAsync(async (req, res, next) => {
+  if (!req.file)
+    return next(
+      new AppError('A service image is required', 400, {
+        image: 'Una imagen del servicio es requerida',
+      })
+    );
   const doc = await Service.create(req.body);
-  res.status(201).json({
-    status: 'success',
-    service: doc,
-  });
+  req.doc = doc;
+  next();
 });

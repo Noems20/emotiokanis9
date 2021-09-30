@@ -30,11 +30,16 @@ const serviceSchema = new mongoose.Schema({
     required: [true, 'No puede estar vacío'],
     trim: true,
   },
-  //   image: {
-  //     type: String,
-  //     required: [true, 'No puede estar vacío'],
-  //     trim: true,
-  //   },
+  image: {
+    type: String,
+  },
+});
+
+// --------------- ADD SERVICE IMAGE -----------------
+serviceSchema.pre('save', async function (next) {
+  let image = `service-${this.id}`;
+  this.image = image;
+  next();
 });
 
 const Service = mongoose.model('Service', serviceSchema);

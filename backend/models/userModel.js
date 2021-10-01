@@ -3,7 +3,8 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
-// Validators run in: findByIdAndUpdate, create, save
+// Validators run in: findByIdAndUpdate(if specified), create, save
+// But validators using this. keyword only run on CREATE and SAVE
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -42,6 +43,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'No puede estar vacío'],
     validate: {
       // Only works with CREATE and SAVE
+      // Because this. only points to current doc on NEW document creation
       validator: function (el) {
         return el === this.password;
       },

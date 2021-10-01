@@ -33,11 +33,11 @@ export const uploadImage = upload.single('image');
 export const resizeServiceImage = (req, res, next) => {
   // As we saved image in memory filename doesn't exist but update needs it
   if (req.file) {
-    req.file.filename = `service-${req.doc.id}.jpeg`;
+    req.file.filename = `service-${req.doc.id}.jpg`;
 
     sharp(req.file.buffer)
       .resize(1920, 1200)
-      .toFormat('jpeg')
+      .toFormat('jpg')
       .jpeg({ quality: 90 })
       .toFile(`backend/public/img/services/${req.file.filename}`);
   }
@@ -91,7 +91,7 @@ export const updateService = catchAsync(async (req, res, next) => {
 export const deleteService = catchAsync(async (req, res, next) => {
   const { id: docID } = req.params;
   const doc = await Service.findByIdAndDelete(docID);
-  const filename = `service-${docID}.jpeg`;
+  const filename = `service-${docID}.jpg`;
 
   if (!doc) {
     return next(new AppError('No document found with that ID', 404));
@@ -99,12 +99,40 @@ export const deleteService = catchAsync(async (req, res, next) => {
 
   const path = `backend/public/img/services/${filename}`;
 
-  fs.unlink(path, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-  });
+  const deleteImage = () => {
+    fs.unlink(path, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  };
+
+  // Current date and time
+  let now = new Date();
+
+  // Time where we want to delete data (Takes the time of the current day)
+  let deleteHour = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    4,
+    0,
+    0,
+    0
+  );
+
+  // Milliseconds till that desired hour
+  let millisTill4 = deleteHour - now;
+
+  // If that hour already passed we select the same hour of the next day
+  if (millisTill4 < 0) {
+    deleteHour.setDate(deleteHour.getDate() + 1);
+    millisTill4 = deleteHour - now;
+  }
+
+  // Delete image at desired hour
+  setTimeout(deleteImage, millisTill4);
 
   res.status(204).json({ status: 'success', data: null });
 });

@@ -36,34 +36,19 @@ export const ServiceTitle = styled.h1`
 `;
 
 export const ContentContainer = styled.div`
+  margin: auto 10rem;
   grid-column: full-start / full-end;
 
   display: grid;
-  /* grid-gap: 4rem; */
-  grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
-  align-content: center;
-  align-items: start;
-
-  @media only screen and (max-width: 900px) {
-    grid-gap: 2rem;
-    margin: 3rem 0;
-  }
-  @media only screen and (max-width: 300px) {
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-  }
+  grid-template-columns: 0.5fr 0.5fr;
 `;
 
 export const ServiceDescription = styled.div`
-  margin-left: 10rem;
-  margin-right: 2rem;
   display: grid;
   grid-gap: 1.5rem;
-  justify-content: center;
-
-  @media only screen and (max-width: 900px) {
-    margin-right: 2rem;
-    margin-left: 2rem;
-  }
+  grid-auto-rows: min-content;
+  align-items: start;
+  justify-items: start;
 `;
 export const DescriptionTitle = styled.h1`
   font-family: ${tokens.fontPrimary};
@@ -73,24 +58,14 @@ export const DescriptionTitle = styled.h1`
 `;
 export const Description = styled.p`
   font-size: 2rem;
-
-  @media only screen and (max-width: 1572px) {
-    /* font-size: 2.5rem; */
-  }
 `;
 
 export const ServicePrice = styled.div`
-  text-align: center;
-  margin-right: 4rem;
-  margin-left: 2rem;
   display: grid;
   grid-gap: 1.5rem;
-  justify-content: center;
-
-  @media only screen and (max-width: 900px) {
-    margin-right: 2rem;
-    margin-left: 2rem;
-  }
+  grid-auto-rows: min-content;
+  align-items: start;
+  justify-items: center;
 `;
 export const PriceTitle = styled.h1`
   font-family: ${tokens.fontPrimary};

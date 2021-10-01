@@ -13,11 +13,15 @@ import {
   Button,
 } from './service.styles';
 
-const Service = ({ title, description, price, url }) => {
+const Service = ({ name, description, price, image }) => {
   return (
     <>
-      <ServiceHeading url={url}>
-        <ServiceTitle>{title}</ServiceTitle>
+      <ServiceHeading
+        url={
+          require(`../../../../backend/public/img/services/${image}`).default
+        }
+      >
+        <ServiceTitle>{name}</ServiceTitle>
       </ServiceHeading>
       <ContentContainer>
         <ServiceDescription>
@@ -26,7 +30,7 @@ const Service = ({ title, description, price, url }) => {
         </ServiceDescription>
         <ServicePrice>
           <PriceTitle>Precio</PriceTitle>
-          <Price>{price}</Price>
+          <Price>${price}</Price>
           <Button primary>Agendar cita</Button>
         </ServicePrice>
       </ContentContainer>

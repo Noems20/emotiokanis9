@@ -1,11 +1,28 @@
-import React from 'react';
-import { Grid } from './services.page.styles';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+// DATA
+// import { servicesData } from './services-data';
+
+// COMPONENTS
 import Service from '../../components/service/service.component';
 
-import { servicesData } from './services-data';
+// STYLES
+import { Grid } from './services.page.styles';
 
 const Services = () => {
+  const [servicesData, setServicesData] = useState([]);
+
+  const fetchData = async () => {
+    const res = await axios.get(`/api/v1/services`);
+    setServicesData(res.data.data);
+    console.log(res.data.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -28,8 +45,8 @@ const Services = () => {
         animate='visible'
         exit='exit'
       >
-        {servicesData.map(({ id, ...otherProps }) => (
-          <Service key={id} {...otherProps}></Service>
+        {servicesData.map(({ _id, ...otherProps }) => (
+          <Service key={_id} {...otherProps}></Service>
         ))}
       </Grid>
     </>

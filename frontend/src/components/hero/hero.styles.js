@@ -7,12 +7,12 @@ export const HeroContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 3rem;
-  height: 80rem;
+  height: 100vh;
   position: relative;
   margin-top: -8rem;
   z-index: 1;
 
-  :before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -26,6 +26,15 @@ export const HeroContainer = styled.div`
       ),
       linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 100%);
     z-index: 2;
+  }
+
+  @media only screen and (max-width: 992px) {
+    margin-top: 0;
+    height: calc(100vh - 5.7rem);
+  }
+
+  @media only screen and (max-width: 800px) {
+    height: calc(100vh - 5.5rem);
   }
 `;
 

@@ -116,6 +116,12 @@ export const SidebarAdminItems = styled(motion.div)`
         margin: 0 2rem !important;
         margin-right: 0 !important;
 
+        & p {
+          @media only screen and (max-width: 700px) {
+            display: block;
+          }
+        }
+
         &:hover {
           background-color: transparent;
         }

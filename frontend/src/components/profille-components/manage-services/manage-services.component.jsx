@@ -19,21 +19,19 @@ import {
   ImageInputLabel,
   ImageInput,
   Button,
-} from './settings.styles';
+} from './manage-services.styles';
 
-const UserSettings = () => {
-  const [credentials, setCredentials] = useState({
+const ManageServices = () => {
+  const [serviceData, setServiceData] = useState({
     name: '',
-    email: '',
-    passwordCurrent: '',
-    password: '',
-    passwordConfirm: '',
+    description: '',
+    priceLapse: '',
+    price: '',
   });
   const [userPhoto, setUserPhoto] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
 
-  const { email, name, passwordCurrent, password, passwordConfirm } =
-    credentials;
+  const { name, description, priceLapse, price } = serviceData;
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -53,14 +51,6 @@ const UserSettings = () => {
   };
 
   useEffect(() => {
-    setCredentials({
-      name: user.name,
-      email: user.email,
-      passwordCurrent: '',
-      password: '',
-      passwordConfirm: '',
-    });
-
     try {
       setUserPhoto(
         require(`../../../../../backend/public/img/users/${user.photo}`).default
@@ -72,23 +62,17 @@ const UserSettings = () => {
     return () => {
       dispatch(clearUiErrors());
     };
-  }, [setCredentials, user, dispatch]);
+  }, [user, dispatch]);
 
   const handleDetailsSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateMe(email, name, selectedFile));
     setSelectedFile('');
-  };
-
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault();
-    dispatch(updateMyPassword(passwordCurrent, password, passwordConfirm));
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setCredentials({ ...credentials, [name]: value });
+    setServiceData({ ...serviceData, [name]: value });
   };
 
   const handleFile = (e) => {
@@ -103,7 +87,7 @@ const UserSettings = () => {
       exit='hidden'
     >
       <Settings>
-        <Title>Configuración de cuenta</Title>
+        <Title>Crear servicio</Title>
         <form onSubmit={handleDetailsSubmit}>
           <FormInput
             name='name'
@@ -114,11 +98,27 @@ const UserSettings = () => {
             error={uiErrors.errorsOne.name}
           />
           <FormInput
-            name='email'
-            type='email'
+            name='description'
+            type='text'
             handleChange={handleChange}
-            value={email}
-            label='Email'
+            value={description}
+            label='Descripción'
+            error={uiErrors.errorsOne.name}
+          />
+          <FormInput
+            name='priceLapse'
+            type='text'
+            handleChange={handleChange}
+            value={priceLapse}
+            label='Lapso de precio'
+            error={uiErrors.errorsOne.name}
+          />
+          <FormInput
+            name='price'
+            type='text'
+            handleChange={handleChange}
+            value={price}
+            label='Precio'
             error={uiErrors.errorsOne.email}
           />
           <ChangeImage>
@@ -138,50 +138,13 @@ const UserSettings = () => {
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            Guardar configuración
+            Crear servicio
           </Button>
         </form>
       </Settings>
       <Line />
-      <Settings>
-        <Title>Cambiar contraseña</Title>
-        <form onSubmit={handlePasswordSubmit}>
-          <FormInput
-            name='passwordCurrent'
-            type='password'
-            handleChange={handleChange}
-            value={passwordCurrent}
-            label='Contraseña actual'
-            error={uiErrors.errorsTwo.passwordCurrent}
-          />
-          <FormInput
-            name='password'
-            type='password'
-            handleChange={handleChange}
-            value={password}
-            label='Nueva contraseña'
-            error={uiErrors.errorsTwo.password}
-          />
-          <FormInput
-            name='passwordConfirm'
-            type='password'
-            handleChange={handleChange}
-            value={passwordConfirm}
-            label='Confirmar contraseña'
-            error={uiErrors.errorsTwo.passwordConfirm}
-          />
-          <Button
-            type='submit'
-            loading={loading.secondLoader}
-            disabled={loading.secondLoader || loading.firstLoader}
-            primary
-          >
-            Cambiar contraseña
-          </Button>
-        </form>
-      </Settings>
     </SettingsContainer>
   );
 };
 
-export default UserSettings;
+export default ManageServices;

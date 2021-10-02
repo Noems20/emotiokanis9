@@ -8,6 +8,7 @@ import { checkUser } from '../../redux/user/userActions';
 // COMPONENTS
 import TabLoader from '../../components/loaders/tab-loader/tab-loader.component';
 import UserSettings from '../../components/profille-components/settings/settings.component';
+import ManageServices from '../../components/profille-components/manage-services/manage-services.component';
 
 // STYLES
 import {
@@ -63,6 +64,19 @@ const Profile = () => {
   const [tab, setTab] = useState('settings');
   const [open, setOpen] = useState(false);
 
+  // ----------------------------- RENDER TAB ----------------------
+  const renderSwitch = (tab) => {
+    switch (tab) {
+      case 'settings':
+        return <UserSettings />;
+      case 'manageServices':
+        return <ManageServices />;
+      default:
+        return <UserSettings />;
+    }
+  };
+
+  // ---------------------- REDUX AND EXTRA CONFIGURATION ------------
   const dispatch = useDispatch();
   const { user, userLoaded } = useSelector((state) => state.user);
 
@@ -122,8 +136,8 @@ const Profile = () => {
               </SideBarContent>
             </SideBarItem>
             <SideBarItem
-              onClick={() => setTab('makeAppointment')}
-              className={tab === 'makeAppointment' ? 'active' : ''}
+              onClick={() => setTab('billing')}
+              className={tab === 'billing' ? 'active' : ''}
             >
               <SideBarContent>
                 <IoWallet />
@@ -150,8 +164,8 @@ const Profile = () => {
                       exit='hidden'
                     >
                       <SideBarItem
-                        onClick={() => setTab('billing')}
-                        className={tab === 'billing' ? 'active' : ''}
+                        onClick={() => setTab('manageUsers')}
+                        className={tab === 'manageUsers' ? 'active' : ''}
                       >
                         <SideBarContent>
                           <IoPeople />
@@ -159,8 +173,8 @@ const Profile = () => {
                         </SideBarContent>
                       </SideBarItem>
                       <SideBarItem
-                        onClick={() => setTab('manageUsers')}
-                        className={tab === 'manageUsers' ? 'active' : ''}
+                        onClick={() => setTab('manageAwards')}
+                        className={tab === 'manageAwards' ? 'active' : ''}
                       >
                         <SideBarContent>
                           <BsAwardFill />
@@ -168,8 +182,8 @@ const Profile = () => {
                         </SideBarContent>
                       </SideBarItem>
                       <SideBarItem
-                        onClick={() => setTab('manageAwards')}
-                        className={tab === 'manageAwards' ? 'active' : ''}
+                        onClick={() => setTab('manageServices')}
+                        className={tab === 'manageServices' ? 'active' : ''}
                       >
                         <SideBarContent>
                           <IoStorefront />
@@ -194,7 +208,15 @@ const Profile = () => {
           </SideBarContainer>
         </SideBar>
         {/* -------------------- CONTENT ------------------- */}
-        <Content>{!userLoaded.tab ? <TabLoader /> : <UserSettings />}</Content>
+        <Content>
+          {!userLoaded.tab ? (
+            <TabLoader />
+          ) : (
+            <AnimatePresence exitBeforeEnter>
+              {renderSwitch(tab)}
+            </AnimatePresence>
+          )}
+        </Content>
       </Container>
     </Grid>
   );

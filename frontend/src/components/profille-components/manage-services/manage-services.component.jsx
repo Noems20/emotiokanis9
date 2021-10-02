@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { updateMe, updateMyPassword } from '../../../redux/user/userActions';
+import { createService } from '../../../redux/services/serviceActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
@@ -28,13 +28,12 @@ const ManageServices = () => {
     priceLapse: '',
     price: '',
   });
-  const [userPhoto, setUserPhoto] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
 
   const { name, description, priceLapse, price } = serviceData;
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
   const { uiErrors, loading } = useSelector((state) => state.ui);
 
   const containerVariants = {
@@ -51,22 +50,16 @@ const ManageServices = () => {
   };
 
   useEffect(() => {
-    try {
-      setUserPhoto(
-        require(`../../../../../backend/public/img/users/${user.photo}`).default
-      );
-    } catch {
-      setUserPhoto(require(`../../../public/img/users/default.jpg`).default);
-    }
+    // require(`../../../../../backend/public/img/services/${service.image}`).default
 
     return () => {
       dispatch(clearUiErrors());
     };
-  }, [user, dispatch]);
+  }, [dispatch]);
 
-  const handleDetailsSubmit = (e) => {
+  const handleServiceSubmit = (e) => {
     e.preventDefault();
-    setSelectedFile('');
+    dispatch(createService(name, description, priceLapse, price, selectedFile));
   };
 
   const handleChange = (event) => {
@@ -88,7 +81,7 @@ const ManageServices = () => {
     >
       <Settings>
         <Title>Crear servicio</Title>
-        <form onSubmit={handleDetailsSubmit}>
+        <form onSubmit={handleServiceSubmit}>
           <FormInput
             name='name'
             type='text'
@@ -103,7 +96,7 @@ const ManageServices = () => {
             handleChange={handleChange}
             value={description}
             label='Descripción'
-            error={uiErrors.errorsOne.name}
+            error={uiErrors.errorsOne.description}
           />
           <FormInput
             name='priceLapse'
@@ -111,7 +104,7 @@ const ManageServices = () => {
             handleChange={handleChange}
             value={priceLapse}
             label='Lapso de precio'
-            error={uiErrors.errorsOne.name}
+            error={uiErrors.errorsOne.priceLapse}
           />
           <FormInput
             name='price'
@@ -119,11 +112,18 @@ const ManageServices = () => {
             handleChange={handleChange}
             value={price}
             label='Precio'
-            error={uiErrors.errorsOne.email}
+            error={uiErrors.errorsOne.price}
           />
           <ChangeImage>
-            <UserImage src={userPhoto} />
-            <ImageInputLabel htmlFor='photo'>Cambiar foto</ImageInputLabel>
+            {/* <UserImage src={userPhoto} /> */}
+            <ImageInputLabel
+              htmlFor='photo'
+              error={uiErrors.errorsOne.image ? true : false}
+            >
+              {uiErrors.errorsOne.image
+                ? uiErrors.errorsOne.image
+                : 'Seleccionar foto de servicio'}
+            </ImageInputLabel>
             <ImageInput
               type='file'
               accept='image/*'

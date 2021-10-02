@@ -67,14 +67,15 @@ export const UserImage = styled.img`
 `;
 
 export const ImageInputLabel = styled.label`
-  color: var(--color-primary);
+  color: ${({ error }) => (error ? 'red' : 'var(--color-primary)')};
   font-size: 1.5rem;
   /* display: inline-block; */
   text-decoration: none;
   padding: 5px;
   background-color: transparent;
   border: 0px;
-  border-bottom: 1px solid var(--color-primary);
+  border-bottom: ${({ error }) =>
+    error ? '1px solid red' : '1px solid var(--color-primary)'};
   cursor: pointer;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
@@ -82,6 +83,7 @@ export const ImageInputLabel = styled.label`
   &:hover {
     color: white;
     background-color: var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
     -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
     -webkit-transform: translateY(-2px);

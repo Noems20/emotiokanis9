@@ -16,7 +16,6 @@ const Services = () => {
   const fetchData = async () => {
     const res = await axios.get(`/api/v1/services`);
     setServicesData(res.data.data);
-    console.log(res.data.data);
   };
 
   useEffect(() => {

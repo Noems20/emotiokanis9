@@ -9,11 +9,12 @@ import {
   Description,
   ServicePrice,
   PriceTitle,
+  PriceLapse,
   Price,
   Button,
 } from './service.styles';
 
-const Service = ({ name, description, price, image }) => {
+const Service = ({ name, description, priceLapse, price, image }) => {
   return (
     <>
       <ServiceHeading
@@ -30,6 +31,8 @@ const Service = ({ name, description, price, image }) => {
         </ServiceDescription>
         <ServicePrice>
           <PriceTitle>Precio</PriceTitle>
+          {priceLapse && <PriceLapse>{priceLapse}</PriceLapse>}
+
           <Price>${price}</Price>
           <Button primary>Agendar cita</Button>
         </ServicePrice>

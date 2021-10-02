@@ -87,6 +87,15 @@ export const PriceTitle = styled.h1`
   font-weight: 300;
   color: var(--color-primary);
 `;
+
+export const PriceLapse = styled.h1`
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
+  color: var(--color-grey-dark-3);
+
+  margin-top: -1rem;
+`;
+
 export const Price = styled.p`
   font-size: 4rem;
 `;

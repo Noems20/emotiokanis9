@@ -77,7 +77,6 @@ const UserSettings = () => {
   const handleDetailsSubmit = (e) => {
     e.preventDefault();
     dispatch(updateMe(email, name, selectedFile));
-    setSelectedFile('');
   };
 
   const handlePasswordSubmit = (e) => {
@@ -123,7 +122,14 @@ const UserSettings = () => {
           />
           <ChangeImage>
             <UserImage src={userPhoto} />
-            <ImageInputLabel htmlFor='photo'>Cambiar foto</ImageInputLabel>
+            <ImageInputLabel
+              htmlFor='photo'
+              error={uiErrors.errorsOne.photo ? true : false}
+            >
+              {uiErrors.errorsOne.photo
+                ? uiErrors.errorsOne.photo
+                : 'Seleccionar foto de servicio'}
+            </ImageInputLabel>
             <ImageInput
               type='file'
               accept='image/*'

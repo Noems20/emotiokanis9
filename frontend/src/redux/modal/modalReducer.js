@@ -1,4 +1,4 @@
-import { SET_MODAL } from './modal.types';
+import { SET_MODAL } from './modalTypes';
 
 const INITIAL_STATE = {
   modalType: null,

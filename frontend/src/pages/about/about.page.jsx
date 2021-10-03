@@ -10,7 +10,7 @@ import Modal from '../../components/modal/modal.component';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modal.actions';
+import { setModalType } from '../../redux/modal/modalActions';
 
 // STYLES
 import {

@@ -10,6 +10,7 @@ import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import FormInput from '../../form-input/form-input.component';
+import TextAreaInput from '../../text-area-input/text-area-input.component';
 import HandleService from '../../handle-service/handle-service.component';
 
 // STYLES
@@ -20,7 +21,7 @@ import {
   Title,
   Line,
   ChangeImage,
-  UserImage,
+  // UserImage,
   ImageInputLabel,
   ImageInput,
   Button,
@@ -97,13 +98,14 @@ const ManageServices = () => {
             label='Nombre'
             error={uiErrors.errorsOne.name}
           />
-          <FormInput
+          <TextAreaInput
             name='description'
             type='text'
             handleChange={handleChange}
             value={description}
             label='Descripción'
             error={uiErrors.errorsOne.description}
+            rows={1}
           />
           <FormInput
             name='priceLapse'
@@ -151,13 +153,13 @@ const ManageServices = () => {
       </Settings>
       <Line />
 
-      <ServicesSettings loading={loading.fetchLoader}>
+      <ServicesSettings loading={loading.fetchLoader ? 'true' : 'false'}>
         <Title>Administrar servicios</Title>
         {loading.fetchLoader ? (
           <Loader />
         ) : (
           servicesData.map(({ _id, ...otherProps }) => (
-            <HandleService key={_id} {...otherProps}></HandleService>
+            <HandleService key={_id} id={_id} {...otherProps}></HandleService>
           ))
         )}
       </ServicesSettings>

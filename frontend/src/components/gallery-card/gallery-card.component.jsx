@@ -4,7 +4,7 @@ import 'aos/dist/aos.css';
 
 // REDUX
 import { useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modal.actions';
+import { setModalType } from '../../redux/modal/modalActions';
 
 // STYLES
 import {

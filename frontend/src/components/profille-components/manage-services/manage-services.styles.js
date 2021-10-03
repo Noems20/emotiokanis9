@@ -60,23 +60,23 @@ export const ServicesSettings = styled(Settings)`
       justify-self: center;
     }
 
-    padding-bottom: ${({ loading }) => (loading ? '20rem' : '0')};
+    padding-bottom: ${({ loading }) => (loading === 'true' ? '20rem' : '0')};
   }
   @media only screen and (max-width: 900px) {
     padding: 0 10rem;
-    padding-bottom: ${({ loading }) => (loading ? '20rem' : '0')};
+    padding-bottom: ${({ loading }) => (loading === 'true' ? '20rem' : '0')};
   }
   @media only screen and (max-width: 700px) {
     padding: 0 8rem;
-    padding-bottom: ${({ loading }) => (loading ? '20rem' : '0')};
+    padding-bottom: ${({ loading }) => (loading === 'true' ? '20rem' : '0')};
   }
   @media only screen and (max-width: 600px) {
     padding: 0 5rem;
-    padding-bottom: ${({ loading }) => (loading ? '20rem' : '0')};
+    padding-bottom: ${({ loading }) => (loading === 'true' ? '20rem' : '0')};
   }
   @media only screen and (max-width: 400px) {
     padding: 0 3rem;
-    padding-bottom: ${({ loading }) => (loading ? '20rem' : '0')};
+    padding-bottom: ${({ loading }) => (loading === 'true' ? '20rem' : '0')};
   }
 `;
 

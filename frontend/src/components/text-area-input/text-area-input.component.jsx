@@ -2,21 +2,36 @@ import React from 'react';
 
 import {
   GroupContainer,
+  InputGroup,
   MagicBox,
   FormInputContainer,
   FormInputLabel,
+  ErrorText,
 } from './text-area-input.styles';
 
-const TextAreaInput = ({ handleChange, label, ...props }) => (
+const TextAreaInput = ({ handleChange, label, error, ...props }) => (
   <GroupContainer>
-    <MagicBox>
-      <FormInputContainer onChange={handleChange} {...props} />
-    </MagicBox>
+    <InputGroup>
+      <MagicBox
+        error={error ? true : false}
+        className={props.value.length ? 'active' : ''}
+      >
+        <FormInputContainer
+          error={error ? true : false}
+          onChange={handleChange}
+          {...props}
+        />
+      </MagicBox>
+    </InputGroup>
     {label ? (
-      <FormInputLabel className={props.value.length ? 'shrink' : ''}>
+      <FormInputLabel
+        error={error ? true : false}
+        className={props.value.length ? 'shrink' : ''}
+      >
         {label}
       </FormInputLabel>
     ) : null}
+    {error ? <ErrorText>{error}</ErrorText> : null}
   </GroupContainer>
 );
 

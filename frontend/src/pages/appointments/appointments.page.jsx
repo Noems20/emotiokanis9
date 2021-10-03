@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { setModalType } from '../../redux/modal/modalActions';
+import { checkUser } from '../../redux/user/userActions';
+
 // COMPONENTS
 import CreateAppointment from '../../components/create-appointment/create-appointment.component';
 import UserAppointmentsHistory from '../../components/user-appointments/user-appointments-history.component';
@@ -9,11 +14,6 @@ import FormInput from '../../components/form-input/form-input.component';
 import TextAreaInput from '../../components/text-area-input/text-area-input.component';
 import Modal from '../../components/modal/modal.component';
 import Alert from '../../components/alert/alert.component';
-
-// REDUX
-import { useSelector, useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modal.actions';
-import { checkUser } from '../../redux/user/userActions';
 
 // STYLES
 import {

@@ -1,12 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 // REDUX
 import { useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modal.actions';
+import { setModalType } from '../../redux/modal/modalActions';
 
 // STYLES
-import './modal.styles.scss';
+import { Backdrop } from './modal.styles';
 
 const Modal = ({ children }) => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ const Modal = ({ children }) => {
   };
 
   return (
-    <motion.div
+    <Backdrop
       className='backdrop'
       onClick={handleClick}
       initial={{ opacity: 0 }}
@@ -31,7 +30,7 @@ const Modal = ({ children }) => {
         animate={{ y: 0 }}
       /> */}
       {children}
-    </motion.div>
+    </Backdrop>
   );
 };
 

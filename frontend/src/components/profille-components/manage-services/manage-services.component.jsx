@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ import FormInput from '../../form-input/form-input.component';
 import {
   SettingsContainer,
   Settings,
+  ServicesSettings,
   Title,
   Line,
   ChangeImage,
@@ -20,8 +22,10 @@ import {
   ImageInput,
   Button,
 } from './manage-services.styles';
+import HandleService from '../../handle-service/handle-service.component';
 
 const ManageServices = () => {
+  const [servicesData, setServicesData] = useState([]);
   const [serviceData, setServiceData] = useState({
     name: '',
     description: '',
@@ -31,6 +35,11 @@ const ManageServices = () => {
   const [selectedFile, setSelectedFile] = useState('');
 
   const { name, description, priceLapse, price } = serviceData;
+
+  const fetchData = async () => {
+    const res = await axios.get(`/api/v1/services`);
+    setServicesData(res.data.data);
+  };
 
   const dispatch = useDispatch();
   // const { user } = useSelector((state) => state.user);
@@ -51,7 +60,7 @@ const ManageServices = () => {
 
   useEffect(() => {
     // require(`../../../../../backend/public/img/services/${service.image}`).default
-
+    fetchData();
     return () => {
       dispatch(clearUiErrors());
     };
@@ -143,6 +152,13 @@ const ManageServices = () => {
         </form>
       </Settings>
       <Line />
+
+      <ServicesSettings>
+        <Title>Administrar servicios</Title>
+        {servicesData.map(({ _id, ...otherProps }) => (
+          <HandleService key={_id} {...otherProps}></HandleService>
+        ))}
+      </ServicesSettings>
     </SettingsContainer>
   );
 };

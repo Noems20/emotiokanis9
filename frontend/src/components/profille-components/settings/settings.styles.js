@@ -7,7 +7,7 @@ import { TitleSm } from '../../general.styles';
 export const SettingsContainer = styled(motion.div)`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr min-content 1fr;
+  grid-template-rows: repeat(3, min-content);
 `;
 
 export const Line = styled.div`

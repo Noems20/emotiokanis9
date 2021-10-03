@@ -5,9 +5,11 @@ import CustomButton from '../../custom-button/custom-button.component';
 import { TitleSm } from '../../general.styles';
 
 export const SettingsContainer = styled(motion.div)`
+  overflow: auto;
+
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr min-content 1fr;
+  grid-template-rows: min-content min-content max-content;
 `;
 
 export const Line = styled.div`
@@ -30,6 +32,28 @@ export const Settings = styled.div`
     grid-gap: 4.5rem;
   }
 
+  @media only screen and (max-width: 900px) {
+    padding: 0 10rem;
+  }
+  @media only screen and (max-width: 700px) {
+    padding: 0 8rem;
+  }
+  @media only screen and (max-width: 600px) {
+    padding: 0 5rem;
+  }
+  @media only screen and (max-width: 400px) {
+    padding: 0 3rem;
+  }
+`;
+
+export const ServicesSettings = styled(Settings)`
+  padding: 0 8rem;
+
+  @media only screen and (max-width: 1200px) {
+    & h1 {
+      justify-self: center;
+    }
+  }
   @media only screen and (max-width: 900px) {
     padding: 0 10rem;
   }

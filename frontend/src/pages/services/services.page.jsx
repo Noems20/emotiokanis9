@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// DATA
-// import { servicesData } from './services-data';
-
 // COMPONENTS
 import Service from '../../components/service/service.component';
 

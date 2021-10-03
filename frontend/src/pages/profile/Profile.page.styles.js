@@ -17,7 +17,7 @@ export const Container = styled.div`
   grid-column: center-start / center-end;
   margin: 4rem 0;
   overflow: hidden;
-  min-height: calc(100vh - 8rem);
+  height: 107rem;
   border-radius: 3px;
   box-shadow: 0px 0px 8px 2px var(--color-grey-light-4);
   -webkit-box-shadow: 0px 0px 8px 2px var(--color-grey-light-4);
@@ -27,6 +27,8 @@ export const Container = styled.div`
   grid-template-columns: 0.42fr 1fr;
 
   @media only screen and (max-width: 1200px) {
+    height: auto;
+    min-height: calc(100vh - 8rem);
     margin-top: 0;
     grid-column: full-start / full-end;
     grid-template-rows: min-content 1fr;
@@ -54,6 +56,7 @@ export const SideBarText = styled(SidebarText)``;
 
 export const Content = styled.div`
   /* width: 100%; */
+  overflow: auto;
   margin: 7rem 0;
   position: relative;
 `;

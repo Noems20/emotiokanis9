@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import servicesReducer from './services/servicesReducer';
 import awardsReducer from './awards/awards.reducer';
 import modalReducer from './modal/modal.reducer';
 import userReducer from './user/userReducer';
@@ -16,6 +17,7 @@ import uiReducer from './ui/uiReducer';
 // }
 
 const rootReducer = combineReducers({
+  services: servicesReducer,
   awards: awardsReducer,
   modal: modalReducer,
   user: userReducer,

@@ -10,6 +10,7 @@ const initialState = {
   loading: {
     firstLoader: false,
     secondLoader: false,
+    fetchLoader: false,
   },
   uiErrors: {
     errorsOne: {},

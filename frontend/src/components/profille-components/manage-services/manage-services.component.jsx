@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { createService } from '../../../redux/services/serviceActions';
+import {
+  fetchServices,
+  createService,
+} from '../../../redux/services/servicesActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import FormInput from '../../form-input/form-input.component';
+import HandleService from '../../handle-service/handle-service.component';
 
 // STYLES
 import {
@@ -21,11 +24,10 @@ import {
   ImageInputLabel,
   ImageInput,
   Button,
+  Loader,
 } from './manage-services.styles';
-import HandleService from '../../handle-service/handle-service.component';
 
 const ManageServices = () => {
-  const [servicesData, setServicesData] = useState([]);
   const [serviceData, setServiceData] = useState({
     name: '',
     description: '',
@@ -36,13 +38,9 @@ const ManageServices = () => {
 
   const { name, description, priceLapse, price } = serviceData;
 
-  const fetchData = async () => {
-    const res = await axios.get(`/api/v1/services`);
-    setServicesData(res.data.data);
-  };
-
   const dispatch = useDispatch();
   // const { user } = useSelector((state) => state.user);
+  const { servicesData } = useSelector((state) => state.services);
   const { uiErrors, loading } = useSelector((state) => state.ui);
 
   const containerVariants = {
@@ -60,7 +58,7 @@ const ManageServices = () => {
 
   useEffect(() => {
     // require(`../../../../../backend/public/img/services/${service.image}`).default
-    fetchData();
+    dispatch(fetchServices());
     return () => {
       dispatch(clearUiErrors());
     };
@@ -153,11 +151,15 @@ const ManageServices = () => {
       </Settings>
       <Line />
 
-      <ServicesSettings>
+      <ServicesSettings loading={loading.fetchLoader}>
         <Title>Administrar servicios</Title>
-        {servicesData.map(({ _id, ...otherProps }) => (
-          <HandleService key={_id} {...otherProps}></HandleService>
-        ))}
+        {loading.fetchLoader ? (
+          <Loader />
+        ) : (
+          servicesData.map(({ _id, ...otherProps }) => (
+            <HandleService key={_id} {...otherProps}></HandleService>
+          ))
+        )}
       </ServicesSettings>
     </SettingsContainer>
   );

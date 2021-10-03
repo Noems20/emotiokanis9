@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+
+// REDUX
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchServices } from '../../redux/services/servicesActions';
 
 // COMPONENTS
 import Service from '../../components/service/service.component';
+import TabLoader from '../../components/loaders/tab-loader/tab-loader.component';
 
 // STYLES
 import { Grid } from './services.page.styles';
 
 const Services = () => {
-  const [servicesData, setServicesData] = useState([]);
-
-  const fetchData = async () => {
-    const res = await axios.get(`/api/v1/services`);
-    setServicesData(res.data.data);
-  };
+  const dispatch = useDispatch();
+  const { servicesData } = useSelector((state) => state.services);
+  const { loading } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    dispatch(fetchServices());
+  }, [dispatch]);
 
   const containerVariants = {
     hidden: {
@@ -40,10 +41,15 @@ const Services = () => {
         initial='hidden'
         animate='visible'
         exit='exit'
+        loading={loading.fetchLoader}
       >
-        {servicesData.map(({ _id, ...otherProps }) => (
-          <Service key={_id} {...otherProps}></Service>
-        ))}
+        {loading.fetchLoader ? (
+          <TabLoader />
+        ) : (
+          servicesData.map(({ _id, ...otherProps }) => (
+            <Service key={_id} {...otherProps}></Service>
+          ))
+        )}
       </Grid>
     </>
   );

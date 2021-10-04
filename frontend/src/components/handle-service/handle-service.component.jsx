@@ -34,6 +34,7 @@ import {
 } from './handle-service.styles';
 
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
+  const [serviceImage, setServiceImage] = useState('');
   const [serviceData, setServiceData] = useState({
     formName: name,
     formDescription: description,
@@ -50,10 +51,14 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const { uiErrors, loading } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    return function cleanup() {
-      dispatch(setModalType(null));
-    };
-  }, [dispatch]);
+    try {
+      setServiceImage(
+        require(`../../../../backend/public/img/services/${image}`).default
+      );
+    } catch {
+      setServiceImage(require(`../../public/img/users/default.jpg`).default);
+    }
+  }, [image]);
 
   const handleServiceSubmit = (e) => {
     e.preventDefault();
@@ -73,11 +78,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   return (
     <>
       <Container>
-        <ServiceHeading
-          url={
-            require(`../../../../backend/public/img/services/${image}`).default
-          }
-        >
+        <ServiceHeading url={serviceImage}>
           <ServiceTitle>{name}</ServiceTitle>
         </ServiceHeading>
         <ContentContainer>

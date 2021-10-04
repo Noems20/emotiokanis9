@@ -116,6 +116,16 @@ export const ImageInputLabel = styled.label`
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 
+  &.selected {
+    color: white;
+    background-color: var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
+    -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
+  }
+
   &:hover {
     color: white;
     background-color: var(--color-primary);

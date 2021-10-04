@@ -125,10 +125,13 @@ const UserSettings = () => {
             <ImageInputLabel
               htmlFor='photo'
               error={uiErrors.errorsOne.photo ? true : false}
+              className={selectedFile ? 'selected' : ''}
             >
               {uiErrors.errorsOne.photo
                 ? uiErrors.errorsOne.photo
-                : 'Seleccionar foto de servicio'}
+                : selectedFile
+                ? `${selectedFile.name}`
+                : 'Seleccionar foto de usuario'}
             </ImageInputLabel>
             <ImageInput
               type='file'

@@ -44,6 +44,8 @@ export const FormInputContainer = styled.textarea`
   border-bottom: ${({ error }) =>
     error ? `1px solid ${errorColor}` : `1px solid ${subColor}`};
 
+  resize: vertical;
+
   -webkit-text-fill-color: ${subColor};
 
   &:focus {

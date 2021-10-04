@@ -81,6 +81,7 @@ const Profile = () => {
   const { user, userLoaded } = useSelector((state) => state.user);
 
   useEffect(() => {
+    dispatch(checkUser());
     if (window.innerWidth <= 1200) {
       setOpen(false);
     } else {
@@ -99,16 +100,17 @@ const Profile = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-
-  useEffect(() => {
-    dispatch(checkUser());
-  }, [tab, dispatch]);
+  }, [dispatch]);
 
   const toggleOpen = () => {
     if (window.innerWidth <= 1200) {
       setOpen(!open);
     }
+  };
+
+  const handleTabChange = (tab) => {
+    dispatch(checkUser());
+    setTab(tab);
   };
 
   return (
@@ -118,7 +120,7 @@ const Profile = () => {
         <SideBar>
           <SideBarContainer>
             <SideBarItem
-              onClick={() => setTab('settings')}
+              onClick={() => handleTabChange('settings')}
               className={tab === 'settings' ? 'active' : ''}
             >
               <SideBarContent>
@@ -127,7 +129,7 @@ const Profile = () => {
               </SideBarContent>
             </SideBarItem>
             <SideBarItem
-              onClick={() => setTab('pets')}
+              onClick={() => handleTabChange('pets')}
               className={tab === 'pets' ? 'active' : ''}
             >
               <SideBarContent>
@@ -136,7 +138,7 @@ const Profile = () => {
               </SideBarContent>
             </SideBarItem>
             <SideBarItem
-              onClick={() => setTab('billing')}
+              onClick={() => handleTabChange('billing')}
               className={tab === 'billing' ? 'active' : ''}
             >
               <SideBarContent>
@@ -164,7 +166,7 @@ const Profile = () => {
                       exit='hidden'
                     >
                       <SideBarItem
-                        onClick={() => setTab('manageUsers')}
+                        onClick={() => handleTabChange('manageUsers')}
                         className={tab === 'manageUsers' ? 'active' : ''}
                       >
                         <SideBarContent>
@@ -173,7 +175,7 @@ const Profile = () => {
                         </SideBarContent>
                       </SideBarItem>
                       <SideBarItem
-                        onClick={() => setTab('manageAwards')}
+                        onClick={() => handleTabChange('manageAwards')}
                         className={tab === 'manageAwards' ? 'active' : ''}
                       >
                         <SideBarContent>
@@ -182,7 +184,7 @@ const Profile = () => {
                         </SideBarContent>
                       </SideBarItem>
                       <SideBarItem
-                        onClick={() => setTab('manageServices')}
+                        onClick={() => handleTabChange('manageServices')}
                         className={tab === 'manageServices' ? 'active' : ''}
                       >
                         <SideBarContent>
@@ -192,7 +194,7 @@ const Profile = () => {
                       </SideBarItem>
 
                       <SideBarItem
-                        onClick={() => setTab('manageAppointments')}
+                        onClick={() => handleTabChange('manageAppointments')}
                         className={tab === 'manageAppointments' ? 'active' : ''}
                       >
                         <SideBarContent>

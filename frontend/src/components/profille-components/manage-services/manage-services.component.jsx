@@ -6,6 +6,7 @@ import {
   fetchServices,
   createService,
 } from '../../../redux/services/servicesActions';
+import { setModalType } from '../../../redux/modal/modalActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
@@ -61,6 +62,7 @@ const ManageServices = () => {
     // require(`../../../../../backend/public/img/services/${service.image}`).default
     dispatch(fetchServices());
     return () => {
+      dispatch(setModalType(null));
       dispatch(clearUiErrors());
     };
   }, [dispatch]);
@@ -128,9 +130,12 @@ const ManageServices = () => {
             <ImageInputLabel
               htmlFor='photo'
               error={uiErrors.errorsOne.image ? true : false}
+              className={selectedFile ? 'selected' : ''}
             >
               {uiErrors.errorsOne.image
                 ? uiErrors.errorsOne.image
+                : selectedFile
+                ? `${selectedFile.name}`
                 : 'Seleccionar foto de servicio'}
             </ImageInputLabel>
             <ImageInput

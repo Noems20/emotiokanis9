@@ -9,9 +9,8 @@ import {
   Button,
 } from './contact.page.styles';
 import ContactSection from '../../components/contact-section/contact-section.component';
-import FormInput from '../../components/form-input/form-input.component';
-import TextAreaInput from '../../components/text-area-input/text-area-input.component';
-// import GoogleMap from '../../components/map/map.component';
+import TextInput from '../../components/form-inputs/text-input/text-input.component';
+import TextAreaInput from '../../components/form-inputs/textarea-input/textarea-input.component';
 
 const Contact = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -65,23 +64,23 @@ const Contact = () => {
           <Title>¿Tienes dudas?</Title>
         </Heading>
         <ContactSection>
-          <FormInput
+          <TextInput
             name='displayName'
             type='text'
             handleChange={handleChange}
             value={displayName}
             label='Nombre'
             required
-          />
-          <FormInput
+          />{' '}
+          <TextInput
             name='lastname'
             type='text'
             handleChange={handleChange}
             value={lastname}
             label='Apellidos'
             required
-          />
-          <FormInput
+          />{' '}
+          <TextInput
             name='email'
             type='email'
             handleChange={handleChange}

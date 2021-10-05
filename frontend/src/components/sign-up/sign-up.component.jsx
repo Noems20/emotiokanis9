@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from '../../redux/user/userActions';
 
 // COMPONENTS
-import FormInput from '../form-input/form-input.component';
+import TextInput from '../form-inputs/text-input/text-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 // STYLES
@@ -56,31 +56,31 @@ const SignUp = () => {
       <SignUpTitle>No tengo una cuenta</SignUpTitle>
       <SignUpSubtitle>Registrate con tu email y contraseña.</SignUpSubtitle>
       <FormContainer onSubmit={handleSubmit}>
-        <FormInput
+        <TextInput
           name='name'
           type='text'
           handleChange={handleChange}
           value={name}
           label='Nombre'
           error={uiErrors.errorsTwo.name}
-        />
-        <FormInput
+        />{' '}
+        <TextInput
           name='email'
           type='email'
           handleChange={handleChange}
           value={email}
           label='Email'
           error={uiErrors.errorsTwo.email}
-        />
-        <FormInput
+        />{' '}
+        <TextInput
           name='password'
           type='password'
           handleChange={handleChange}
           value={password}
           label='Contraseña'
           error={uiErrors.errorsTwo.password}
-        />
-        <FormInput
+        />{' '}
+        <TextInput
           name='passwordConfirm'
           type='password'
           handleChange={handleChange}

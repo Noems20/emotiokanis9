@@ -6,7 +6,7 @@ import { forgotPassword } from '../../redux/user/userActions';
 import { clearUiErrors, clearSuccess } from '../../redux/ui/uiActions';
 
 // COMPONENTS
-import FormInput from '../../components/form-input/form-input.component';
+import TextInput from '../../components/form-inputs/text-input/text-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 // STYLES
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
               Escribe la dirección de correo electrónico asociado a tu cuenta de
               EmotioKanis9.
             </Text>
-            <FormInput
+            <TextInput
               name='email'
               type='text'
               handleChange={handleChange}

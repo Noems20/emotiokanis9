@@ -6,7 +6,7 @@ import { updateMe, updateMyPassword } from '../../../redux/user/userActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
-import FormInput from '../../form-input/form-input.component';
+import TextInput from '../../form-inputs/text-input/text-input.component';
 
 // STYLES
 import {
@@ -104,7 +104,7 @@ const UserSettings = () => {
       <Settings>
         <Title>Configuración de cuenta</Title>
         <form onSubmit={handleDetailsSubmit}>
-          <FormInput
+          <TextInput
             name='name'
             type='text'
             handleChange={handleChange}
@@ -112,7 +112,7 @@ const UserSettings = () => {
             label='Nombre'
             error={uiErrors.errorsOne.name}
           />
-          <FormInput
+          <TextInput
             name='email'
             type='email'
             handleChange={handleChange}
@@ -125,7 +125,9 @@ const UserSettings = () => {
             <ImageInputLabel
               htmlFor='photo'
               error={uiErrors.errorsOne.photo ? true : false}
-              className={selectedFile ? 'selected' : ''}
+              className={
+                selectedFile ? !uiErrors.errorsOne.photo && 'selected' : ''
+              }
             >
               {uiErrors.errorsOne.photo
                 ? uiErrors.errorsOne.photo
@@ -155,23 +157,23 @@ const UserSettings = () => {
       <Settings>
         <Title>Cambiar contraseña</Title>
         <form onSubmit={handlePasswordSubmit}>
-          <FormInput
+          <TextInput
             name='passwordCurrent'
             type='password'
             handleChange={handleChange}
             value={passwordCurrent}
             label='Contraseña actual'
             error={uiErrors.errorsTwo.passwordCurrent}
-          />
-          <FormInput
+          />{' '}
+          <TextInput
             name='password'
             type='password'
             handleChange={handleChange}
             value={password}
             label='Nueva contraseña'
             error={uiErrors.errorsTwo.password}
-          />
-          <FormInput
+          />{' '}
+          <TextInput
             name='passwordConfirm'
             type='password'
             handleChange={handleChange}

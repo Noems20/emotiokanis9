@@ -10,8 +10,9 @@ import { setModalType } from '../../../redux/modal/modalActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
-import FormInput from '../../form-input/form-input.component';
-import TextAreaInput from '../../text-area-input/text-area-input.component';
+import TextInput from '../../form-inputs/text-input/text-input.component';
+import TextAreaInput from '../../form-inputs/textarea-input/textarea-input.component';
+import FileInput from '../../form-inputs/file-input/file-input.component';
 import HandleService from '../../handle-service/handle-service.component';
 
 // STYLES
@@ -21,10 +22,7 @@ import {
   ServicesSettings,
   Title,
   Line,
-  ChangeImage,
   // UserImage,
-  ImageInputLabel,
-  ImageInput,
   Button,
   Loader,
 } from './manage-services.styles';
@@ -92,7 +90,7 @@ const ManageServices = () => {
       <Settings>
         <Title>Crear servicio</Title>
         <form onSubmit={handleServiceSubmit}>
-          <FormInput
+          <TextInput
             name='name'
             type='text'
             handleChange={handleChange}
@@ -109,7 +107,7 @@ const ManageServices = () => {
             error={uiErrors.errorsOne.description}
             rows={1}
           />
-          <FormInput
+          <TextInput
             name='priceLapse'
             type='text'
             handleChange={handleChange}
@@ -117,7 +115,7 @@ const ManageServices = () => {
             label='Lapso de precio'
             error={uiErrors.errorsOne.priceLapse}
           />
-          <FormInput
+          <TextInput
             name='price'
             type='text'
             handleChange={handleChange}
@@ -125,27 +123,20 @@ const ManageServices = () => {
             label='Precio'
             error={uiErrors.errorsOne.price}
           />
-          <ChangeImage>
-            {/* <UserImage src={userPhoto} /> */}
-            <ImageInputLabel
-              htmlFor='photo'
-              error={uiErrors.errorsOne.image ? true : false}
-              className={selectedFile ? 'selected' : ''}
-            >
-              {uiErrors.errorsOne.image
-                ? uiErrors.errorsOne.image
-                : selectedFile
-                ? `${selectedFile.name}`
-                : 'Seleccionar foto de servicio'}
-            </ImageInputLabel>
-            <ImageInput
-              type='file'
-              accept='image/*'
-              // name='photo'
-              id='photo'
-              onChange={handleFile}
-            />
-          </ChangeImage>
+          <FileInput
+            id='image'
+            error={uiErrors.errorsOne.image ? true : false}
+            selected={
+              selectedFile ? !uiErrors.errorsOne.image && 'selected' : ''
+            }
+            onChange={handleFile}
+          >
+            {uiErrors.errorsOne.image
+              ? uiErrors.errorsOne.image
+              : selectedFile
+              ? `${selectedFile.name}`
+              : 'Seleccionar foto de servicio'}
+          </FileInput>
           <Button
             type='submit'
             loading={loading.firstLoader}

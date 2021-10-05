@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import tokens from '../../tokens';
+import tokens from '../../../tokens';
 
 const subColor = 'grey';
 // const mainColor = 'black';

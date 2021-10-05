@@ -10,8 +10,8 @@ import { checkUser } from '../../redux/user/userActions';
 import CreateAppointment from '../../components/create-appointment/create-appointment.component';
 import UserAppointmentsHistory from '../../components/user-appointments/user-appointments-history.component';
 import ContactSection from '../../components/contact-section/contact-section.component';
-import FormInput from '../../components/form-input/form-input.component';
-import TextAreaInput from '../../components/text-area-input/text-area-input.component';
+import TextInput from '../../components/form-inputs/text-input/text-input.component';
+import TextAreaInput from '../../components/form-inputs/textarea-input/textarea-input.component';
 import Modal from '../../components/modal/modal.component';
 import Alert from '../../components/alert/alert.component';
 
@@ -73,7 +73,7 @@ const Appointments = () => {
             exit={{ x: '100vw' }}
             transition={{ transition: { ease: 'easeInOut' } }}
           >
-            <FormInput
+            <TextInput
               name='subject'
               type='text'
               handleChange={handleChange}

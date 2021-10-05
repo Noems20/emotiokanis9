@@ -3,9 +3,6 @@ import React from 'react';
 import { MdLocationOn, MdPhoneInTalk, MdMail } from 'react-icons/md';
 import { FaFacebook } from 'react-icons/fa';
 
-// import FormInput from '../form-input/form-input.component';
-// import TextAreaInput from '../text-area-input/text-area-input.component';
-
 import {
   ContactContainer,
   ContactInfoContainer,

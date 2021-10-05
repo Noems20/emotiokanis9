@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // COMPONENTS
-import FormInput from '../form-input/form-input.component';
+import TextInput from '../form-inputs/text-input/text-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 // REDUX
@@ -63,15 +63,15 @@ const SignIn = () => {
         />
       )}
       <FormContainer onSubmit={handleSubmit}>
-        <FormInput
+        <TextInput
           name='email'
           type='text'
           handleChange={handleChange}
           value={email}
           label='Email'
           error={uiErrors.errorsOne.email}
-        />
-        <FormInput
+        />{' '}
+        <TextInput
           name='password'
           type='password'
           handleChange={handleChange}

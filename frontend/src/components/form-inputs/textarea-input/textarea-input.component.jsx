@@ -7,7 +7,7 @@ import {
   FormInputContainer,
   FormInputLabel,
   ErrorText,
-} from './text-area-input.styles';
+} from './textarea-input.styles';
 
 const TextAreaInput = ({ handleChange, label, error, ...props }) => (
   <GroupContainer>

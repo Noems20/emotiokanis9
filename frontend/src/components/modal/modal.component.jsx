@@ -7,12 +7,13 @@ import { setModalType } from '../../redux/modal/modalActions';
 // STYLES
 import { Backdrop } from './modal.styles';
 
-const Modal = ({ children }) => {
+const Modal = ({ children, handleClose }) => {
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
     if (e.target.classList.contains('backdrop')) {
       dispatch(setModalType(null));
+      handleClose();
     }
   };
 

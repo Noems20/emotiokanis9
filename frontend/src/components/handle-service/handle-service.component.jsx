@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
+import { clearUiErrors } from '../../redux/ui/uiActions';
 import { setModalType } from '../../redux/modal/modalActions';
+import {
+  deleteService,
+  updateService,
+} from '../../redux/services/servicesActions';
 
 // COMPONENTS
 import Modal from '../modal/modal.component';
-import FormInput from '../form-input/form-input.component';
-import TextAreaInput from '../text-area-input/text-area-input.component';
+import TextInput from '../form-inputs/text-input/text-input.component';
+import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
+import FileInput from '../form-inputs/file-input/file-input.component';
 
 // STYLES
 import {
@@ -28,9 +34,7 @@ import {
   // Form styles
   FormContainer,
   Title,
-  ChangeImage,
-  ImageInputLabel,
-  ImageInput,
+  UpdateServiceButton,
 } from './handle-service.styles';
 
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
@@ -60,9 +64,37 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
     }
   }, [image]);
 
+  const handleOpen = () => {
+    dispatch(clearUiErrors());
+    dispatch(setModalType(`serviceUpdateForm-${id}`));
+  };
+
+  const handleClose = () => {
+    dispatch(clearUiErrors());
+    setServiceData({
+      formName: name,
+      formDescription: description,
+      formPriceLapse: priceLapse ? priceLapse : '',
+      formPrice: price,
+    });
+  };
+
   const handleServiceSubmit = (e) => {
     e.preventDefault();
-    // dispatch(createService(formName, formDescription, formPriceLapse, formPrice, selectedFile));
+    dispatch(
+      updateService(
+        id,
+        formName,
+        formDescription,
+        formPriceLapse,
+        formPrice,
+        selectedFile
+      )
+    );
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteService(id));
   };
 
   const handleChange = (event) => {
@@ -75,6 +107,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
     setSelectedFile(e.target.files[0]);
   };
 
+  // console.log(selectedFile);
   return (
     <>
       <Container>
@@ -92,15 +125,10 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
 
             <Price>${price}</Price>
             <ButtonsContainer>
-              <Button
-                primary
-                onClick={() =>
-                  dispatch(setModalType(`serviceUpdateForm-${id}`))
-                }
-              >
+              <Button primary onClick={handleOpen}>
                 Editar servicio
               </Button>
-              <Button primary danger={true}>
+              <Button primary danger={true} onClick={handleDelete}>
                 Eliminar servicio
               </Button>
             </ButtonsContainer>
@@ -109,11 +137,11 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
       </Container>
 
       {modalType === `serviceUpdateForm-${id}` && (
-        <Modal>
+        <Modal handleClose={handleClose}>
           <FormContainer initial={{ y: '-100vh' }} animate={{ y: 0 }}>
             <Title>Actualizar servicio</Title>
             <form onSubmit={handleServiceSubmit}>
-              <FormInput
+              <TextInput
                 name='formName'
                 type='text'
                 handleChange={handleChange}
@@ -130,7 +158,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
                 error={uiErrors.errorsOne.description}
                 rows={3}
               />
-              <FormInput
+              <TextInput
                 name='formPriceLapse'
                 type='text'
                 handleChange={handleChange}
@@ -138,7 +166,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
                 label='Lapso de precio'
                 error={uiErrors.errorsOne.priceLapse}
               />
-              <FormInput
+              <TextInput
                 name='formPrice'
                 type='text'
                 handleChange={handleChange}
@@ -146,31 +174,28 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
                 label='Precio'
                 error={uiErrors.errorsOne.price}
               />
-              <ChangeImage>
-                <ImageInputLabel
-                  htmlFor='photo'
-                  error={uiErrors.errorsOne.image ? true : false}
-                >
-                  {uiErrors.errorsOne.image
-                    ? uiErrors.errorsOne.image
-                    : 'Seleccionar foto de servicio'}
-                </ImageInputLabel>
-                <ImageInput
-                  type='file'
-                  accept='image/*'
-                  // name='photo'
-                  id='photo'
-                  onChange={handleFile}
-                />
-              </ChangeImage>
-              <Button
+              <FileInput
+                id='serviceImage'
+                error={uiErrors.errorsOne.image ? true : false}
+                selected={
+                  selectedFile ? !uiErrors.errorsOne.image && 'selected' : ''
+                }
+                onChange={handleFile}
+              >
+                {uiErrors.errorsOne.image
+                  ? uiErrors.errorsOne.image
+                  : selectedFile
+                  ? `${selectedFile.name}`
+                  : 'Seleccionar foto de servicio'}
+              </FileInput>
+              <UpdateServiceButton
                 type='submit'
-                loading={loading.firstLoader}
+                loading={loading.secondLoader}
                 disabled={loading.firstLoader || loading.secondLoader}
                 primary
               >
                 Actualizar servicio
-              </Button>
+              </UpdateServiceButton>
             </form>
           </FormContainer>
         </Modal>

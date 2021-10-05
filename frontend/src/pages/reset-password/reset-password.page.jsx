@@ -3,11 +3,10 @@ import { useParams } from 'react-router';
 
 // REDUX
 import { useDispatch, useSelector, batch } from 'react-redux';
-// import { forgotPassword } from '../../redux/user/userActions';
 import { clearUiErrors, clearSuccess } from '../../redux/ui/uiActions';
 
 // COMPONENTS
-import FormInput from '../../components/form-input/form-input.component';
+import TextInput from '../../components/form-inputs/text-input/text-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 // STYLES
@@ -78,15 +77,15 @@ const ResetPassword = () => {
             <Text>
               Escribe la nueva contraseña para tu cuenta de EmotioKanis9.
             </Text>
-            <FormInput
+            <TextInput
               name='password'
               type='password'
               handleChange={handleChange}
               value={password}
               label='Contraseña'
               error={uiErrors.errorsOne.password}
-            />
-            <FormInput
+            />{' '}
+            <TextInput
               name='passwordConfirm'
               type='password'
               handleChange={handleChange}

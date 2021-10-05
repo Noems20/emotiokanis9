@@ -1,2 +1,4 @@
 export const SET_SERVICES = 'SET_SERVICES';
 export const ADD_SERVICE = 'ADD_SERVICE';
+export const UPDATE_SERVICE = 'UPDATE_SERVICE';
+export const DELETE_SERVICE = 'DELETE_SERVICE';

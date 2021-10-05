@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 
 // COMPONENTS
-import FormInput from '../form-input/form-input.component';
-import TextAreaInput from '../text-area-input/text-area-input.component';
+import TextInput from '../form-inputs/text-input/text-input.component';
+import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
 
 // STYLES
@@ -74,7 +74,7 @@ const CreateAppointment = ({ loading, className }) => {
             <>
               <Title>Agendar cita</Title>
               <FormContainer>
-                <FormInput
+                <TextInput
                   name='subject'
                   type='text'
                   handleChange={handleChange}
@@ -82,7 +82,7 @@ const CreateAppointment = ({ loading, className }) => {
                   label='Asunto'
                   required
                 />
-                <FormInput
+                <TextInput
                   name='date'
                   type='datetime-local'
                   handleChange={handleChange}

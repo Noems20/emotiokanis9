@@ -1,5 +1,10 @@
-import { SET_SERVICES, ADD_SERVICE } from './servicesTypes';
-import { addService } from './servicesUtils';
+import {
+  SET_SERVICES,
+  ADD_SERVICE,
+  UPDATE_SERVICE,
+  DELETE_SERVICE,
+} from './servicesTypes';
+import { addService, updateService, deleteService } from './servicesUtils';
 
 const initialState = {
   servicesData: [],
@@ -15,6 +20,16 @@ const servicesReducer = (state = initialState, action) => {
       return {
         ...state,
         servicesData: addService(action.payload, state.servicesData),
+      };
+    case UPDATE_SERVICE:
+      return {
+        ...state,
+        servicesData: updateService(action.payload, state.servicesData),
+      };
+    case DELETE_SERVICE:
+      return {
+        ...state,
+        servicesData: deleteService(action.payload, state.servicesData),
       };
 
     default:

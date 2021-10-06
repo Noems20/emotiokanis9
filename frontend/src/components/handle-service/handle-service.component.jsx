@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { clearUiErrors } from '../../redux/ui/uiActions';
+import { clearSuccess, clearUiErrors } from '../../redux/ui/uiActions';
 import { setModalType } from '../../redux/modal/modalActions';
 import {
   deleteService,
@@ -37,10 +37,9 @@ import {
   UpdateServiceButton,
 } from './handle-service.styles';
 
-import defaultImage from '../../public/img/users/default.jpg';
-
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
-  const [serviceImage, setServiceImage] = useState('');
+  const imageSrc = `/img/services/${image}`;
+  const [imageHash, setImageHash] = useState(Date.now());
   const [serviceData, setServiceData] = useState({
     formName: name,
     formDescription: description,
@@ -54,17 +53,14 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
 
   const dispatch = useDispatch();
   const { modalType } = useSelector((state) => state.modal);
-  const { uiErrors, loading } = useSelector((state) => state.ui);
+  const { uiErrors, loading, success } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    try {
-      setServiceImage(
-        require(`../../../../backend/public/img/services/${image}`).default
-      );
-    } catch {
-      setServiceImage(defaultImage);
+    if (success === true && selectedFile) {
+      setImageHash(Date.now());
+      dispatch(clearSuccess());
     }
-  }, [image]);
+  }, [success, selectedFile, dispatch]);
 
   const handleOpen = () => {
     dispatch(clearUiErrors());
@@ -79,6 +75,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
       formPriceLapse: priceLapse ? priceLapse : '',
       formPrice: price,
     });
+    setSelectedFile('');
   };
 
   const handleServiceSubmit = (e) => {
@@ -113,7 +110,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   return (
     <>
       <Container>
-        <ServiceHeading url={serviceImage}>
+        <ServiceHeading url={`${imageSrc}?${imageHash}`}>
           <ServiceTitle>{name}</ServiceTitle>
         </ServiceHeading>
         <ContentContainer>

@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchServices } from '../../redux/services/servicesActions';
+import {
+  fetchServices,
+  clearServices,
+} from '../../redux/services/servicesActions';
 
 // COMPONENTS
 import Service from '../../components/service/service.component';
@@ -18,6 +21,10 @@ const Services = () => {
 
   useEffect(() => {
     dispatch(fetchServices());
+
+    return () => {
+      dispatch(clearServices());
+    };
   }, [dispatch]);
 
   const containerVariants = {

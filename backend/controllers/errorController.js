@@ -64,9 +64,9 @@ const sendErrorDev = (err, req, res, uiErrors) => {
     });
   }
 
-  if (!(req.originalUrl === '/perfil')) {
-    console.error('ERROR', err);
-  }
+  // if (!(req.originalUrl === '/perfil')) {
+  // console.error('ERROR', err);
+  // }
 };
 
 const sendErrorProd = (err, req, res) => {
@@ -100,9 +100,7 @@ const sendErrorProd = (err, req, res) => {
   //Programming or other unknown error don't leak error details
   // 1) Log error
 
-  if (!(req.originalUrl === '/perfil')) {
-    console.error('ERROR', err);
-  }
+  console.error('ERROR', err);
 
   // 2) Send generate message
   // return res.status(err.statusCode).render('error', {

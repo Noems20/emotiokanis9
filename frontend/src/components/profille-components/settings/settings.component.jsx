@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { updateMe, updateMyPassword } from '../../../redux/user/userActions';
-import { clearUiErrors } from '../../../redux/ui/uiActions';
+import { clearUiErrors, clearSuccess } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import TextInput from '../../form-inputs/text-input/text-input.component';
@@ -22,6 +22,7 @@ import {
 } from './settings.styles';
 
 const UserSettings = () => {
+  // ---------------------- VARIABLES, CONSTANTS -------------------
   const [credentials, setCredentials] = useState({
     name: '',
     email: '',
@@ -29,7 +30,7 @@ const UserSettings = () => {
     password: '',
     passwordConfirm: '',
   });
-  const [userPhoto, setUserPhoto] = useState('');
+  const [imageHash, setImageHash] = useState(Date.now());
   const [selectedFile, setSelectedFile] = useState('');
 
   const { email, name, passwordCurrent, password, passwordConfirm } =
@@ -37,7 +38,9 @@ const UserSettings = () => {
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { uiErrors, loading } = useSelector((state) => state.ui);
+  const { uiErrors, loading, success } = useSelector((state) => state.ui);
+  const userImageSrc = `/img/users/${user.photo}`;
+  // console.log(userImageSrc);
 
   const containerVariants = {
     hidden: {
@@ -51,7 +54,7 @@ const UserSettings = () => {
       },
     },
   };
-
+  // -------------------------- USE EFFECTS --------------------
   useEffect(() => {
     setCredentials({
       name: user.name,
@@ -61,19 +64,19 @@ const UserSettings = () => {
       passwordConfirm: '',
     });
 
-    try {
-      setUserPhoto(
-        require(`../../../../../backend/public/img/users/${user.photo}`).default
-      );
-    } catch {
-      setUserPhoto(require(`../../../public/img/users/default.jpg`).default);
-    }
-
     return () => {
       dispatch(clearUiErrors());
     };
   }, [setCredentials, user, dispatch]);
 
+  useEffect(() => {
+    if (success === true && selectedFile) {
+      setImageHash(Date.now());
+      dispatch(clearSuccess());
+    }
+  }, [success, selectedFile, dispatch]);
+
+  // -------------------------- HANDLERS --------------------
   const handleDetailsSubmit = (e) => {
     e.preventDefault();
     dispatch(updateMe(email, name, selectedFile));
@@ -121,7 +124,7 @@ const UserSettings = () => {
             error={uiErrors.errorsOne.email}
           />
           <ChangeImage>
-            <UserImage src={userPhoto} />
+            <UserImage src={`${userImageSrc}?${imageHash}`} />
             <ImageInputLabel
               htmlFor='photo'
               error={uiErrors.errorsOne.photo ? true : false}
@@ -164,7 +167,7 @@ const UserSettings = () => {
             value={passwordCurrent}
             label='Contraseña actual'
             error={uiErrors.errorsTwo.passwordCurrent}
-          />{' '}
+          />
           <TextInput
             name='password'
             type='password'
@@ -172,7 +175,7 @@ const UserSettings = () => {
             value={password}
             label='Nueva contraseña'
             error={uiErrors.errorsTwo.password}
-          />{' '}
+          />
           <TextInput
             name='passwordConfirm'
             type='password'

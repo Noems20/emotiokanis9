@@ -1,5 +1,6 @@
 import {
   SET_SERVICES,
+  CLEAR_SERVICES,
   ADD_SERVICE,
   UPDATE_SERVICE,
   DELETE_SERVICE,
@@ -16,6 +17,8 @@ const servicesReducer = (state = initialState, action) => {
         ...state,
         servicesData: action.payload,
       };
+    case CLEAR_SERVICES:
+      return initialState;
     case ADD_SERVICE:
       return {
         ...state,

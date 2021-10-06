@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 import cookieParser from 'cookie-parser';
 
 // SECURITY
@@ -20,6 +22,12 @@ import serviceRouter from './routes/serviceRoutes.js';
 dotenv.config();
 
 const app = express();
+
+// Serving static files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ---------------------------- MIDDLEWARES ---------------------------
 const limiter = rateLimit({

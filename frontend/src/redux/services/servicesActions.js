@@ -1,7 +1,13 @@
 import axios from 'axios';
-import { SET_UI_ERRORS, SET_UI_LOADING, CLEAR_UI_ERRORS } from '../ui/uiTypes';
+import {
+  SET_UI_ERRORS,
+  SET_UI_LOADING,
+  CLEAR_UI_ERRORS,
+  SET_SUCCESS,
+} from '../ui/uiTypes';
 import {
   SET_SERVICES,
+  CLEAR_SERVICES,
   ADD_SERVICE,
   UPDATE_SERVICE,
   DELETE_SERVICE,
@@ -31,6 +37,13 @@ export const fetchServices = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+// ---------------------------- CREATE SERVICE ----------------------------
+export const clearServices = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_SERVICES,
+  });
 };
 
 // ---------------------------- CREATE SERVICE ----------------------------
@@ -105,6 +118,10 @@ export const updateService =
         type: SET_UI_LOADING,
         payload: { secondLoader: true },
       });
+      dispatch({
+        type: SET_SUCCESS,
+        payload: false,
+      });
 
       const form = new FormData();
 
@@ -132,6 +149,10 @@ export const updateService =
         dispatch({
           type: UPDATE_SERVICE,
           payload: data.data,
+        });
+        dispatch({
+          type: SET_SUCCESS,
+          payload: true,
         });
         dispatch({
           type: SET_UI_LOADING,

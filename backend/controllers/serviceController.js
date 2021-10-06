@@ -108,31 +108,33 @@ export const deleteService = catchAsync(async (req, res, next) => {
     });
   };
 
-  // Current date and time
-  let now = new Date();
+  // // Current date and time
+  // let now = new Date();
 
-  // Time where we want to delete data (Takes the time of the current day)
-  let deleteHour = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-    4,
-    0,
-    0,
-    0
-  );
+  // // Time where we want to delete data (Takes the time of the current day)
+  // let deleteHour = new Date(
+  //   now.getFullYear(),
+  //   now.getMonth(),
+  //   now.getDate(),
+  //   4,
+  //   0,
+  //   0,
+  //   0
+  // );
 
-  // Milliseconds till that desired hour
-  let millisTill4 = deleteHour - now;
+  // // Milliseconds till that desired hour
+  // let millisTill4 = deleteHour - now;
 
-  // If that hour already passed we select the same hour of the next day
-  if (millisTill4 < 0) {
-    deleteHour.setDate(deleteHour.getDate() + 1);
-    millisTill4 = deleteHour - now;
-  }
+  // // If that hour already passed we select the same hour of the next day
+  // if (millisTill4 < 0) {
+  //   deleteHour.setDate(deleteHour.getDate() + 1);
+  //   millisTill4 = deleteHour - now;
+  // }
 
-  // Delete image at desired hour
-  setTimeout(deleteImage, millisTill4);
+  // // Delete image at desired hour
+  // setTimeout(deleteImage, millisTill4);
+
+  deleteImage();
 
   res.status(204).json({ status: 'success', data: null });
 });

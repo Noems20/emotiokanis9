@@ -17,11 +17,7 @@ import {
 const Service = ({ name, description, priceLapse, price, image }) => {
   return (
     <>
-      <ServiceHeading
-        url={
-          require(`../../../../backend/public/img/services/${image}`).default
-        }
-      >
+      <ServiceHeading url={`/img/services/${image}`}>
         <ServiceTitle>{name}</ServiceTitle>
       </ServiceHeading>
       <ContentContainer>

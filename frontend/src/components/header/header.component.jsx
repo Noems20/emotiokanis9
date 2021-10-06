@@ -40,22 +40,11 @@ const Header = ({ history }) => {
   const [clicked, setClicked] = useState(false);
   const [scrollNav, setScrollNav] = useState();
   const [image, setImage] = useState();
-  const [userPhoto, setUserPhoto] = useState('');
 
-  const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { user, userLoaded } = userData;
+  const { user, userLoaded } = useSelector((state) => state.user);
 
   useEffect(() => {
-    // ------------------ CHECK USER IMAGE ------
-    try {
-      setUserPhoto(
-        require(`../../../../backend/public/img/users/${user.photo}`).default
-      );
-    } catch {
-      setUserPhoto(require(`../../public/img/users/default.jpg`).default);
-    }
-
     // ------------------ DETECTAR PAGINA PARA FONDO TRANSPARENTE ------
     let listener = undefined;
     let currentLocation = history.location.pathname;
@@ -87,7 +76,7 @@ const Header = ({ history }) => {
     return function cleanup() {
       setOpen(false);
     };
-  }, [history, user]);
+  }, [history]);
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -151,7 +140,11 @@ const Header = ({ history }) => {
                     scrollnav={scrollNav ? 1 : 0}
                     onClick={() => setOpen(!open)}
                   >
-                    {scrollNav && <UserImage src={userPhoto} />}
+                    {scrollNav && (
+                      <UserImage
+                        src={`/img/users/${user.photo}?${Date.now()}`}
+                      />
+                    )}
                     {user.name.split(' ')[0]}
                     <DropDown open={open}>
                       <DropDownItem

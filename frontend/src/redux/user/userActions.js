@@ -129,7 +129,10 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
       type: SET_UI_LOADING,
       payload: { firstLoader: true },
     });
-
+    dispatch({
+      type: SET_SUCCESS,
+      payload: false,
+    });
     const form = new FormData();
 
     form.append('email', email);
@@ -146,15 +149,19 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
 
     batch(() => {
       dispatch({
+        type: SET_SUCCESS,
+        payload: true,
+      });
+      dispatch({
+        type: SET_USER,
+        payload: data.user,
+      });
+      dispatch({
         type: SET_UI_LOADING,
         payload: { firstLoader: false },
       });
       dispatch({
         type: CLEAR_UI_ERRORS,
-      });
-      dispatch({
-        type: SET_USER,
-        payload: data.user,
       });
     });
   } catch (error) {

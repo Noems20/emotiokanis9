@@ -4,18 +4,14 @@ import { PageGrid } from '../../components/general.styles';
 
 export const Grid = styled(PageGrid)`
   overflow-x: hidden;
-  grid-template-rows:
-    calc(100vh - 8rem) max-content calc(100vh - 8rem)
-    max-content;
+  grid-auto-rows: calc(100vh - 8rem) max-content;
 
-  @media only screen and (max-width: 800px) {
-    grid-template-rows:
-      calc(100vh - 5.5rem) max-content calc(100vh - 5.5rem)
-      max-content;
+  @media only screen and (max-width: 1200px) {
+    grid-auto-rows: calc(100vh - 5.7rem) max-content;
   }
-  /* @media only screen and (max-width: 600px) {
-    grid-template-rows: calc(100vh - 5.5rem) max-content 100vh max-content 100vh max-content;
-  } */
+  @media only screen and (max-width: 800px) {
+    grid-auto-rows: calc(100vh - 5.5rem) max-content;
+  }
 `;
 
 export const SectionHeading = styled.div`

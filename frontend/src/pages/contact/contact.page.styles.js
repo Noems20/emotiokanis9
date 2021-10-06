@@ -7,7 +7,7 @@ import img from './images/img1.jpg';
 export const Grid = styled(PageGrid)`
   grid-template-rows: repeat(2, calc(100vh - 8rem)) max-content;
 
-  @media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 1200px) {
     grid-template-rows: calc(100vh - 5.7rem) max-content max-content;
   }
 

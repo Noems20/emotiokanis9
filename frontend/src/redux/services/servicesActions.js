@@ -56,7 +56,20 @@ export const createService =
         },
       };
 
-      const { data } = await axios.post('/api/v1/services', form, config);
+      const { data } = await axios.post(
+        '/api/v1/services',
+        form,
+        // {
+        //   onUploadProgress: (progressEvent) => {
+        //     console.log(
+        //       'Progress: ' +
+        //         Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+        //         '%'
+        //     );
+        //   },
+        // },
+        config
+      );
 
       batch(() => {
         dispatch({

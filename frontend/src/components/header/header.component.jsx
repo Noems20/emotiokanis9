@@ -26,7 +26,7 @@ import {
 
 import { DropDownItem } from '../dropdown/dropdown.styles';
 
-import logoB from './images/logoB.svg';
+import logoB from './images/logo.svg';
 import logo from './images/logo.svg';
 
 // ICONS

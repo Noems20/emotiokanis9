@@ -37,6 +37,8 @@ import {
   UpdateServiceButton,
 } from './handle-service.styles';
 
+import defaultImage from '../../public/img/users/default.jpg';
+
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const [serviceImage, setServiceImage] = useState('');
   const [serviceData, setServiceData] = useState({
@@ -60,7 +62,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
         require(`../../../../backend/public/img/services/${image}`).default
       );
     } catch {
-      setServiceImage(require(`../../public/img/users/default.jpg`).default);
+      setServiceImage(defaultImage);
     }
   }, [image]);
 

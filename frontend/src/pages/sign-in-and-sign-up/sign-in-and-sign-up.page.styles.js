@@ -4,6 +4,10 @@ import { PageGrid } from '../../components/general.styles';
 export const Grid = styled(PageGrid)`
   grid-template-rows: calc(100vh - 8rem);
 
+  @media only screen and (max-width: 1200px) {
+    grid-template-rows: calc(100vh - 5.7rem);
+  }
+
   @media only screen and (max-width: 1024px) {
     grid-template-rows: max-content;
   }

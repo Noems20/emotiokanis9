@@ -41,7 +41,7 @@ const Services = () => {
         initial='hidden'
         animate='visible'
         exit='exit'
-        loading={loading.fetchLoader}
+        loading={loading.fetchLoader ? 1 : 0}
       >
         {loading.fetchLoader ? (
           <TabLoader />

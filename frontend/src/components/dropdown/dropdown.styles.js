@@ -61,7 +61,7 @@ export const DropDownItem = styled.div`
   & * {
     text-decoration: none;
     color: #333;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     cursor: pointer;
   }
 

@@ -7,7 +7,7 @@ export const MobileIcon = styled.div`
   visibility: hidden;
   position: absolute;
 
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     position: static;
     visibility: visible;
     display: inline-block;
@@ -37,10 +37,11 @@ export const HeaderNav = styled.nav`
 
   z-index: 11;
 
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     height: 5.7rem;
     transition: all 0.8s ease;
     background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 `;
 
@@ -58,11 +59,11 @@ export const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
 
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 1200px) {
       padding: 0 3rem;
     }
   }
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     margin: 0 0rem;
 
     justify-content: space-between;
@@ -72,7 +73,7 @@ export const HeaderContainer = styled.div`
 `;
 
 const clickedNavMenu = css`
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     height: 45rem;
     background: #fff;
     visibility: visible;
@@ -100,7 +101,7 @@ const clickedNavMenu = css`
   }
 `;
 const notClickedNavMenu = css`
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -177,8 +178,8 @@ export const UserImage = styled.img`
 export const HeaderLink = styled.div`
   font-family: ${tokens.fontPrimary};
   color: var(--color-primary);
-  text-transform: uppercase;
-  font-size: 2.2rem;
+  /* text-transform: uppercase; */
+  font-size: 2.5rem;
   font-weight: 400;
   text-decoration: none;
   width: 100%;
@@ -193,9 +194,9 @@ export const HeaderLink = styled.div`
     color: #333;
   }
 
-  @media screen and (min-width: 992px) {
-    font-size: 1.8rem;
-    color: ${({ scrollnav }) => (scrollnav ? '#333' : '#fff')};
+  @media screen and (min-width: 1200px) {
+    font-size: ${({ scrollnav }) => (scrollnav ? '2.3rem' : '2.5rem')};
+    color: ${({ scrollnav }) => (scrollnav ? '#333' : 'rgba(0,0,0,0.5)')};
     text-align: center;
 
     display: ${({ scrollnav }) => (scrollnav ? 'flex' : 'inline')};
@@ -203,25 +204,31 @@ export const HeaderLink = styled.div`
     align-items: center;
 
     padding: 0 2rem;
-    &:hover,
-    &.is-active {
+
+    &:hover {
       background-color: ${({ scrollnav }) =>
         scrollnav ? 'var(--color-grey-light-1)' : 'none'};
       color: ${({ scrollnav }) =>
-        scrollnav ? 'var(--color-primary)' : '#fff'};
-    }
-    &:after {
-      display: block;
-      content: '';
-      border-bottom: solid 3px #fff;
-      transform: scaleX(0);
-      transition: transform 250ms ease-in-out;
+        scrollnav ? 'var(--color-primary)' : 'var(--color-grey-dark-1)'};
     }
 
-    &:hover:after,
+    &.is-active {
+      background-color: ${({ scrollnav }) =>
+        scrollnav ? 'var(--color-grey-light-1)' : 'none'};
+      color: var(--color-primary);
+    }
+    /* &:after {
+      display: block;
+      content: '';
+      border-bottom: solid 3px #333;
+      transform: scaleX(0);
+      transition: transform 250ms ease-in-out;
+    } */
+
+    /* &:hover:after,
     &.is-active {
       transform: scaleX(1);
-    }
+    } */
   }
 `;
 
@@ -243,19 +250,19 @@ export const SessionBtn = styled(NavLink)`
     background-color: var(--color-primary-light);
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1200px) {
     font-size: 1.8rem;
     margin-left: 1.2rem;
     width: 100%;
     padding: 0.8rem 2rem;
     color: #fff;
     background: ${({ scrollnav }) =>
-      scrollnav ? '#333' : 'var(--color-primary-light)'};
+      scrollnav ? '#333' : 'var(--color-primary)'};
     &:hover {
       background-color: ${({ scrollnav }) =>
-        scrollnav ? 'var(--color-primary)' : '#fff'};
-      color: ${({ scrollnav }) =>
-        scrollnav ? '#fff' : 'var(--color-primary-light)'};
+        scrollnav ? 'var(--color-primary)' : 'var(--color-primary-dark)'};
+      /* color: ${({ scrollnav }) =>
+        scrollnav ? '#fff' : 'var(--color-primary-light)'}; */
       transition: all 0.2s ease-in-out;
     }
   }
@@ -280,7 +287,7 @@ export const CloseSessionBtn = styled.button`
     background-color: var(--color-primary-light);
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1200px) {
     font-size: 1.8rem;
     margin-left: 1.2rem;
     width: 100%;
@@ -300,7 +307,7 @@ export const CloseSessionBtn = styled.button`
 
 export const HeaderLogoLink = styled(Link)`
   margin-right: auto;
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     display: none;
     visibility: hidden;
   }
@@ -311,7 +318,7 @@ export const HeaderLogo = styled.img`
   height: ${({ scrollnav }) => (scrollnav ? '90%' : '13rem')};
   transition: all 0.15s ease-in-out;
 
-  @media screen and (max-width: 992px) {
+  @media screen and (max-width: 1200px) {
     display: none;
     visibility: hidden;
   }
@@ -324,7 +331,7 @@ export const HeaderLetterLogo = styled(Link)`
   font-size: 4rem;
   color: var(--color-primary);
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: 1200px) {
     display: none;
     visibility: hidden;
   }

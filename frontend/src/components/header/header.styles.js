@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import tokens from '../../tokens';
 
 export const MobileIcon = styled.div`
@@ -74,7 +74,7 @@ export const HeaderContainer = styled.div`
 
 const clickedNavMenu = css`
   @media screen and (max-width: 1200px) {
-    height: 45rem;
+    height: 39rem;
     background: #fff;
     visibility: visible;
     opacity: 1;
@@ -135,13 +135,13 @@ const notClickedNavMenu = css`
 
     100% {
       opacity: 1;
-      height: 45rem;
+      height: 39rem;
     }
   }
   @keyframes fadeOut {
     0% {
       opacity: 1;
-      height: 45rem;
+      height: 39rem;
     }
 
     100% {
@@ -178,20 +178,23 @@ export const UserImage = styled.img`
 export const HeaderLink = styled.div`
   font-family: ${tokens.fontPrimary};
   color: var(--color-primary);
-  /* text-transform: uppercase; */
   font-size: 2.5rem;
   font-weight: 400;
   text-decoration: none;
   width: 100%;
   transition: all 0.15s ease-in-out;
 
-  /* display: flex;
-  align-self: stretch;
-  align-items: center; */
-
   &:hover,
   &.is-active {
     color: #333;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @media screen and (min-width: 1200px) {
@@ -217,22 +220,10 @@ export const HeaderLink = styled.div`
         scrollnav ? 'var(--color-grey-light-1)' : 'none'};
       color: var(--color-primary);
     }
-    /* &:after {
-      display: block;
-      content: '';
-      border-bottom: solid 3px #333;
-      transform: scaleX(0);
-      transition: transform 250ms ease-in-out;
-    } */
-
-    /* &:hover:after,
-    &.is-active {
-      transform: scaleX(1);
-    } */
   }
 `;
 
-export const SessionBtn = styled(NavLink)`
+export const SessionBtn = styled.div`
   font-family: ${tokens.fontPrimary};
   text-decoration: none;
   color: #fff;

@@ -65,7 +65,7 @@ const sendErrorDev = (err, req, res, uiErrors) => {
   }
 
   // if (!(req.originalUrl === '/perfil')) {
-  // console.error('ERROR', err);
+  console.error('ERROR', err);
   // }
 };
 

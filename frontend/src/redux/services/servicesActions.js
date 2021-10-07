@@ -39,7 +39,7 @@ export const fetchServices = () => async (dispatch) => {
   }
 };
 
-// ---------------------------- CREATE SERVICE ----------------------------
+// ---------------------------- CLEAR SERVICES ----------------------------
 export const clearServices = () => async (dispatch) => {
   dispatch({
     type: CLEAR_SERVICES,

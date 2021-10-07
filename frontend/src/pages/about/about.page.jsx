@@ -25,20 +25,13 @@ import {
 import logo from './images/logo.svg';
 
 const About = () => {
+  //----------------------------- STATE AND VARIABLES -----------------------
   const [selectedImg, setSelectedImg] = useState(null);
 
   const dispatch = useDispatch();
   const modal = useSelector((state) => state.modal);
   const awards = useSelector((state) => state.awards);
   const { modalType } = modal;
-
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-
-    return function cleanup() {
-      dispatch(setModalType(null));
-    };
-  }, [dispatch]);
 
   const breakpoints = {
     default: 3,
@@ -60,6 +53,19 @@ const About = () => {
       opacity: 0,
     },
   };
+
+  //------------------------------- USE EFFECT ------------------------
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+
+    return function cleanup() {
+      dispatch(setModalType(null));
+    };
+  }, [dispatch]);
+
+  //--------------------------------- HANDLERS --------------------------
+
+  const handleClose = () => {};
 
   return (
     <>
@@ -109,7 +115,7 @@ const About = () => {
         </Gallery>
       </Grid>
       {modalType && (
-        <Modal>
+        <Modal handleClose={handleClose}>
           <motion.img
             src={selectedImg}
             alt='Imagen agrandada'

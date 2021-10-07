@@ -50,6 +50,7 @@ export const Items = styled.div`
 export const DropDownItem = styled.div`
   padding: 1rem 2rem;
   border-radius: var(--border-radius);
+  text-decoration: none;
   cursor: pointer;
 
   display: grid;
@@ -63,6 +64,14 @@ export const DropDownItem = styled.div`
     color: #333;
     font-size: 1.8rem;
     cursor: pointer;
+  }
+
+  &.is-active {
+    background-color: #f9f9f9;
+
+    & * {
+      color: var(--color-primary);
+    }
   }
 
   &:hover {

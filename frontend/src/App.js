@@ -30,7 +30,6 @@ import FullScreenLoader from './components/loaders/full-screen-loader/full-scree
 
 import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 import BackToTop from './components/scroll-to-top/back-to-top.component';
-// import ProtectedRoute from './components/protectedRoute';
 
 import './App.scss';
 import { AnimatePresence } from 'framer-motion';

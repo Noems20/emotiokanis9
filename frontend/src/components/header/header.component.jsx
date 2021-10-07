@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { HeaderItems } from './header.items';
 
@@ -35,17 +35,45 @@ import { FiLogOut } from 'react-icons/fi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 
+function useOutsideAlerter(ref, closer) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        // alert('You clicked outside of me!');
+        closer(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref, closer]);
+}
+
 const Header = ({ history }) => {
+  // ----------------------- STATE AND VARIABLES ----------------
+  const dropdownRef = useRef(null);
+  const headerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
+  useOutsideAlerter(dropdownRef, setOpen, 'dropdown');
+  useOutsideAlerter(headerRef, setClicked, 'header');
+  const [showDropdown, setShowDropdown] = useState(true);
   const [scrollNav, setScrollNav] = useState();
   const [image, setImage] = useState();
 
   const dispatch = useDispatch();
   const { user, userLoaded } = useSelector((state) => state.user);
 
+  // ----------------------------- USE EFFECTS --------------------------
   useEffect(() => {
-    // ------------------ DETECTAR PAGINA PARA FONDO TRANSPARENTE ------
+    // ------ DETECT PAGE FOR TRANSPARENT BACKGROUND ------
     let listener = undefined;
     let currentLocation = history.location.pathname;
     // console.log(currentLocation);
@@ -78,6 +106,28 @@ const Header = ({ history }) => {
     };
   }, [history]);
 
+  useEffect(() => {
+    // -------- CHECK SCREEN WIDTH -------
+    if (window.innerWidth <= 1200) {
+      setShowDropdown(false);
+    } else {
+      setShowDropdown(true);
+    }
+    function handleResize() {
+      if (window.innerWidth > 1200) {
+        setShowDropdown(true);
+      } else {
+        setShowDropdown(false);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // ----------------------------- HANDLERS --------------------------
   const handleClick = () => {
     setClicked(!clicked);
   };
@@ -95,14 +145,17 @@ const Header = ({ history }) => {
 
   return (
     <HeaderNav scrollnav={scrollNav ? 1 : 0}>
-      <HeaderContainer>
+      <HeaderContainer ref={headerRef}>
         <HeaderLogoLink to='/'>
           <HeaderLogo src={image} scrollnav={scrollNav ? 1 : 0} />
         </HeaderLogoLink>
-        <HeaderLetterLogo to='/'>K9</HeaderLetterLogo>
+        <HeaderLetterLogo to='/' onClick={handleClick}>
+          K9
+        </HeaderLetterLogo>
         <MobileIcon scrollnav={scrollNav ? 1 : 0} onClick={handleClick}>
           {clicked ? <AiOutlineClose /> : <RiMenu2Line />}
         </MobileIcon>
+        {/* ------------------- CHECK IF USER LOADED------------------ */}
         {userLoaded.general && (
           <HeaderMenu clicked={clicked}>
             {HeaderItems.map((item, index) => {
@@ -121,7 +174,7 @@ const Header = ({ history }) => {
               );
             })}
 
-            {/* Boton para iniciar sesión o cerrar dependiendo de usuario */}
+            {/* ------------------- CHECK IF THERE IS USER LOGGED------------------ */}
             {user ? (
               <>
                 <HeaderItem onClick={handleClick}>
@@ -135,34 +188,61 @@ const Header = ({ history }) => {
                     Citas
                   </HeaderLink>
                 </HeaderItem>
-                <HeaderItem>
-                  <HeaderLink
-                    scrollnav={scrollNav ? 1 : 0}
-                    onClick={() => setOpen(!open)}
-                  >
-                    {scrollNav && (
-                      <UserImage
-                        src={`/img/users/${user.photo}?${Date.now()}`}
-                      />
-                    )}
-                    {user.name.split(' ')[0]}
-                    <DropDown open={open}>
-                      <DropDownItem
-                        onClick={() => {
-                          history.push('/perfil');
-                        }}
+                {/* ------------------- SHOULD SHOW DROPDOWN ------------------ */}
+                {showDropdown ? (
+                  <HeaderItem>
+                    <HeaderLink
+                      scrollnav={scrollNav ? 1 : 0}
+                      ref={dropdownRef}
+                      onClick={() => setOpen(!open)}
+                    >
+                      {scrollNav && (
+                        <UserImage
+                          src={`/img/users/${user.photo}?${Date.now()}`}
+                        />
+                      )}
+                      {user.name.split(' ')[0]}
+                      <DropDown open={open} setOpen={setOpen}>
+                        <DropDownItem
+                          as={NavLink}
+                          to='/perfil'
+                          exact
+                          activeClassName='is-active'
+                          onClick={handleClick}
+                        >
+                          <FaUser />
+                          <p>Perfil</p>
+                        </DropDownItem>
+                        <DropDownItem onClick={() => dispatch(logout())}>
+                          <FiLogOut />
+                          <p>Cerrar Sesión</p>
+                        </DropDownItem>
+                      </DropDown>
+                    </HeaderLink>
+                  </HeaderItem>
+                ) : (
+                  <>
+                    <HeaderItem onClick={handleClick}>
+                      <HeaderLink
+                        as={NavLink}
+                        to='/perfil'
+                        exact
+                        activeClassName='is-active'
+                        scrollnav={scrollNav ? 1 : 0}
                       >
-                        <FaUser />
-                        <p>Perfil</p>
-                      </DropDownItem>
-                      <DropDownItem onClick={() => dispatch(logout())}>
-                        <FiLogOut />
-                        <p>Cerrar Sesión</p>
-                      </DropDownItem>
-                    </DropDown>
-                  </HeaderLink>
-                </HeaderItem>
-                ,
+                        Perfil
+                      </HeaderLink>
+                    </HeaderItem>
+                    <HeaderItem>
+                      <SessionBtn
+                        onClick={() => dispatch(logout())}
+                        scrollnav={scrollNav ? 1 : 0}
+                      >
+                        Cerrar sesión
+                      </SessionBtn>
+                    </HeaderItem>
+                  </>
+                )}
               </>
             ) : (
               <HeaderItem>

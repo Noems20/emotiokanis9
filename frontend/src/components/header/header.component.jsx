@@ -67,10 +67,17 @@ const Header = ({ history }) => {
   const [showDropdown, setShowDropdown] = useState(true);
   const [scrollNav, setScrollNav] = useState();
   const [image, setImage] = useState();
+  const [photoHash, setPhotoHash] = useState(Date.now());
 
   const dispatch = useDispatch();
   const { user, userLoaded } = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (userLoaded.updatedUser === true) {
+      console.log('Perfil actualizado Header');
+      setPhotoHash(Date.now());
+    }
+  }, [userLoaded]);
   // ----------------------------- USE EFFECTS --------------------------
   useEffect(() => {
     // ------ DETECT PAGE FOR TRANSPARENT BACKGROUND ------
@@ -198,7 +205,7 @@ const Header = ({ history }) => {
                     >
                       {scrollNav && (
                         <UserImage
-                          src={`/img/users/${user.photo}?${Date.now()}`}
+                          src={`/img/users/${user.photo}?${photoHash}`}
                         />
                       )}
                       {user.name.split(' ')[0]}

@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { updateMe, updateMyPassword } from '../../../redux/user/userActions';
-import { clearUiErrors, clearSuccess } from '../../../redux/ui/uiActions';
+import {
+  updateMe,
+  updateMyPassword,
+  setUpdatedUser,
+} from '../../../redux/user/userActions';
+import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import TextInput from '../../form-inputs/text-input/text-input.component';
@@ -37,8 +41,8 @@ const UserSettings = () => {
     credentials;
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  const { uiErrors, loading, success } = useSelector((state) => state.ui);
+  const { user, userLoaded } = useSelector((state) => state.user);
+  const { uiErrors, loading } = useSelector((state) => state.ui);
   const userImageSrc = `/img/users/${user.photo}`;
   // console.log(userImageSrc);
 
@@ -64,17 +68,20 @@ const UserSettings = () => {
       passwordConfirm: '',
     });
 
+    // Clean up also runs after form submit because of
+    // set credential dependency
     return () => {
       dispatch(clearUiErrors());
     };
   }, [setCredentials, user, dispatch]);
 
   useEffect(() => {
-    if (success === true && selectedFile) {
+    if (userLoaded.updatedUser === true) {
+      console.log('Perfil actualizado settings');
       setImageHash(Date.now());
-      dispatch(clearSuccess());
+      dispatch(setUpdatedUser(false));
     }
-  }, [success, selectedFile, dispatch]);
+  }, [dispatch, userLoaded]);
 
   // -------------------------- HANDLERS --------------------
   const handleDetailsSubmit = (e) => {

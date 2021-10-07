@@ -1,4 +1,4 @@
-import { SET_USER, SET_USER_LOADED } from './userTypes';
+import { SET_USER, SET_UPDATED_USER, SET_USER_LOADED } from './userTypes';
 import {
   CLEAR_UI_ERRORS,
   SET_SUCCESS,
@@ -129,10 +129,6 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
       type: SET_UI_LOADING,
       payload: { firstLoader: true },
     });
-    dispatch({
-      type: SET_SUCCESS,
-      payload: false,
-    });
     const form = new FormData();
 
     form.append('email', email);
@@ -149,20 +145,21 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
 
     batch(() => {
       dispatch({
-        type: SET_SUCCESS,
-        payload: true,
-      });
-      dispatch({
         type: SET_USER,
         payload: data.user,
+      });
+      dispatch({
+        type: SET_UPDATED_USER,
+        payload: true,
       });
       dispatch({
         type: SET_UI_LOADING,
         payload: { firstLoader: false },
       });
-      dispatch({
-        type: CLEAR_UI_ERRORS,
-      });
+      // CLEAN UP RUNS IN USE EFFECT OF SETTINGS COMPONENT
+      // dispatch({
+      //   type: CLEAR_UI_ERRORS,
+      // });
     });
   } catch (error) {
     dispatch({
@@ -330,3 +327,11 @@ export const resetPassword =
       });
     }
   };
+
+// ------------------------------- UTILS --------------------
+export const setUpdatedUser = (value) => (dispatch) => {
+  dispatch({
+    type: SET_UPDATED_USER,
+    payload: value,
+  });
+};

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -135,70 +136,72 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
         </ContentContainer>
       </Container>
 
-      {modalType === `serviceUpdateForm-${id}` && (
-        <Modal handleClose={handleClose}>
-          <FormContainer initial={{ y: '-100vh' }} animate={{ y: 0 }}>
-            <Title>Actualizar servicio</Title>
-            <form onSubmit={handleServiceSubmit}>
-              <TextInput
-                name='formName'
-                type='text'
-                handleChange={handleChange}
-                value={formName}
-                label='Nombre'
-                error={uiErrors.errorsOne.name}
-              />
-              <TextAreaInput
-                name='formDescription'
-                type='text'
-                handleChange={handleChange}
-                value={formDescription}
-                label='Descripción'
-                error={uiErrors.errorsOne.description}
-                rows={3}
-              />
-              <TextInput
-                name='formPriceLapse'
-                type='text'
-                handleChange={handleChange}
-                value={formPriceLapse}
-                label='Lapso de precio'
-                error={uiErrors.errorsOne.priceLapse}
-              />
-              <TextInput
-                name='formPrice'
-                type='text'
-                handleChange={handleChange}
-                value={formPrice}
-                label='Precio'
-                error={uiErrors.errorsOne.price}
-              />
-              <FileInput
-                id='serviceImage'
-                error={uiErrors.errorsOne.image ? true : false}
-                selected={
-                  selectedFile ? !uiErrors.errorsOne.image && 'selected' : ''
-                }
-                onChange={handleFile}
-              >
-                {uiErrors.errorsOne.image
-                  ? uiErrors.errorsOne.image
-                  : selectedFile
-                  ? `${selectedFile.name}`
-                  : 'Seleccionar foto de servicio'}
-              </FileInput>
-              <UpdateServiceButton
-                type='submit'
-                loading={loading.secondLoader}
-                disabled={loading.firstLoader || loading.secondLoader}
-                primary
-              >
-                Actualizar servicio
-              </UpdateServiceButton>
-            </form>
-          </FormContainer>
-        </Modal>
-      )}
+      <AnimatePresence>
+        {modalType === `serviceUpdateForm-${id}` && (
+          <Modal handleClose={handleClose}>
+            <FormContainer>
+              <Title>Actualizar servicio</Title>
+              <form onSubmit={handleServiceSubmit}>
+                <TextInput
+                  name='formName'
+                  type='text'
+                  handleChange={handleChange}
+                  value={formName}
+                  label='Nombre'
+                  error={uiErrors.errorsOne.name}
+                />
+                <TextAreaInput
+                  name='formDescription'
+                  type='text'
+                  handleChange={handleChange}
+                  value={formDescription}
+                  label='Descripción'
+                  error={uiErrors.errorsOne.description}
+                  rows={3}
+                />
+                <TextInput
+                  name='formPriceLapse'
+                  type='text'
+                  handleChange={handleChange}
+                  value={formPriceLapse}
+                  label='Lapso de precio'
+                  error={uiErrors.errorsOne.priceLapse}
+                />
+                <TextInput
+                  name='formPrice'
+                  type='text'
+                  handleChange={handleChange}
+                  value={formPrice}
+                  label='Precio'
+                  error={uiErrors.errorsOne.price}
+                />
+                <FileInput
+                  id='serviceImage'
+                  error={uiErrors.errorsOne.image ? true : false}
+                  selected={
+                    selectedFile ? !uiErrors.errorsOne.image && 'selected' : ''
+                  }
+                  onChange={handleFile}
+                >
+                  {uiErrors.errorsOne.image
+                    ? uiErrors.errorsOne.image
+                    : selectedFile
+                    ? `${selectedFile.name}`
+                    : 'Seleccionar foto de servicio'}
+                </FileInput>
+                <UpdateServiceButton
+                  type='submit'
+                  loading={loading.secondLoader}
+                  disabled={loading.firstLoader || loading.secondLoader}
+                  primary
+                >
+                  Actualizar servicio
+                </UpdateServiceButton>
+              </form>
+            </FormContainer>
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

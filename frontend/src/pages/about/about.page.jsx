@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Masonry from 'react-masonry-css';
@@ -126,16 +126,13 @@ const About = () => {
           </Masonry>
         </Gallery>
       </Grid>
-      {modalType && (
-        <Modal handleClose={handleClose}>
-          <motion.img
-            src={selectedImg}
-            alt='Imagen agrandada'
-            initial={{ y: '-100vh' }}
-            animate={{ y: 0 }}
-          />
-        </Modal>
-      )}
+      <AnimatePresence exitBeforeEnter={true}>
+        {modalType && (
+          <Modal handleClose={handleClose}>
+            <img src={selectedImg} alt='Imagen agrandada' />
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

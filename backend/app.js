@@ -18,6 +18,7 @@ import globalErrorHandler from './controllers/errorController.js';
 // ROUTERS
 import userRouter from './routes/userRoutes.js';
 import serviceRouter from './routes/serviceRoutes.js';
+import awardRouter from './routes/awardRoutes.js';
 
 dotenv.config();
 
@@ -78,6 +79,7 @@ app.use(cookieParser());
 // ---------------------------- ROUTER'S ---------------------------
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/services', serviceRouter);
+app.use('/api/v1/awards', awardRouter);
 
 // ---------------------------- ERRORS ---------------------------
 

@@ -72,12 +72,6 @@ const Header = ({ history }) => {
   const dispatch = useDispatch();
   const { user, userLoaded } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (userLoaded.updatedUser === true) {
-      console.log('Perfil actualizado Header');
-      setPhotoHash(Date.now());
-    }
-  }, [userLoaded]);
   // ----------------------------- USE EFFECTS --------------------------
   useEffect(() => {
     // ------ DETECT PAGE FOR TRANSPARENT BACKGROUND ------
@@ -114,7 +108,7 @@ const Header = ({ history }) => {
   }, [history]);
 
   useEffect(() => {
-    // -------- CHECK SCREEN WIDTH -------
+    // ----------- CHECK SCREEN WIDTH ----------
     if (window.innerWidth <= 1200) {
       setShowDropdown(false);
     } else {
@@ -133,6 +127,13 @@ const Header = ({ history }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    // -------------------- UPDATE PHOTO -----------
+    if (userLoaded.updatedUser === true) {
+      setPhotoHash(Date.now());
+    }
+  }, [userLoaded]);
 
   // ----------------------------- HANDLERS --------------------------
   const handleClick = () => {

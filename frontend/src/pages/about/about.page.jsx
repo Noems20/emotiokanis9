@@ -24,6 +24,18 @@ import {
 } from './about.page.styles';
 import logo from './images/logo.svg';
 
+// var date = new Date("2000-02-11T01:00:00") -> LOCAL
+// var date = new Date("2000-02-11T01:00:00.000-06:00Z") -> ISO
+// var date = new Date("2000-02-11T07:00:00Z") -> ISO
+
+// const options = { year: 'numeric', month: 'long', day: 'numeric' };
+// date.toLocaleDateString('es-ES', options) -> '11 de febrero de 2000'
+
+// ----------- PROCESS TO MANAGE DATE ------------
+// SAVE TO MONGODB AS LOCAL DATE new Date("2000-02-11T01:00:00")
+// MONGODB WILL SAVE IT AS ISO new Date("2000-02-11T07:00:00Z")
+// WE RETRIVE USING date.toLocaleDateString('es-ES', options) -> '11 de febrero de 2000'
+
 const About = () => {
   //----------------------------- STATE AND VARIABLES -----------------------
   const [selectedImg, setSelectedImg] = useState(null);

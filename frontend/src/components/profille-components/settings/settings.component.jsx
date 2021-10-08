@@ -60,6 +60,7 @@ const UserSettings = () => {
   };
   // -------------------------- USE EFFECTS --------------------
   useEffect(() => {
+    // ----------- SET FORM VALUES AFTER SUBMIT -------
     setCredentials({
       name: user.name,
       email: user.email,
@@ -76,8 +77,8 @@ const UserSettings = () => {
   }, [setCredentials, user, dispatch]);
 
   useEffect(() => {
+    // ---------- UPDATE USER PHOTO ---------
     if (userLoaded.updatedUser === true) {
-      console.log('Perfil actualizado settings');
       setImageHash(Date.now());
       dispatch(setUpdatedUser(false));
     }

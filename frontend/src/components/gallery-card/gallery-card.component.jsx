@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 
-// REDUX
-import { useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modalActions';
+// COMPONENTS
+import Modal from '../modal/modal.component';
 
 // STYLES
 import {
@@ -15,18 +15,21 @@ import {
   CardText,
 } from './gallery-card.styles';
 
-// import image from '../../pages/about/images/gallery/img1.jpg';
+const GalleryCard = ({ title, description, url, alt }) => {
+  const [modalOpen, setModalOpen] = useState(false);
 
-const GalleryCard = ({ title, description, url, alt, setSelectedImg }) => {
-  const dispatch = useDispatch();
-
+  // ------------------- USE EFFECT ---------------
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
 
+  // ------------------ HANDLERS ------------------
   const handleClick = () => {
-    setSelectedImg(url);
-    dispatch(setModalType('image'));
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -38,6 +41,13 @@ const GalleryCard = ({ title, description, url, alt, setSelectedImg }) => {
           <CardText>{description}</CardText>
         </CardDescription>
       </CardContainer>
+      <AnimatePresence>
+        {modalOpen && (
+          <Modal handleClose={handleClose}>
+            <img src={url} alt='Imagen agrandada' />
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
 };

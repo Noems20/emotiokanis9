@@ -6,7 +6,6 @@ import {
   fetchServices,
   createService,
 } from '../../../redux/services/servicesActions';
-import { setModalType } from '../../../redux/modal/modalActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
@@ -28,6 +27,7 @@ import {
 } from './manage-services.styles';
 
 const ManageServices = () => {
+  // -------------------------- STATE AND CONSTANTS ---------------
   const [serviceData, setServiceData] = useState({
     name: '',
     description: '',
@@ -39,7 +39,6 @@ const ManageServices = () => {
   const { name, description, priceLapse, price } = serviceData;
 
   const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state.user);
   const { servicesData } = useSelector((state) => state.services);
   const { uiErrors, loading } = useSelector((state) => state.ui);
 
@@ -56,15 +55,15 @@ const ManageServices = () => {
     },
   };
 
+  // ------------------------- USE EFFECT ---------------------
   useEffect(() => {
-    // require(`../../../../../backend/public/img/services/${service.image}`).default
     dispatch(fetchServices());
     return () => {
-      dispatch(setModalType(null));
       dispatch(clearUiErrors());
     };
   }, [dispatch]);
 
+  // ------------------------- HANDLERS ---------------------
   const handleServiceSubmit = (e) => {
     e.preventDefault();
     dispatch(createService(name, description, priceLapse, price, selectedFile));

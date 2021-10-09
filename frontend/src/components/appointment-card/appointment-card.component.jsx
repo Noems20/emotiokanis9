@@ -1,8 +1,6 @@
-import React from 'react';
-
-// REDUX
-import { useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modalActions';
+import React, { useState } from 'react';
+import Alert from '../alert/alert.component';
+import Modal from '../modal/modal.component';
 
 // STYLES
 import {
@@ -20,7 +18,7 @@ import {
 } from './appointment-card.styles';
 
 const AppointmentCard = ({ variants, active }) => {
-  const dispatch = useDispatch();
+  const [modalType, setModalType] = useState();
 
   return (
     <>
@@ -35,14 +33,8 @@ const AppointmentCard = ({ variants, active }) => {
 
           {active ? (
             <CardIcons>
-              <EditIcon
-                key={1}
-                onClick={() => dispatch(setModalType('edit'))}
-              />
-              <CloseIcon
-                key={2}
-                onClick={() => dispatch(setModalType('delete'))}
-              />
+              <EditIcon key={1} onClick={() => setModalType('edit')} />
+              <CloseIcon key={2} onClick={() => setModalType('delete')} />
             </CardIcons>
           ) : (
             <FinishedText key={3}>Finalizada</FinishedText>
@@ -58,6 +50,29 @@ const AppointmentCard = ({ variants, active }) => {
           </CardBodyDescription>
         </CardBody>
       </Container>
+
+      {modalType === 'edit' && (
+        <Modal>
+          <Alert
+            title='¡Exito!'
+            text='Tu cuenta ha sido creada correctamente'
+            button='Continuar'
+            handleClose={() => setModalType(null)}
+            type='success'
+          />
+        </Modal>
+      )}
+      {modalType === 'delete' && (
+        <Modal>
+          <Alert
+            title='¡Cuidado!'
+            text='¿Estas seguro de que deseas cancelar tu cita?'
+            button='Cancelar cita'
+            handleClose={() => setModalType(null)}
+            type='error'
+          />
+        </Modal>
+      )}
     </>
   );
 };

@@ -1,10 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// REDUX
-import { useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modalActions';
-
 // STYLES
 import { Backdrop } from './modal.styles';
 
@@ -38,11 +34,8 @@ const contentVariants = {
 };
 
 const Modal = ({ children, handleClose }) => {
-  const dispatch = useDispatch();
-
   const handleClick = (e) => {
     if (e.target.classList.contains('backdrop')) {
-      dispatch(setModalType(null));
       handleClose();
     }
   };

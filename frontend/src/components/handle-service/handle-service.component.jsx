@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { clearSuccess, clearUiErrors } from '../../redux/ui/uiActions';
-import { setModalType } from '../../redux/modal/modalActions';
 import {
   deleteService,
   updateService,
@@ -41,6 +40,7 @@ import {
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const imageSrc = `/img/services/${image}`;
   const [imageHash, setImageHash] = useState(Date.now());
+  const [modalOpen, setModalOpen] = useState(false);
   const [serviceData, setServiceData] = useState({
     formName: name,
     formDescription: description,
@@ -53,7 +53,6 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const { formName, formDescription, formPriceLapse, formPrice } = serviceData;
 
   const dispatch = useDispatch();
-  const { modalType } = useSelector((state) => state.modal);
   const { uiErrors, loading, success } = useSelector((state) => state.ui);
 
   useEffect(() => {
@@ -65,7 +64,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
 
   const handleOpen = () => {
     dispatch(clearUiErrors());
-    dispatch(setModalType(`serviceUpdateForm-${id}`));
+    setModalOpen(true);
   };
 
   const handleClose = () => {
@@ -77,6 +76,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
       formPrice: price,
     });
     setSelectedFile('');
+    setModalOpen(false);
   };
 
   const handleServiceSubmit = (e) => {
@@ -137,7 +137,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
       </Container>
 
       <AnimatePresence>
-        {modalType === `serviceUpdateForm-${id}` && (
+        {modalOpen && (
           <Modal handleClose={handleClose}>
             <FormContainer>
               <Title>Actualizar servicio</Title>

@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import Masonry from 'react-masonry-css';
 
 // COMPONENTS
 import GalleryCard from '../../components/gallery-card/gallery-card.component';
-import Modal from '../../components/modal/modal.component';
 
 // REDUX
-import { useSelector, useDispatch } from 'react-redux';
-import { setModalType } from '../../redux/modal/modalActions';
+import { useSelector } from 'react-redux';
 
 // STYLES
 import {
@@ -38,12 +35,7 @@ import logo from './images/logo.svg';
 
 const About = () => {
   //----------------------------- STATE AND VARIABLES -----------------------
-  const [selectedImg, setSelectedImg] = useState(null);
-
-  const dispatch = useDispatch();
-  const modal = useSelector((state) => state.modal);
   const awards = useSelector((state) => state.awards);
-  const { modalType } = modal;
 
   const breakpoints = {
     default: 3,
@@ -69,15 +61,9 @@ const About = () => {
   //------------------------------- USE EFFECT ------------------------
   useEffect(() => {
     Aos.init({ duration: 1000 });
-
-    return function cleanup() {
-      dispatch(setModalType(null));
-    };
-  }, [dispatch]);
+  }, []);
 
   //--------------------------------- HANDLERS --------------------------
-
-  const handleClose = () => {};
 
   return (
     <>
@@ -117,22 +103,11 @@ const About = () => {
             columnClassName='my-masonry-grid_column'
           >
             {awards.map(({ id, ...otherCardProps }) => (
-              <GalleryCard
-                key={id}
-                setSelectedImg={setSelectedImg}
-                {...otherCardProps}
-              />
+              <GalleryCard key={id} {...otherCardProps} />
             ))}
           </Masonry>
         </Gallery>
       </Grid>
-      <AnimatePresence exitBeforeEnter={true}>
-        {modalType && (
-          <Modal handleClose={handleClose}>
-            <img src={selectedImg} alt='Imagen agrandada' />
-          </Modal>
-        )}
-      </AnimatePresence>
     </>
   );
 };

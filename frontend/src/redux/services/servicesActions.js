@@ -173,24 +173,14 @@ export const updateService =
       });
     }
   };
-
+// ---------------------------- DELETE SERVICE ----------------------------
 export const deleteService = (id) => async (dispatch) => {
   try {
-    dispatch({
-      type: SET_UI_LOADING,
-      payload: { firstLoader: true },
-    });
-
     await axios.delete(`/api/v1/services/${id}`);
-
     batch(() => {
       dispatch({
         type: DELETE_SERVICE,
         payload: id,
-      });
-      dispatch({
-        type: SET_UI_LOADING,
-        payload: { firstLoader: false },
       });
     });
   } catch (error) {

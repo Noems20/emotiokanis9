@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import tokens from '../../tokens';
 
+// ------------------ PRIMARY BUTTON STYLES ------------
 const primaryButtonStyles = css`
   color: #fff;
   background-color: var(--color-primary);
@@ -11,10 +12,14 @@ const primaryButtonStyles = css`
     border: 0.2px solid var(--color-primary);
     background-color: #fff;
     color: var(--color-primary);
-    transition: all 0.2s ease-in-out;
+  }
+
+  &:disabled {
+    background-color: var(--color-primary);
   }
 `;
 
+// ------------------ SECONDARY BUTTON STYLES ------------
 const secondaryButtonStyles = css`
   border: none;
   color: var(--color-primary);
@@ -23,10 +28,31 @@ const secondaryButtonStyles = css`
   &:hover {
     background-color: var(--color-primary);
     color: #fff;
-    transition: all 0.2s ease-in-out;
+  }
+
+  &:disabled {
+    background-color: var(--color-primary);
   }
 `;
 
+// ------------------ DANGER BUTTON STYLES ------------
+const dangerButtonStyles = css`
+  color: #fff;
+  background-color: #f94415;
+  border: 0.2px solid #f94415;
+
+  &:hover {
+    background-color: #e03e14;
+    color: #fff;
+    border: 0.2px solid #e03e14;
+  }
+
+  &:disabled {
+    background-color: #f94415;
+  }
+`;
+
+// ------------------ GOOGLE BUTTON STYLES ------------
 const googleSignInStyles = css`
   background-color: #4285f4;
   color: white;
@@ -46,7 +72,6 @@ const googleSignInStyles = css`
     border: 0.2px solid var(--color-primary);
     background-color: #fff;
     color: var(--color-primary);
-    transition: all 0.2s ease-in-out;
   }
 
   & svg {
@@ -61,9 +86,13 @@ const googleSignInStyles = css`
 const getButtonStyles = (props) => {
   if (props.isGoogleSignIn) {
     return googleSignInStyles;
+  } else if (props.primary) {
+    return primaryButtonStyles;
+  } else if (props.danger) {
+    return dangerButtonStyles;
+  } else {
+    return secondaryButtonStyles;
   }
-
-  return props.primary ? primaryButtonStyles : secondaryButtonStyles;
 };
 
 export const CustomButtonContainer = styled(motion.button)`
@@ -75,14 +104,18 @@ export const CustomButtonContainer = styled(motion.button)`
   border: none;
   border-radius: 100px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition-property: color, background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+
+  &:hover {
+    transition-property: color, background-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+  }
 
   &:disabled {
     cursor: not-allowed;
-    &:hover {
-      background-color: var(--color-primary);
-      color: #fff;
-    }
   }
 
   @media screen and (min-width: 992px) {

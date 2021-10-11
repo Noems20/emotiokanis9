@@ -39,6 +39,7 @@ import {
 
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const imageSrc = `/img/services/${image}`;
+  const [deleteLoader, setDeleteLoader] = useState(false);
   const [imageHash, setImageHash] = useState(Date.now());
   const [modalOpen, setModalOpen] = useState(false);
   const [serviceData, setServiceData] = useState({
@@ -95,6 +96,7 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
 
   const handleDelete = () => {
     dispatch(deleteService(id));
+    setDeleteLoader(true);
   };
 
   const handleChange = (event) => {
@@ -107,7 +109,6 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  // console.log(selectedFile);
   return (
     <>
       <Container>
@@ -128,7 +129,12 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
               <Button primary onClick={handleOpen}>
                 Editar servicio
               </Button>
-              <Button primary danger={true} onClick={handleDelete}>
+              <Button
+                danger
+                loading={deleteLoader}
+                onClick={handleDelete}
+                disabled={deleteLoader}
+              >
                 Eliminar servicio
               </Button>
             </ButtonsContainer>

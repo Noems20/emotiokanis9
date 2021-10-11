@@ -110,14 +110,12 @@ export const ButtonsContainer = styled.div`
 
 export const Button = styled(CustomButton)`
   font-size: 1.6rem;
-  background-color: ${({ danger }) => danger && '#f94415'};
-  color: ${({ danger }) => danger && '#fff'};
-  border: ${({ danger }) => danger && '0.2px solid #f94415'};
+  padding: ${({ danger }) => danger && '1rem 1rem'};
+  border-radius: ${({ loading }) => loading && '50%'};
+  padding: ${({ loading }) => loading && '0.755rem 1.735rem'};
 
-  &:hover {
-    background-color: ${({ danger }) => danger && '#e03e14'};
-    color: ${({ danger }) => danger && '#fff'};
-    border: ${({ danger }) => danger && '0.2px solid #e03e14'};
+  & .loader {
+    font-size: 0.45rem;
   }
 `;
 

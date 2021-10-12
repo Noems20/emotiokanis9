@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
+import Masonry from 'react-masonry-css';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import Masonry from 'react-masonry-css';
+
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAwards, clearAwards } from '../../redux/awards/awardsActions';
 
 // COMPONENTS
 import GalleryCard from '../../components/gallery-card/gallery-card.component';
-
-// REDUX
-import { useSelector } from 'react-redux';
+import TabLoader from '../../components/loaders/tab-loader/tab-loader.component';
 
 // STYLES
 import {
@@ -35,7 +37,9 @@ import logo from './images/logo.svg';
 
 const About = () => {
   //----------------------------- STATE AND VARIABLES -----------------------
-  const awards = useSelector((state) => state.awards);
+  const dispatch = useDispatch();
+  const { awardsData } = useSelector((state) => state.awards);
+  const { loading } = useSelector((state) => state.ui);
 
   const breakpoints = {
     default: 3,
@@ -62,6 +66,14 @@ const About = () => {
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchAwards());
+
+    return () => {
+      dispatch(clearAwards());
+    };
+  }, [dispatch]);
 
   //--------------------------------- HANDLERS --------------------------
 
@@ -97,15 +109,19 @@ const About = () => {
           </SectionTitle>
         </SectionHeading>
         <Gallery>
-          <Masonry
-            breakpointCols={breakpoints}
-            className='my-masonry-grid'
-            columnClassName='my-masonry-grid_column'
-          >
-            {awards.map(({ id, ...otherCardProps }) => (
-              <GalleryCard key={id} {...otherCardProps} />
-            ))}
-          </Masonry>
+          {loading.fetchLoader ? (
+            <TabLoader />
+          ) : (
+            <Masonry
+              breakpointCols={breakpoints}
+              className='my-masonry-grid'
+              columnClassName='my-masonry-grid_column'
+            >
+              {awardsData.map(({ _id, ...otherCardProps }) => (
+                <GalleryCard key={_id} {...otherCardProps} />
+              ))}
+            </Masonry>
+          )}
         </Gallery>
       </Grid>
     </>

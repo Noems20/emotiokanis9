@@ -15,15 +15,14 @@ import TextInput from '../../form-inputs/text-input/text-input.component';
 // STYLES
 import {
   SettingsContainer,
-  Settings,
   Title,
-  Line,
   ChangeImage,
   UserImage,
   ImageInputLabel,
   ImageInput,
-  Button,
 } from './settings.styles';
+
+import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
 
 const UserSettings = () => {
   // ---------------------- VARIABLES, CONSTANTS -------------------
@@ -112,7 +111,7 @@ const UserSettings = () => {
       animate='visible'
       exit='hidden'
     >
-      <Settings>
+      <TabSubContainer>
         <Title>Configuración de cuenta</Title>
         <form onSubmit={handleDetailsSubmit}>
           <TextInput
@@ -154,18 +153,18 @@ const UserSettings = () => {
               onChange={handleFile}
             />
           </ChangeImage>
-          <Button
+          <TabButton
             type='submit'
             loading={loading.firstLoader}
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
             Guardar configuración
-          </Button>
+          </TabButton>
         </form>
-      </Settings>
+      </TabSubContainer>
       <Line />
-      <Settings>
+      <TabSubContainer>
         <Title>Cambiar contraseña</Title>
         <form onSubmit={handlePasswordSubmit}>
           <TextInput
@@ -192,16 +191,16 @@ const UserSettings = () => {
             label='Confirmar contraseña'
             error={uiErrors.errorsTwo.passwordConfirm}
           />
-          <Button
+          <TabButton
             type='submit'
             loading={loading.secondLoader}
             disabled={loading.secondLoader || loading.firstLoader}
             primary
           >
             Cambiar contraseña
-          </Button>
+          </TabButton>
         </form>
-      </Settings>
+      </TabSubContainer>
     </SettingsContainer>
   );
 };

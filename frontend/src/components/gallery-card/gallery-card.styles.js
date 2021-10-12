@@ -1,23 +1,16 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import tokens from '../../tokens';
 
-export const CardContainer = styled.div`
-  border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.32);
-  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.32);
-
+export const CardContainer = styled(motion.div)`
   margin-bottom: 3rem;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.32);
+  cursor: pointer;
 
   display: grid;
   grid-template-rows: repeat(2, min-content);
-
-  transition: all 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.01);
-    transition: all 0.2s;
-  }
 `;
 
 export const CardImage = styled.img`
@@ -27,15 +20,32 @@ export const CardImage = styled.img`
 
 export const CardDescription = styled.div`
   margin: 2rem;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 0.65fr 0.35fr;
+  grid-column-gap: 3rem;
+  grid-row-gap: 1rem;
 `;
 
 export const CardTitle = styled.h1`
+  grid-column: 1/2;
   color: var(--color-primary);
   font-family: ${tokens.fontPrimary};
-  font-weight: 100;
-  font-size: 2.7rem;
-  margin-bottom: 1rem;
+  font-weight: 300;
+  font-size: 2rem;
 `;
+
+export const CardDate = styled.h1`
+  grid-column: 2/3;
+  text-align: right;
+
+  color: var(--color-primary);
+  font-family: ${tokens.fontPrimary};
+  font-weight: 300;
+  font-size: 1.8rem;
+`;
+
 export const CardText = styled.p`
+  grid-column: 1/3;
   font-size: 1.6rem;
 `;

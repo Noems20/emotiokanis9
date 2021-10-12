@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import servicesReducer from './services/servicesReducer';
-import awardsReducer from './awards/awards.reducer';
+import awardsReducer from './awards/awardsReducer';
 import userReducer from './user/userReducer';
 import uiReducer from './ui/uiReducer';
 

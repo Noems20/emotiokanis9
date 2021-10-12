@@ -5,7 +5,7 @@ import {
   UPDATE_SERVICE,
   DELETE_SERVICE,
 } from './servicesTypes';
-import { addService, updateService, deleteService } from './servicesUtils';
+import { addItem, updateItem, deleteItem } from '../utils/reducerUtils';
 
 const initialState = {
   servicesData: [],
@@ -22,17 +22,17 @@ const servicesReducer = (state = initialState, action) => {
     case ADD_SERVICE:
       return {
         ...state,
-        servicesData: addService(action.payload, state.servicesData),
+        servicesData: addItem(action.payload, state.servicesData),
       };
     case UPDATE_SERVICE:
       return {
         ...state,
-        servicesData: updateService(action.payload, state.servicesData),
+        servicesData: updateItem(action.payload, state.servicesData),
       };
     case DELETE_SERVICE:
       return {
         ...state,
-        servicesData: deleteService(action.payload, state.servicesData),
+        servicesData: deleteItem(action.payload, state.servicesData),
       };
 
     default:

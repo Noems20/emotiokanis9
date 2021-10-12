@@ -118,12 +118,6 @@ export const CustomButtonContainer = styled(motion.button)`
     cursor: not-allowed;
   }
 
-  @media screen and (min-width: 992px) {
-    &:active {
-      transform: translateY(2px);
-    }
-  }
-
   ${getButtonStyles}
 `;
 

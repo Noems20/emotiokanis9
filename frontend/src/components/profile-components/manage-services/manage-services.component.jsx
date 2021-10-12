@@ -17,14 +17,13 @@ import HandleService from '../../handle-service/handle-service.component';
 // STYLES
 import {
   SettingsContainer,
-  Settings,
   ServicesSettings,
   Title,
-  Line,
   // UserImage,
-  Button,
   Loader,
 } from './manage-services.styles';
+
+import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
 
 const ManageServices = () => {
   // -------------------------- STATE AND CONSTANTS ---------------
@@ -86,8 +85,8 @@ const ManageServices = () => {
       animate='visible'
       exit='hidden'
     >
-      <Settings>
-        <Title>Crear servicio</Title>
+      <TabSubContainer>
+        <Title>Añadir servicio</Title>
         <form onSubmit={handleServiceSubmit}>
           <TextInput
             name='name'
@@ -136,18 +135,17 @@ const ManageServices = () => {
               ? `${selectedFile.name}`
               : 'Seleccionar foto de servicio'}
           </FileInput>
-          <Button
+          <TabButton
             type='submit'
             loading={loading.firstLoader}
             disabled={loading.firstLoader || loading.secondLoader}
             primary
           >
-            Crear servicio
-          </Button>
+            Añadir servicio
+          </TabButton>
         </form>
-      </Settings>
+      </TabSubContainer>
       <Line />
-
       <ServicesSettings loading={loading.fetchLoader ? 'true' : 'false'}>
         <Title>Administrar servicios</Title>
         {loading.fetchLoader ? (

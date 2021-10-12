@@ -7,8 +7,9 @@ import { checkUser } from '../../redux/user/userActions';
 
 // COMPONENTS
 import TabLoader from '../../components/loaders/tab-loader/tab-loader.component';
-import UserSettings from '../../components/profille-components/settings/settings.component';
-import ManageServices from '../../components/profille-components/manage-services/manage-services.component';
+import UserSettings from '../../components/profile-components/settings/settings.component';
+import ManageServices from '../../components/profile-components/manage-services/manage-services.component';
+import ManageAwards from '../../components/profile-components/manage-awards/manage-awards.component';
 
 // STYLES
 import {
@@ -71,6 +72,8 @@ const Profile = () => {
         return <UserSettings />;
       case 'manageServices':
         return <ManageServices />;
+      case 'manageAwards':
+        return <ManageAwards />;
       default:
         return <UserSettings />;
     }

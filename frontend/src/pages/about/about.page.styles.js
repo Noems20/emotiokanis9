@@ -80,4 +80,6 @@ export const SectionText = styled.p`
 export const Gallery = styled.div`
   grid-column: full-start / full-end;
   padding: 7rem 3rem;
+
+  position: relative;
 `;

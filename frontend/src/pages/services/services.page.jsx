@@ -15,17 +15,10 @@ import TabLoader from '../../components/loaders/tab-loader/tab-loader.component'
 import { Grid } from './services.page.styles';
 
 const Services = () => {
+  //----------------------------- STATE AND CONSTANTS -----------------------
   const dispatch = useDispatch();
   const { servicesData } = useSelector((state) => state.services);
   const { loading } = useSelector((state) => state.ui);
-
-  useEffect(() => {
-    dispatch(fetchServices());
-
-    return () => {
-      dispatch(clearServices());
-    };
-  }, [dispatch]);
 
   const containerVariants = {
     hidden: {
@@ -41,6 +34,15 @@ const Services = () => {
       opacity: 0,
     },
   };
+
+  //----------------------------- USE EFFECT -----------------------
+  useEffect(() => {
+    dispatch(fetchServices());
+
+    return () => {
+      dispatch(clearServices());
+    };
+  }, [dispatch]);
   return (
     <>
       <Grid

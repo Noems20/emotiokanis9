@@ -11,6 +11,7 @@ import Modal from '../modal/modal.component';
 import TextInput from '../form-inputs/text-input/text-input.component';
 import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
 import FileInput from '../form-inputs/file-input/file-input.component';
+import CustomButton from '../custom-button/custom-button.component';
 
 // STYLES
 import {
@@ -25,8 +26,6 @@ import {
   PriceTitle,
   Price,
   ButtonsContainer,
-  Button,
-
   // Form styles
   FormContainer,
   Title,
@@ -122,17 +121,17 @@ const HandleAward = ({ id, name, description, date, image }) => {
             <PriceTitle>Fecha</PriceTitle>
             <Price>{formatedDate.toLocaleDateString('es-ES', options)}</Price>
             <ButtonsContainer>
-              <Button primary onClick={handleOpen}>
+              <CustomButton primary onClick={handleOpen}>
                 Editar premio
-              </Button>
-              <Button
+              </CustomButton>
+              <CustomButton
                 danger
                 loading={deleteLoader}
                 onClick={handleDelete}
                 disabled={deleteLoader}
               >
                 Eliminar premio
-              </Button>
+              </CustomButton>
             </ButtonsContainer>
           </ServicePrice>
         </ContentContainer>

@@ -100,17 +100,6 @@ export const ButtonsContainer = styled.div`
   }
 `;
 
-export const Button = styled(CustomButton)`
-  font-size: 1.6rem;
-  padding: ${({ danger }) => danger && '1rem 1rem'};
-  border-radius: ${({ loading }) => loading && '50%'};
-  padding: ${({ loading }) => loading && '0.755rem 1.735rem'};
-
-  & .loader {
-    font-size: 0.45rem;
-  }
-`;
-
 // -------------------- FORM STYLES --------------
 export const FormContainer = styled(motion.div)`
   width: 60vw;

@@ -15,14 +15,13 @@ import TextInput from '../../form-inputs/text-input/text-input.component';
 // STYLES
 import {
   SettingsContainer,
-  Title,
   ChangeImage,
   UserImage,
   ImageInputLabel,
   ImageInput,
 } from './settings.styles';
 
-import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
+import { Title, Line, TabSubContainer, TabButton } from '../managers.styles.js';
 
 const UserSettings = () => {
   // ---------------------- VARIABLES, CONSTANTS -------------------

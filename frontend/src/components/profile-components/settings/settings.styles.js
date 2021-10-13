@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { TitleSm } from '../../general.styles';
 
 export const SettingsContainer = styled(motion.div)`
   display: grid;
@@ -9,16 +8,6 @@ export const SettingsContainer = styled(motion.div)`
 
   @media only screen and (max-width: 1200px) {
     overflow: hidden;
-  }
-`;
-
-export const Title = styled(TitleSm)`
-  justify-self: start;
-  font-size: 2.6rem;
-  text-transform: uppercase;
-
-  @media only screen and (max-width: 600px) {
-    justify-self: center;
   }
 `;
 

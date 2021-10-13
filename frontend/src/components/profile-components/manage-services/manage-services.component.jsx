@@ -13,17 +13,16 @@ import TextInput from '../../form-inputs/text-input/text-input.component';
 import TextAreaInput from '../../form-inputs/textarea-input/textarea-input.component';
 import FileInput from '../../form-inputs/file-input/file-input.component';
 import HandleService from '../../handle-service/handle-service.component';
+import TabLoader from '../../loaders/tab-loader/tab-loader.component';
 
-// STYLES
 import {
-  SettingsContainer,
-  ServicesSettings,
+  Line,
+  TabContainer,
+  TabSubContainer,
+  TabButton,
+  ManageItems,
   Title,
-  // UserImage,
-  Loader,
-} from './manage-services.styles';
-
-import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
+} from '../managers.styles.js';
 
 const ManageServices = () => {
   // -------------------------- STATE AND CONSTANTS ---------------
@@ -79,7 +78,7 @@ const ManageServices = () => {
   };
 
   return (
-    <SettingsContainer
+    <TabContainer
       variants={containerVariants}
       initial='hidden'
       animate='visible'
@@ -146,17 +145,17 @@ const ManageServices = () => {
         </form>
       </TabSubContainer>
       <Line />
-      <ServicesSettings loading={loading.fetchLoader ? 'true' : 'false'}>
+      <ManageItems loading={loading.fetchLoader ? 'true' : 'false'}>
         <Title>Administrar servicios</Title>
         {loading.fetchLoader ? (
-          <Loader />
+          <TabLoader />
         ) : (
           servicesData.map(({ _id, ...otherProps }) => (
             <HandleService key={_id} id={_id} {...otherProps}></HandleService>
           ))
         )}
-      </ServicesSettings>
-    </SettingsContainer>
+      </ManageItems>
+    </TabContainer>
   );
 };
 

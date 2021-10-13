@@ -1,13 +1,12 @@
 import React from 'react';
 
-// COMPONENTS
-import Loader from '../loaders/loader/loader.component';
-
 // STYLES
 import {
   CustomButtonContainer,
+  GooogleChildrenContainer,
   ChildrenContainer,
   GoogleContainer,
+  ButtonLoader,
 } from './custom-button.styles';
 
 // ICONS
@@ -21,12 +20,12 @@ const CustomButton = ({ children, isGoogleSignIn, loading, ...props }) => {
           <GoogleContainer>
             <FcGoogle />
           </GoogleContainer>
-          <ChildrenContainer>{children}</ChildrenContainer>,
+          <GooogleChildrenContainer>{children}</GooogleChildrenContainer>,
         </>
-      ) : loading ? (
-        <Loader />
       ) : (
-        children
+        <ChildrenContainer>
+          {loading ? <ButtonLoader /> : children}
+        </ChildrenContainer>
       )}
     </CustomButtonContainer>
   );

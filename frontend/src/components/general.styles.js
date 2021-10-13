@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import tokens from '../tokens';
-import CustomButton from './custom-button/custom-button.component';
 
 // --------------------------------------------------------
 // PAGE GRID
@@ -253,51 +252,5 @@ export const SidebarText = styled.p`
   z-index: 3;
   @media only screen and (max-width: 700px) {
     display: none;
-  }
-`;
-
-// ---------------------------------------------------------
-// TAB STYLES
-// ---------------------------------------------------------
-
-export const TabSubContainer = styled.div`
-  padding: 0 16rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 4rem;
-  align-items: start;
-  align-content: start;
-
-  & form {
-    display: grid;
-    grid-gap: 4.5rem;
-  }
-
-  @media only screen and (max-width: 900px) {
-    padding: 0 10rem;
-  }
-  @media only screen and (max-width: 700px) {
-    padding: 0 8rem;
-  }
-  @media only screen and (max-width: 600px) {
-    padding: 0 5rem;
-  }
-  @media only screen and (max-width: 400px) {
-    padding: 0 3rem;
-  }
-`;
-
-export const Line = styled.div`
-  margin: 6rem 0;
-  width: 100%;
-  height: 1px;
-  background-color: #e0e0e0;
-`;
-
-export const TabButton = styled(CustomButton)`
-  justify-self: end;
-
-  @media only screen and (max-width: 600px) {
-    justify-self: center;
   }
 `;

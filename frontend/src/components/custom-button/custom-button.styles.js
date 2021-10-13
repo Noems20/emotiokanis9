@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import tokens from '../../tokens';
+import Loader from '../loaders/loader/loader.component';
 
 // ------------------ PRIMARY BUTTON STYLES ------------
 const primaryButtonStyles = css`
@@ -121,11 +122,24 @@ export const CustomButtonContainer = styled(motion.button)`
   ${getButtonStyles}
 `;
 
-export const ChildrenContainer = styled.div`
+export const GooogleChildrenContainer = styled.div`
   margin-left: -2rem;
 `;
+
+export const ChildrenContainer = styled.div`
+  height: 2.4rem;
+  display: grid;
+  align-content: center;
+`;
+
 export const GoogleContainer = styled.div`
   display: grid;
   justify-content: start;
   justify-items: center;
+`;
+
+export const ButtonLoader = styled(Loader)`
+  /* font-size: 10rem; */
+  margin: 0 auto;
+  font-size: 0.5rem;
 `;

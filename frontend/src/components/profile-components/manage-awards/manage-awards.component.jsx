@@ -10,16 +10,17 @@ import TextInput from '../../form-inputs/text-input/text-input.component';
 import TextAreaInput from '../../form-inputs/textarea-input/textarea-input.component';
 import FileInput from '../../form-inputs/file-input/file-input.component';
 import HandleAward from '../../handle-award/handle-award.component';
+import TabLoader from '../../loaders/tab-loader/tab-loader.component';
 
 // STYLES
 import {
-  SettingsContainer,
-  ServicesSettings,
+  Line,
+  TabContainer,
+  TabSubContainer,
+  TabButton,
+  ManageItems,
   Title,
-  Loader,
-} from './manage-awards.styles';
-
-import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
+} from '../managers.styles.js';
 
 const ManageAwards = () => {
   // -------------------------- STATE AND CONSTANTS ---------------
@@ -74,7 +75,7 @@ const ManageAwards = () => {
   };
 
   return (
-    <SettingsContainer
+    <TabContainer
       variants={containerVariants}
       initial='hidden'
       animate='visible'
@@ -133,17 +134,17 @@ const ManageAwards = () => {
         </form>
       </TabSubContainer>
       <Line />
-      <ServicesSettings loading={loading.fetchLoader ? 'true' : 'false'}>
+      <ManageItems loading={loading.fetchLoader ? 'true' : 'false'}>
         <Title>Administrar premios</Title>
         {loading.fetchLoader ? (
-          <Loader />
+          <TabLoader />
         ) : (
           awardsData.map(({ _id, ...otherProps }) => (
             <HandleAward key={_id} id={_id} {...otherProps}></HandleAward>
           ))
         )}
-      </ServicesSettings>
-    </SettingsContainer>
+      </ManageItems>
+    </TabContainer>
   );
 };
 

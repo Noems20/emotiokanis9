@@ -7,15 +7,29 @@ export const CardContainer = styled(motion.div)`
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.32);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
   cursor: pointer;
+
+  transition-property: box-shadow;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
 
   display: grid;
   grid-template-rows: repeat(2, min-content);
+
+  &:hover {
+    -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.32);
+    box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.32);
+    transition-property: box-shadow;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+  }
 `;
 
 export const CardImage = styled.img`
   width: 100%;
-  border-radius: 10px 10px 0 0;
+  object-fit: fill;
+  /* border-radius: 10px 10px 0 0; */
 `;
 
 export const CardDescription = styled.div`
@@ -39,7 +53,7 @@ export const CardDate = styled.h1`
   grid-column: 2/3;
   text-align: right;
 
-  color: var(--color-primary);
+  color: var(--color-grey-dark-3);
   font-family: ${tokens.fontPrimary};
   font-weight: 300;
   font-size: 1.8rem;

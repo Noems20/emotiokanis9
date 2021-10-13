@@ -4,10 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { clearSuccess, clearUiErrors } from '../../redux/ui/uiActions';
-import {
-  deleteService,
-  updateService,
-} from '../../redux/services/servicesActions';
+import { deleteAward, updateAward } from '../../redux/awards/awardsActions';
 
 // COMPONENTS
 import Modal from '../modal/modal.component';
@@ -37,14 +34,17 @@ import {
 } from './handle-award.styles';
 
 const HandleAward = ({ id, name, description, date, image }) => {
+  // ---------------------------- STATE AND CONSTANTS -----------------------------
   const imageSrc = `/img/awards/${image}`;
+  const formatedDate = new Date(date);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const [deleteLoader, setDeleteLoader] = useState(false);
   const [imageHash, setImageHash] = useState(Date.now());
   const [modalOpen, setModalOpen] = useState(false);
   const [serviceData, setServiceData] = useState({
     formName: name,
     formDescription: description,
-    formDate: date,
+    formDate: date.substr(0, 10),
   });
 
   const [selectedFile, setSelectedFile] = useState('');
@@ -54,6 +54,7 @@ const HandleAward = ({ id, name, description, date, image }) => {
   const dispatch = useDispatch();
   const { uiErrors, loading, success } = useSelector((state) => state.ui);
 
+  // ---------------------------- USE EFFECT'S -----------------------------
   useEffect(() => {
     if (success === true && selectedFile) {
       setImageHash(Date.now());
@@ -61,6 +62,7 @@ const HandleAward = ({ id, name, description, date, image }) => {
     }
   }, [success, selectedFile, dispatch]);
 
+  // ---------------------------- HANDLERS -----------------------------
   const handleOpen = () => {
     dispatch(clearUiErrors());
     setModalOpen(true);
@@ -71,21 +73,27 @@ const HandleAward = ({ id, name, description, date, image }) => {
     setServiceData({
       formName: name,
       formDescription: description,
-      formDate: date,
+      formDate: date.substr(0, 10),
     });
     setSelectedFile('');
     setModalOpen(false);
   };
 
-  const handleServiceSubmit = (e) => {
+  const handleAwardSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      updateService(id, formName, formDescription, formDate, selectedFile)
+      updateAward(
+        id,
+        formName,
+        formDescription,
+        formDate + 'T01:00:00',
+        selectedFile
+      )
     );
   };
 
   const handleDelete = () => {
-    dispatch(deleteService(id));
+    dispatch(deleteAward(id));
     setDeleteLoader(true);
   };
 
@@ -112,7 +120,7 @@ const HandleAward = ({ id, name, description, date, image }) => {
           </ServiceDescription>
           <ServicePrice>
             <PriceTitle>Fecha</PriceTitle>
-            <Price>{date}</Price>
+            <Price>{formatedDate.toLocaleDateString('es-ES', options)}</Price>
             <ButtonsContainer>
               <Button primary onClick={handleOpen}>
                 Editar premio
@@ -135,7 +143,7 @@ const HandleAward = ({ id, name, description, date, image }) => {
           <Modal handleClose={handleClose}>
             <FormContainer>
               <Title>Actualizar premio</Title>
-              <form onSubmit={handleServiceSubmit}>
+              <form onSubmit={handleAwardSubmit}>
                 <TextInput
                   name='formName'
                   type='text'
@@ -155,7 +163,7 @@ const HandleAward = ({ id, name, description, date, image }) => {
                 />
                 <TextInput
                   name='formDate'
-                  type='text'
+                  type='date'
                   handleChange={handleChange}
                   value={formDate}
                   label='Fecha'

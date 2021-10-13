@@ -41,6 +41,7 @@ export const resizeServiceImage = (req, res, next) => {
 
     sharp(req.file.buffer)
       .resize(1920, 1200)
+      .withMetadata()
       .toFormat('jpg')
       .jpeg({ quality: 90 })
       .toFile(`backend/public/img/services/${req.file.filename}`)

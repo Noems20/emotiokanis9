@@ -3,7 +3,7 @@ import tokens from '../../tokens';
 import { PageGrid } from '../../components/general.styles';
 
 export const Grid = styled(PageGrid)`
-  overflow-x: hidden;
+  overflow: hidden;
   grid-auto-rows: calc(100vh - 8rem) max-content;
 
   @media only screen and (max-width: 1200px) {

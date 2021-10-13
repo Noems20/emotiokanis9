@@ -10,7 +10,7 @@ import {
 } from './text-input.styles';
 
 const TextInput = ({ handleChange, label, error, ...props }) => (
-  <GroupContainer>
+  <GroupContainer {...props}>
     <InputGroup>
       <MagicBox
         error={error ? true : false}

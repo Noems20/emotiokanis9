@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchServices,
-  createService,
-} from '../../../redux/services/servicesActions';
+import { fetchAwards, createAward } from '../../../redux/awards/awardsActions';
 import { clearUiErrors } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
@@ -26,17 +23,17 @@ import { Line, TabSubContainer, TabButton } from '../../general.styles.js';
 
 const ManageAwards = () => {
   // -------------------------- STATE AND CONSTANTS ---------------
-  const [serviceData, setServiceData] = useState({
+  const [awardData, setAwardData] = useState({
     name: '',
     description: '',
     date: '',
   });
   const [selectedFile, setSelectedFile] = useState('');
 
-  const { name, description, date } = serviceData;
+  const { name, description, date } = awardData;
 
   const dispatch = useDispatch();
-  const { servicesData } = useSelector((state) => state.services);
+  const { awardsData } = useSelector((state) => state.awards);
   const { uiErrors, loading } = useSelector((state) => state.ui);
 
   const containerVariants = {
@@ -54,7 +51,7 @@ const ManageAwards = () => {
 
   // ------------------------- USE EFFECT ---------------------
   useEffect(() => {
-    dispatch(fetchServices());
+    dispatch(fetchAwards());
     return () => {
       dispatch(clearUiErrors());
     };
@@ -63,13 +60,13 @@ const ManageAwards = () => {
   // ------------------------- HANDLERS ---------------------
   const handleServiceSubmit = (e) => {
     e.preventDefault();
-    dispatch(createService(name, description, date, selectedFile));
+    dispatch(createAward(name, description, date + 'T01:00:00', selectedFile));
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setServiceData({ ...serviceData, [name]: value });
+    setAwardData({ ...awardData, [name]: value });
   };
 
   const handleFile = (e) => {
@@ -105,7 +102,7 @@ const ManageAwards = () => {
           />
           <TextInput
             name='date'
-            type='text'
+            type='date'
             handleChange={handleChange}
             value={date}
             label='Fecha'
@@ -141,7 +138,7 @@ const ManageAwards = () => {
         {loading.fetchLoader ? (
           <Loader />
         ) : (
-          servicesData.map(({ _id, ...otherProps }) => (
+          awardsData.map(({ _id, ...otherProps }) => (
             <HandleAward key={_id} id={_id} {...otherProps}></HandleAward>
           ))
         )}

@@ -18,6 +18,10 @@ export const GroupContainer = styled.div`
   input[type='password'] {
     letter-spacing: 0.3em;
   }
+
+  label {
+    ${({ type }) => type === 'date' && shrinkLabelStyles}
+  }
 `;
 export const InputGroup = styled.div`
   position: relative;

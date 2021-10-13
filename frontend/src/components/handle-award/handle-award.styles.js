@@ -15,7 +15,7 @@ export const ServiceHeading = styled.div`
     ${(props) => `url(${props.url})`};
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
 
   box-shadow: 0px 0px 8px 2px var(--color-grey-light-4);
   -webkit-box-shadow: 0px 0px 8px 2px var(--color-grey-light-4);
@@ -86,16 +86,8 @@ export const PriceTitle = styled.h1`
   color: var(--color-primary);
 `;
 
-export const PriceLapse = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  color: var(--color-grey-dark-3);
-
-  margin-top: -1rem;
-`;
-
 export const Price = styled.p`
-  font-size: 3rem;
+  font-size: 2rem;
 `;
 
 export const ButtonsContainer = styled.div`

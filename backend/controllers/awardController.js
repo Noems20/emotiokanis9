@@ -32,26 +32,31 @@ export const uploadImage = upload.single('image');
 
 // ----------------- RESIZE CREATED AWARD IMAGE ----------------
 export const resizeAwardImage = (req, res, next) => {
+  let status = 201;
+  if (req.update === true) {
+    status = 200;
+  }
   // As we saved image in memory filename doesn't exist but update needs it
   if (req.file) {
     req.file.filename = `award-${req.doc.id}.jpg`;
 
     sharp(req.file.buffer)
-      .resize(1920, 1200)
+      .withMetadata()
       .toFormat('jpg')
-      .jpeg({ quality: 90 })
-      .toFile(`backend/public/img/awards/${req.file.filename}`);
+      .jpeg({ quality: 95 })
+      .toFile(`backend/public/img/awards/${req.file.filename}`)
+      .then(() => {
+        return res.status(status).json({
+          status: 'success',
+          data: req.doc,
+        });
+      });
+  } else {
+    res.status(status).json({
+      status: 'success',
+      data: req.doc,
+    });
   }
-
-  let status = 201;
-  if (req.update === true) {
-    status = 200;
-  }
-
-  res.status(status).json({
-    status: 'success',
-    data: req.doc,
-  });
 };
 
 // ----------------- CREATE AWARD -----------------------

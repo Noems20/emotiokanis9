@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import WOW from 'wowjs';
 import { AnimatePresence } from 'framer-motion';
 
 // COMPONENTS
@@ -20,6 +21,12 @@ const GalleryCard = ({ name, description, date, image }) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
   // ------------------- USE EFFECT ---------------
+  useEffect(() => {
+    new WOW.WOW({
+      live: false,
+      animateClass: 'animate__animated',
+    }).init();
+  }, []);
 
   // ------------------ HANDLERS ------------------
   const handleClick = () => {
@@ -33,12 +40,15 @@ const GalleryCard = ({ name, description, date, image }) => {
   return (
     <>
       <CardContainer
-        data-aos='zoom-in-up'
+        // data-aos='zoom-in-up'
+        className='wow animate__animated animate__backInUp'
+        data-wow-duration='1s'
         onClick={handleClick}
-        whileHover={{
-          scale: 1.03,
-          boxShadow: '0px 0px 11px 1px rgba(0, 0, 0, 0.32) ',
-        }}
+        // whileHover={{
+        //   boxShadow: '0px 0px 11px 1px rgba(0, 0, 0, 0.32) ',
+        //   scale: 1.03,
+        // }}
+        // transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
         <CardImage src={`/img/awards/${image}`} alt='Imagen de premio' />
         <CardDescription>

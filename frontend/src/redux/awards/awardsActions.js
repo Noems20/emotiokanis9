@@ -1,10 +1,5 @@
 import axios from 'axios';
-import {
-  SET_UI_ERRORS,
-  SET_UI_LOADING,
-  CLEAR_UI_ERRORS,
-  SET_SUCCESS,
-} from '../ui/uiTypes';
+import { SET_UI_LOADING, CLEAR_UI_ERRORS, SET_SUCCESS } from '../ui/uiTypes';
 import {
   SET_AWARDS,
   CLEAR_AWARDS,
@@ -13,6 +8,7 @@ import {
   DELETE_AWARD,
 } from './awardsTypes';
 import { batch } from 'react-redux';
+import { checkUserPermissions } from '../user/userActions';
 
 // ---------------------------- FETCH AWARDS ----------------------------
 export const fetchAwards = () => async (dispatch) => {
@@ -89,10 +85,7 @@ export const createAward =
         type: SET_UI_LOADING,
         payload: { firstLoader: false },
       });
-      dispatch({
-        type: SET_UI_ERRORS,
-        payload: { errorsOne: error.response.data.uiErrors },
-      });
+      checkUserPermissions(error, dispatch);
     }
   };
 
@@ -148,10 +141,7 @@ export const updateAward =
         type: SET_UI_LOADING,
         payload: { secondLoader: false },
       });
-      dispatch({
-        type: SET_UI_ERRORS,
-        payload: { errorsOne: error.response.data.uiErrors },
-      });
+      checkUserPermissions(error, dispatch);
     }
   };
 // ---------------------------- DELETE AWARD ----------------------------
@@ -165,6 +155,11 @@ export const deleteAward = (id) => async (dispatch) => {
       });
     });
   } catch (error) {
-    console.log(error);
+    if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      window.location.reload();
+    }
   }
 };

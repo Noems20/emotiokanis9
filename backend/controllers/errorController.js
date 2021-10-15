@@ -90,23 +90,8 @@ const sendErrorProd = (err, req, res) => {
       message: 'Something went wrong!',
     });
   }
-  // RENDERED WEBSITE
-  // if (err.isOperational) {
-  //   return res.status(err.statusCode).render('error', {
-  //     title: 'Something went wrong!',
-  //     msg: err.message,
-  //   });
-  // }
-  //Programming or other unknown error don't leak error details
-  // 1) Log error
 
   console.error('ERROR', err);
-
-  // 2) Send generate message
-  // return res.status(err.statusCode).render('error', {
-  //   title: 'Something went wrong!',
-  //   msg: 'Please try again later.',
-  // });
 };
 
 // Only by giving 4 arguments express recognizes as an error handler middleware
@@ -121,6 +106,7 @@ export default (err, req, res, next) => {
     let uiErrors = {};
     if (error.name === 'ValidationError' || error.code === 11000) {
       handleUIErrors(uiErrors, error);
+      error.statusCode = 400;
     }
     sendErrorDev(error, req, res, uiErrors);
   } else if (process.env.NODE_ENV === 'production') {

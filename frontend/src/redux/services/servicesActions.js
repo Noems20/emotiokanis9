@@ -1,10 +1,5 @@
 import axios from 'axios';
-import {
-  SET_UI_ERRORS,
-  SET_UI_LOADING,
-  CLEAR_UI_ERRORS,
-  SET_SUCCESS,
-} from '../ui/uiTypes';
+import { SET_UI_LOADING, CLEAR_UI_ERRORS, SET_SUCCESS } from '../ui/uiTypes';
 import {
   SET_SERVICES,
   CLEAR_SERVICES,
@@ -12,6 +7,8 @@ import {
   UPDATE_SERVICE,
   DELETE_SERVICE,
 } from './servicesTypes';
+
+import { checkUserPermissions } from '../user/userActions';
 import { batch } from 'react-redux';
 
 // ---------------------------- FETCH SERVICES ----------------------------
@@ -103,10 +100,7 @@ export const createService =
         type: SET_UI_LOADING,
         payload: { firstLoader: false },
       });
-      dispatch({
-        type: SET_UI_ERRORS,
-        payload: { errorsOne: error.response.data.uiErrors },
-      });
+      checkUserPermissions(error, dispatch);
     }
   };
 
@@ -167,10 +161,7 @@ export const updateService =
         type: SET_UI_LOADING,
         payload: { secondLoader: false },
       });
-      dispatch({
-        type: SET_UI_ERRORS,
-        payload: { errorsOne: error.response.data.uiErrors },
-      });
+      checkUserPermissions(error, dispatch);
     }
   };
 // ---------------------------- DELETE SERVICE ----------------------------
@@ -184,6 +175,11 @@ export const deleteService = (id) => async (dispatch) => {
       });
     });
   } catch (error) {
-    console.log(error);
+    if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      window.location.reload();
+    }
   }
 };

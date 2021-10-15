@@ -33,7 +33,7 @@ router.use(protect);
 
 router.patch('/updateMyPassword', updatePassword);
 // router.get('/me', getMe, getUser);
-router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
+router.patch('/updateMe', uploadUserPhoto, updateMe, resizeUserPhoto);
 // router.delete('/deleteMe', deleteMe);
 
 // ----------- GENERIC ROUTES --------

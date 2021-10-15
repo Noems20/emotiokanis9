@@ -129,19 +129,21 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
       type: SET_UI_LOADING,
       payload: { firstLoader: true },
     });
+
     const form = new FormData();
 
     form.append('email', email);
     form.append('name', name);
     form.append('photo', photo);
 
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //     'access-control-allow-origin': '*',
+    //   },
+    // };
 
-    const { data } = await axios.patch('/api/v1/users/updateMe', form, config);
+    const { data } = await axios.patch('/api/v1/users/updateMe', form);
 
     batch(() => {
       dispatch({
@@ -166,10 +168,22 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
       type: SET_UI_LOADING,
       payload: { firstLoader: false },
     });
-    dispatch({
-      type: SET_UI_ERRORS,
-      payload: { errorsOne: error.response.data.uiErrors },
-    });
+    if (error.message === 'Network Error') {
+      console.log('There was a network error.');
+      dispatch({
+        type: CLEAR_UI_ERRORS,
+      });
+      window.location.reload();
+    } else {
+      if (checkUserAndPermissions(error) === true) {
+        dispatch({
+          type: SET_UI_ERRORS,
+          payload: { errorsOne: error.response.data.uiErrors },
+        });
+      } else {
+        window.location.reload();
+      }
+    }
   }
 };
 
@@ -214,10 +228,17 @@ export const updateMyPassword =
         type: SET_UI_LOADING,
         payload: { secondLoader: false },
       });
-      dispatch({
-        type: SET_UI_ERRORS,
-        payload: { errorsTwo: error.response.data.uiErrors },
-      });
+      if (checkUserAndPermissions(error) === true) {
+        dispatch({
+          type: SET_UI_ERRORS,
+          payload: { errorsTwo: error.response.data.uiErrors },
+        });
+      } else {
+        dispatch({
+          type: CLEAR_UI_ERRORS,
+        });
+        window.location.reload();
+      }
     }
   };
 
@@ -334,4 +355,43 @@ export const setUpdatedUser = (value) => (dispatch) => {
     type: SET_UPDATED_USER,
     payload: value,
   });
+};
+
+export const checkUserAndPermissions = (error) => {
+  // const { message } = error.response.data;
+  if (
+    error.response.data.message ===
+      'You are not logged in! Please log in to get access' ||
+    error.response.data.message ===
+      'You do not have permission to perform this action' ||
+    error.message === 'No user'
+  ) {
+    return false;
+  }
+  return true;
+};
+
+export const checkUserPermissions = (error, dispatch) => {
+  if (error.message === 'Network Error') {
+    console.log('There was a network error.');
+    dispatch({
+      type: CLEAR_UI_ERRORS,
+    });
+    window.location.reload();
+  } else {
+    if (checkUserAndPermissions(error) === true) {
+      dispatch({
+        type: SET_UI_ERRORS,
+        payload: { errorsOne: error.response.data.uiErrors },
+      });
+    } else if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      dispatch({
+        type: CLEAR_UI_ERRORS,
+      });
+      window.location.reload();
+    }
+  }
 };

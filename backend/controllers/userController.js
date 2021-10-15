@@ -35,24 +35,37 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+export const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
 
 export const uploadUserPhoto = upload.single('photo');
 
 // ----------------- RESIZE USER PHOTO ----------------
 export const resizeUserPhoto = (req, res, next) => {
-  if (!req.file) return next();
-
   // As we saved image in memory filename doesn't exist but updateMe needs it
-  req.file.filename = `user-${req.user.id}.jpeg`;
+  if (req.file) {
+    req.file.filename = `user-${req.doc.id}.jpg`;
 
-  sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(`backend/public/img/users/${req.file.filename}`);
-
-  next();
+    sharp(req.file.buffer)
+      .resize(500, 500)
+      .withMetadata()
+      .toFormat('jpg')
+      .jpeg({ quality: 90 })
+      .toFile(`backend/public/img/users/${req.file.filename}`)
+      .then(() => {
+        return res.status(200).json({
+          status: 'success',
+          user: req.doc,
+        });
+      });
+  } else {
+    res.status(200).json({
+      status: 'success',
+      user: req.doc,
+    });
+  }
 };
 
 // ------------------ FILTER OBJECT -------------
@@ -86,9 +99,10 @@ export const updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
+  // console.log(req.body);
   // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
-  if (req.file) filteredBody.photo = req.file.filename;
+  if (req.file) filteredBody.photo = `user-${req.user.id}.jpg`;
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -96,8 +110,6 @@ export const updateMe = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
-  res.status(200).json({
-    status: 'success',
-    user: updatedUser,
-  });
+  req.doc = updatedUser;
+  next();
 });

@@ -38,7 +38,11 @@ export const Container = styled.div`
   }
 `;
 
-export const SideBar = styled(Sidebar)``;
+export const SideBar = styled(Sidebar)`
+  @media only screen and (min-width: 1200px) {
+    min-width: 33.5rem;
+  }
+`;
 
 export const SideBarContainer = styled(SidebarContainer)``;
 

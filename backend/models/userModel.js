@@ -6,54 +6,60 @@ import crypto from 'crypto';
 // Validators run in: findByIdAndUpdate(if specified), create, save
 // But validators using this. keyword only run on CREATE and SAVE
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'No puede estar vacío'],
-    trim: true,
-    minlength: [3, 'Necesita ser mayor a 2 caracteres'],
-    maxlength: [35, 'Necesita ser menor a 36 caracteres'],
-    validate: {
-      validator: function (value) {
-        return validator.isAlpha(value.split(' ').join(''), 'es-ES');
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'No puede estar vacío'],
+      trim: true,
+      minlength: [3, 'Necesita ser mayor a 2 caracteres'],
+      maxlength: [35, 'Necesita ser menor a 36 caracteres'],
+      validate: {
+        validator: function (value) {
+          return validator.isAlpha(value.split(' ').join(''), 'es-ES');
+        },
+        message: 'Solo debe contener caracteres',
       },
-      message: 'Solo debe contener caracteres',
     },
-  },
-  email: {
-    type: String,
-    required: [true, 'No puede estar vacío'],
-    unique: true,
-    validate: [validator.isEmail, 'Debe ser un email valido'],
-  },
-  photo: { type: String, default: 'default.jpg' },
-  role: {
-    type: String,
-    enum: ['user', 'employee', 'admin'],
-    default: 'user',
-  },
-  password: {
-    type: String,
-    required: [true, 'No puede estar vacío'],
-    minLength: [8, 'Debe ser mayor a 7 caracteres'],
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, 'No puede estar vacío'],
-    validate: {
-      // Only works with CREATE and SAVE
-      // Because this. only points to current doc on NEW document creation
-      validator: function (el) {
-        return el === this.password;
+    email: {
+      type: String,
+      required: [true, 'No puede estar vacío'],
+      unique: true,
+      validate: [validator.isEmail, 'Debe ser un email valido'],
+    },
+    photo: { type: String, default: 'default.jpg' },
+    role: {
+      type: String,
+      enum: ['user', 'employee', 'admin'],
+      default: 'user',
+    },
+    password: {
+      type: String,
+      required: [true, 'No puede estar vacío'],
+      minLength: [8, 'Debe ser mayor a 7 caracteres'],
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, 'No puede estar vacío'],
+      validate: {
+        // Only works with CREATE and SAVE
+        // Because this. only points to current doc on NEW document creation
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: 'Las contraseñas no coinciden',
       },
-      message: 'Las contraseñas no coinciden',
     },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 // --------------------------------------- MIDDLEWARE -----------------------------------------------
 

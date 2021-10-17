@@ -20,7 +20,8 @@ export const GroupContainer = styled.div`
   }
 
   label {
-    ${({ type }) => type === 'date' && shrinkLabelStyles}
+    ${({ type }) =>
+      (type === 'date' || type === 'datetime-local') && shrinkLabelStyles}
   }
 `;
 export const InputGroup = styled.div`

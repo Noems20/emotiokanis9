@@ -26,7 +26,7 @@ import {
 
 import { DropDownItem } from '../dropdown/dropdown.styles';
 
-import logoB from './images/logo.svg';
+// import logoB from './images/logo.svg';
 import logo from './images/logo.svg';
 
 // ICONS
@@ -66,7 +66,6 @@ const Header = ({ history }) => {
   useOutsideAlerter(headerRef, setClicked, 'header');
   const [showDropdown, setShowDropdown] = useState(true);
   const [scrollNav, setScrollNav] = useState();
-  const [image, setImage] = useState();
   const [photoHash, setPhotoHash] = useState(Date.now());
 
   const dispatch = useDispatch();
@@ -81,24 +80,21 @@ const Header = ({ history }) => {
     if (currentLocation === '/') {
       window.addEventListener('scroll', changeNav);
       listener = true;
-      setImage(logoB);
     } else {
       setScrollNav(true);
-      setImage(logo);
     }
     // console.log(currentLocation);
     history.listen((location) => {
       if (location.pathname === '/' && !listener) {
         window.addEventListener('scroll', changeNav);
         setScrollNav(false);
-        setImage(logoB);
+
         listener = true;
         // console.log('Listener añadido');
       } else if (location.pathname !== '/') {
         window.removeEventListener('scroll', changeNav);
         listener = false;
         setScrollNav(true);
-        setImage(logo);
       }
     });
 
@@ -144,10 +140,8 @@ const Header = ({ history }) => {
   const changeNav = () => {
     if (window.scrollY >= 80) {
       setScrollNav(true);
-      setImage(logo);
     } else {
       setScrollNav(false);
-      setImage(logoB);
     }
   };
 
@@ -155,7 +149,7 @@ const Header = ({ history }) => {
     <HeaderNav scrollnav={scrollNav ? 1 : 0}>
       <HeaderContainer ref={headerRef}>
         <HeaderLogoLink to='/'>
-          <HeaderLogo src={image} scrollnav={scrollNav ? 1 : 0} />
+          <HeaderLogo src={logo} scrollnav={scrollNav ? 1 : 0} />
         </HeaderLogoLink>
         <HeaderLetterLogo to='/' onClick={handleClick}>
           K9

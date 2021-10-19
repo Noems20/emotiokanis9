@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import es from 'date-fns/locale/es';
-import fr from 'date-fns/locale/fr';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import getHours from 'date-fns/getHours';
@@ -31,7 +30,6 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('es', es);
-registerLocale('fr', fr);
 
 const CreateAppointment = ({ loading, className }) => {
   // --------------------------- STATE AND CONSTANTS ------------------------
@@ -135,7 +133,7 @@ const CreateAppointment = ({ loading, className }) => {
                     onChange={(date) => setSelectedDate(date)}
                     inline
                     showTimeSelect
-                    locale='fr'
+                    locale='es'
                     timeFormat='hh:mm aaa'
                     timeCaption={'Horario'}
                     timeIntervals={60}

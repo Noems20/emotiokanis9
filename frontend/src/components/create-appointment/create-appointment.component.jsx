@@ -3,6 +3,7 @@ import es from 'date-fns/locale/es';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import getHours from 'date-fns/getHours';
+import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 
 // COMPONENTS
@@ -43,6 +44,7 @@ const CreateAppointment = ({ loading, className }) => {
       ? setHours(addDays(new Date(), 1), 0)
       : setHours(new Date(), 0)
   );
+  // console.log(getDay(selectedDate));
   // console.log(selectedDate);
   const { subject, description } = appointmentInfo;
 
@@ -134,7 +136,7 @@ const CreateAppointment = ({ loading, className }) => {
                     inline
                     showTimeSelect
                     locale='es'
-                    timeFormat='hh:mm aaa'
+                    timeFormat='h:mm aaa'
                     timeCaption={'Horario'}
                     timeIntervals={60}
                     minDate={
@@ -143,8 +145,16 @@ const CreateAppointment = ({ loading, className }) => {
                         : new Date()
                     }
                     maxDate={addDays(new Date(), 29)}
-                    minTime={setHours(setMinutes(new Date(), 0), 8)}
-                    maxTime={setHours(setMinutes(new Date(), 0), 19)}
+                    minTime={
+                      getDay(selectedDate) !== 6
+                        ? setHours(setMinutes(new Date(), 0), 8)
+                        : setHours(setMinutes(new Date(), 0), 9)
+                    }
+                    maxTime={
+                      getDay(selectedDate) !== 6
+                        ? setHours(setMinutes(new Date(), 0), 19)
+                        : setHours(setMinutes(new Date(), 0), 14)
+                    }
                     filterDate={(date) => date.getDay() !== 0}
                     filterTime={filterPassedTime}
                     dateFormat='MMMM d, yyyy h:mm aa'

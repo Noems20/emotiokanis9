@@ -65,11 +65,7 @@ const Appointments = () => {
         return <CreateAppointment loading={userLoaded.tab} key={1} />;
       case 'myAppointments':
         return (
-          <UserAppointmentsHistory
-            loading={userLoaded.tab}
-            setTab={setTab}
-            key={2}
-          />
+          <UserAppointmentsHistory loading={userLoaded.tab} setTab={setTab} />
         );
       case 'contact':
         return (
@@ -105,11 +101,7 @@ const Appointments = () => {
         );
       default:
         return (
-          <UserAppointmentsHistory
-            loading={userLoaded.tab}
-            setTab={setTab}
-            key={1}
-          />
+          <UserAppointmentsHistory loading={userLoaded.tab} setTab={setTab} />
         );
     }
   };

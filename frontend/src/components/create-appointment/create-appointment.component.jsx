@@ -1,10 +1,20 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import es from 'date-fns/locale/es';
+import fr from 'date-fns/locale/fr';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
+import getHours from 'date-fns/getHours';
+import addDays from 'date-fns/addDays';
 
 // COMPONENTS
+import DatePicker, { registerLocale } from 'react-datepicker';
 import TextInput from '../form-inputs/text-input/text-input.component';
 import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
+import {
+  CalendarContainer,
+  CustomMonthHeader,
+} from '../calendar/calendar.components';
 
 // STYLES
 import {
@@ -12,34 +22,31 @@ import {
   ContentWrapper,
   Title,
   FormContainer,
+  DateInputContainer,
   ButtonContainer,
   Button,
   LoaderContainer,
 } from './create-appointment.styles';
 
+import 'react-datepicker/dist/react-datepicker.css';
+
+registerLocale('es', es);
+registerLocale('fr', fr);
+
 const CreateAppointment = ({ loading, className }) => {
+  // --------------------------- STATE AND CONSTANTS ------------------------
   const [appointmentInfo, setAppointmentInfo] = useState({
     subject: '',
-    date: '',
     description: '',
   });
 
-  const { subject, date, description } = appointmentInfo;
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    setAppointmentInfo({
-      subject: '',
-      date: '',
-      description: '',
-    });
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setAppointmentInfo({ ...appointmentInfo, [name]: value });
-  };
+  const [selectedDate, setSelectedDate] = useState(
+    getHours(new Date()) >= 19
+      ? setHours(addDays(new Date(), 1), 0)
+      : setHours(new Date(), 0)
+  );
+  // console.log(selectedDate);
+  const { subject, description } = appointmentInfo;
 
   const containerVariants = {
     hidden: {
@@ -55,6 +62,30 @@ const CreateAppointment = ({ loading, className }) => {
     exit: {
       x: '100vw',
     },
+  };
+
+  // --------------------------- HANDLERS ------------------------
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() + 120 * 60000 < selectedDate.getTime();
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setAppointmentInfo({
+      subject: '',
+      date: '',
+      description: '',
+    });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setAppointmentInfo({ ...appointmentInfo, [name]: value });
   };
 
   return (
@@ -82,23 +113,52 @@ const CreateAppointment = ({ loading, className }) => {
                   label='Asunto'
                   required
                 />
-                <TextInput
-                  name='date'
-                  type='datetime-local'
-                  handleChange={handleChange}
-                  value={date}
-                  min='2017-06-01T08:30'
-                  max='2017-06-30T16:30'
-                  label='Fecha y hora'
-                  required
-                />
+                <DateInputContainer>
+                  <DatePicker
+                    renderCustomHeader={({
+                      date,
+                      decreaseMonth,
+                      increaseMonth,
+                      prevMonthButtonDisabled,
+                      nextMonthButtonDisabled,
+                    }) => {
+                      return CustomMonthHeader(
+                        date,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled
+                      );
+                    }}
+                    calendarContainer={CalendarContainer}
+                    selected={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    inline
+                    showTimeSelect
+                    locale='fr'
+                    timeFormat='hh:mm aaa'
+                    timeCaption={'Horario'}
+                    timeIntervals={60}
+                    minDate={
+                      getHours(new Date()) >= 19
+                        ? addDays(new Date(), 1)
+                        : new Date()
+                    }
+                    maxDate={addDays(new Date(), 29)}
+                    minTime={setHours(setMinutes(new Date(), 0), 8)}
+                    maxTime={setHours(setMinutes(new Date(), 0), 19)}
+                    filterDate={(date) => date.getDay() !== 0}
+                    filterTime={filterPassedTime}
+                    dateFormat='MMMM d, yyyy h:mm aa'
+                  />
+                </DateInputContainer>
                 <TextAreaInput
                   name='description'
                   type='text'
                   handleChange={handleChange}
                   value={description}
                   label='Descripción'
-                  rows={5}
+                  rows={1}
                   required
                 />
               </FormContainer>

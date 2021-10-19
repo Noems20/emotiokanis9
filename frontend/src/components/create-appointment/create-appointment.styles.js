@@ -49,8 +49,18 @@ export const Title = styled(TitleSm)``;
 
 export const FormContainer = styled.form`
   display: grid;
-  grid-gap: 4rem;
+  grid-gap: 2.5rem;
   /* align-content: space-evenly; */
+`;
+
+export const DateInputContainer = styled.div`
+  justify-self: center;
+  border-top: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  overflow: hidden;
 `;
 
 export const ButtonContainer = styled.div`

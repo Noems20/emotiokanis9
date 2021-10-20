@@ -51,7 +51,7 @@ export const Arrow = styled(RiArrowDownSLine)`
   width: 1.5rem;
   height: 1.5rem;
   transform: translateY(-50%);
-  z-index: -1;
+  z-index: 1;
 
   @media only screen and (max-width: 430px) {
     height: 2.5rem;

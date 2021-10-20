@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_UI_LOADING, SET_UI_ERRORS, CLEAR_UI_ERRORS } from '../ui/uiTypes';
-import { CREATE_APPOINTMENT } from './appointmentsTypes';
+import { CREATE_APPOINTMENT, DELETE_APPOINTMENT } from './appointmentsTypes';
 import { batch } from 'react-redux';
 
 // ---------------------------- CLEAR APPOINTMENTS ----------------------------
@@ -133,22 +133,21 @@ export const createAppointment =
 //       checkUserPermissions(error, dispatch);
 //     }
 //   };
-// ---------------------------- DELETE SERVICE ----------------------------
-// export const deleteService = (id) => async (dispatch) => {
-//   try {
-//     await axios.delete(`/api/v1/appointments/${id}`);
-//     batch(() => {
-//       dispatch({
-//         type: DELETE_SERVICE,
-//         payload: id,
-//       });
-//     });
-//   } catch (error) {
-//     if (
-//       error.response.data.message ===
-//       'You are not logged in! Please log in to get access'
-//     ) {
-//       window.location.reload();
-//     }
-//   }
-// };
+// ---------------------------- CANCEL APPOINTMENT ----------------------------
+export const cancelAppointment = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/v1/appointments/${id}`);
+    batch(() => {
+      dispatch({
+        type: DELETE_APPOINTMENT,
+      });
+    });
+  } catch (error) {
+    if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      window.location.reload();
+    }
+  }
+};

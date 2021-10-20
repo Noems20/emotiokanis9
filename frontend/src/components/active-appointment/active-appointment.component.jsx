@@ -5,7 +5,10 @@ import 'moment/locale/es-us';
 
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
-import { createAppointment } from '../../redux/appointments/appointmentsActions';
+import {
+  createAppointment,
+  cancelAppointment,
+} from '../../redux/appointments/appointmentsActions';
 import { clearUiErrors } from '../../redux/ui/uiActions';
 import {
   fetchServices,
@@ -38,6 +41,7 @@ import {
   ContentWrapper,
   LoaderContainer,
   AppointmentContent,
+  ServiceImage,
   AppointmentTitle,
   SubTitle,
   ServiceTitle,
@@ -55,8 +59,10 @@ registerLocale('es', es);
 
 const ActiveAppointment = ({ loading, className, activeAppointment }) => {
   // --------------------------- STATE AND CONSTANTS ------------------------
-  const [description, setDescription] = useState('');
-  const [service, setService] = useState('');
+  const imageSrc = `/img/services/${activeAppointment.service.image}`;
+  const [deleteLoader, setDeleteLoader] = useState(false);
+  const [formDescription, setFormDescription] = useState('');
+  const [formService, setFormService] = useState('');
   const [selectedDate, setSelectedDate] = useState(
     getHours(new Date()) >= 16
       ? setHours(addDays(new Date(), 1), 0)
@@ -94,11 +100,13 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
   // -------------------------- USE EFFECT'S ---------------------
   useEffect(() => {
     dispatch(fetchServices());
+    setFormDescription(activeAppointment.description);
+    setFormService(activeAppointment.service._id);
 
     return () => {
       dispatch(clearServices());
     };
-  }, [dispatch]);
+  }, [dispatch, activeAppointment]);
 
   // --------------------------- HANDLERS ------------------------
   const filterPassedTime = (time) => {
@@ -110,16 +118,21 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!service) {
-      setService(servicesData[0]._id);
+    if (!formService) {
+      setFormService(servicesData[0]._id);
     }
     dispatch(
       createAppointment(
-        service || servicesData[0]._id,
+        formService || servicesData[0]._id,
         selectedDate.toISOString(),
-        description
+        formDescription
       )
     );
+  };
+
+  const handleDelete = () => {
+    setDeleteLoader(true);
+    dispatch(cancelAppointment(activeAppointment.id));
   };
 
   const handleClose = () => {
@@ -154,9 +167,11 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                   <SubTitle>Servicio:</SubTitle> <br />
                   {activeAppointment.service.name}
                 </ServiceTitle>
+                <ServiceImage src={imageSrc} />
                 <AppointmentDate>
-                  <SubTitle>Fecha:</SubTitle> <br />
-                  {moment(activeAppointment.date).format('LLLL')}
+                  <SubTitle>Fecha y ubicación:</SubTitle> <br />
+                  {moment(activeAppointment.date).format('LLLL')}, <br />
+                  Preparatoria #236 B, Agronoma II, 98068 Zacatecas, Zac.
                 </AppointmentDate>
                 <Description>
                   <SubTitle>Descripción:</SubTitle> <br />
@@ -172,7 +187,12 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                   >
                     Editar cita
                   </Button>
-                  <Button danger type='submit' onClick={handleSubmit}>
+                  <Button
+                    danger
+                    loading={deleteLoader}
+                    disabled={deleteLoader}
+                    onClick={handleDelete}
+                  >
                     Cancelar cita
                   </Button>
                 </ButtonsContainer>
@@ -189,8 +209,8 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
               <Title>Actualizar cita</Title>
               <SelectInput
                 label='Servicio'
-                onChange={(e) => setService(e.target.value)}
-                value={service}
+                onChange={(e) => setFormService(e.target.value)}
+                value={formService}
               >
                 {servicesData.map((service) => (
                   <option key={service._id} value={service._id}>
@@ -199,13 +219,13 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                 ))}
               </SelectInput>
               <TextAreaInput
-                name='description'
+                name='formDescription'
                 type='text'
-                handleChange={(e) => setDescription(e.target.value)}
-                value={description}
+                handleChange={(e) => setFormDescription(e.target.value)}
+                value={formDescription}
                 label='Descripción (Num. de mascotas, consideraciones especiales)'
                 error={uiErrors.errorsOne.description}
-                rows={1}
+                rows={3}
                 required
               />
               <Calendar

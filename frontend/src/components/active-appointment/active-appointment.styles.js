@@ -23,7 +23,7 @@ export const Container = styled(motion.div)`
   justify-content: center;
   align-content: center;
   grid-template-columns: 0.95fr;
-  grid-template-rows: 0.95fr;
+  /* grid-template-rows: 0.95fr; */
 
   @media only screen and (max-width: 1200px) {
     padding: 3rem;
@@ -55,13 +55,42 @@ export const ContentWrapper = styled.div`
 
 export const AppointmentContent = styled.div`
   display: grid;
-  grid-gap: 4rem;
+  grid-gap: 3rem;
   grid-template-columns: max-content 1fr;
   margin: 0 1rem;
+
+  @media only screen and (max-width: 830px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const ServiceImage = styled.img`
+  justify-self: center;
+  align-self: center;
+  height: 27rem;
+  width: 27rem;
+  padding: 2.5px;
+  border-radius: 50%;
+  border: 5px solid var(--color-primary);
+  grid-column: 2 / 3;
+  grid-row: 2 / 4;
+
+  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+
+  @media only screen and (max-width: 830px) {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
+  }
 `;
 
 export const AppointmentTitle = styled(TitleSm)`
   grid-column: 1 / 3;
+  @media only screen and (max-width: 830px) {
+    text-align: center;
+    grid-column: auto / auto;
+  }
 `;
 
 export const SubTitle = styled.span`
@@ -75,18 +104,30 @@ export const ServiceTitle = styled.h1`
   font-family: ${tokens.fontPrimary};
   font-weight: 300;
   grid-column: 1 / 2;
+  @media only screen and (max-width: 830px) {
+    text-align: center;
+    grid-column: auto / auto;
+  }
 `;
 export const AppointmentDate = styled.p`
   font-size: 2rem;
   font-family: ${tokens.fontPrimary};
-  color: grey;
+  color: var(--color-grey-dark-3);
   font-weight: 300;
   grid-column: 1 / 2;
+  @media only screen and (max-width: 830px) {
+    text-align: center;
+    grid-column: auto / auto;
+  }
 `;
 export const Description = styled.p`
   font-size: 2rem;
   font-weight: 400;
   grid-column: 1 / 3;
+  @media only screen and (max-width: 830px) {
+    text-align: center;
+    grid-column: auto / auto;
+  }
 `;
 
 // -----------------------------------------
@@ -100,18 +141,18 @@ export const Title = styled(TitleSm)`
 
   @media only screen and (max-width: 600px) {
     justify-self: center;
-    margin-bottom: 1rem;
   }
 `;
 
 export const FormContainer = styled(motion.div)`
   width: 60vw;
-  padding: 5rem;
+  height: auto;
+  padding: 3rem;
   border-radius: 8px;
   background-color: #fff;
 
   display: grid;
-  grid-gap: 3rem;
+  grid-gap: 4rem;
 
   @media only screen and (max-width: 1400px) {
     width: 75vw;
@@ -119,7 +160,6 @@ export const FormContainer = styled(motion.div)`
   @media only screen and (max-width: 1200px) {
     width: 80vw;
     padding: 3rem;
-    grid-gap: 1rem;
   }
   @media only screen and (max-width: 600px) {
     width: 90vw;
@@ -130,9 +170,12 @@ export const FormContainer = styled(motion.div)`
 export const ButtonsContainer = styled.div`
   display: grid;
   grid-gap: 2rem;
-  justify-items: center;
 
   grid-template-columns: max-content max-content;
+
+  @media only screen and (max-width: 830px) {
+    justify-self: center;
+  }
 `;
 
 export const Button = styled(CustomButton)`

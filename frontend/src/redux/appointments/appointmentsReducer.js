@@ -2,6 +2,7 @@ import {
   CREATE_APPOINTMENT,
   SET_APPOINTMENTS,
   SET_ACTIVE_APPOINTMENT,
+  DELETE_APPOINTMENT,
 } from './appointmentsTypes';
 
 const initialState = {
@@ -25,6 +26,11 @@ const appointmentsReducer = (state = initialState, action) => {
       return {
         ...state,
         activeAppointment: action.payload,
+      };
+    case DELETE_APPOINTMENT:
+      return {
+        ...state,
+        activeAppointment: null,
       };
     default:
       return state;

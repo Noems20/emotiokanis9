@@ -52,7 +52,7 @@ const appointmentSchema = new mongoose.Schema(
 
 // --------------- POPULATE APPOINTMENT -----------------
 appointmentSchema.pre(/^find/, function (next) {
-  this.populate('service', 'name');
+  this.populate('service', 'name image');
   this.populate('user', 'name photo');
   next();
 });

@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {
+  getMyAppointments,
   getAllAppointments,
   createAppointment,
   deleteAppointment,
@@ -17,6 +18,8 @@ import { protect, restrictTo } from '../controllers/authController.js';
 const router = express.Router({ mergeParams: true });
 
 router.use(protect);
+
+router.get('/MyAppointments', getMyAppointments);
 
 router
   .route('/')

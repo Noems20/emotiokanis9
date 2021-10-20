@@ -30,7 +30,11 @@ export const Container = styled(motion.div)`
   }
 
   @media only screen and (min-height: 800px) and (max-width: 1280px) {
-    margin: 12vh 0px;
+    margin: 10vh 0px;
+  }
+
+  @media only screen and (min-height: 800px) and (max-width: 430px) {
+    margin: 4rem 0;
   }
 
   @media only screen and (max-width: 600px) {
@@ -49,18 +53,8 @@ export const Title = styled(TitleSm)``;
 
 export const FormContainer = styled.form`
   display: grid;
-  grid-gap: 2.5rem;
+  grid-gap: 3rem;
   /* align-content: space-evenly; */
-`;
-
-export const DateInputContainer = styled.div`
-  justify-self: center;
-  border-top: none;
-  border-radius: 10px;
-  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
-  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
-  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
-  overflow: hidden;
 `;
 
 export const ButtonContainer = styled.div`
@@ -70,5 +64,6 @@ export const ButtonContainer = styled.div`
 
 export const Button = styled(CustomButton)`
   letter-spacing: 2px;
+  font-weight: 300;
   text-transform: uppercase;
 `;

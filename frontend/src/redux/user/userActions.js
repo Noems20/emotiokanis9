@@ -1,5 +1,9 @@
 import { SET_USER, SET_UPDATED_USER, SET_USER_LOADED } from './userTypes';
 import {
+  SET_APPOINTMENTS,
+  SET_ACTIVE_APPOINTMENT,
+} from '../appointments/appointmentsTypes';
+import {
   CLEAR_UI_ERRORS,
   SET_SUCCESS,
   SET_UI_ERRORS,
@@ -116,6 +120,41 @@ export const checkUser = () => async (dispatch) => {
     type: SET_USER,
     payload: data.user,
   });
+  if (data.user) {
+    let {
+      data: { data },
+    } = await axios.get('/api/v1/appointments/MyAppointments');
+
+    if (!data) {
+      dispatch({
+        type: SET_APPOINTMENTS,
+        payload: null,
+      });
+      dispatch({
+        type: SET_ACTIVE_APPOINTMENT,
+        payload: null,
+      });
+    } else {
+      if (data[data.length - 1].active === true) {
+        dispatch({
+          type: SET_ACTIVE_APPOINTMENT,
+          payload: data.pop(),
+        });
+      }
+      if (data.length === 0) {
+        dispatch({
+          type: SET_APPOINTMENTS,
+          payload: null,
+        });
+      } else {
+        dispatch({
+          type: SET_APPOINTMENTS,
+          payload: data,
+        });
+      }
+    }
+  }
+
   dispatch({
     type: SET_USER_LOADED,
     payload: { tab: true },

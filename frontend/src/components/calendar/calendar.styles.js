@@ -1,6 +1,50 @@
 import styled from 'styled-components';
 import tokens from '../../tokens';
 
+// ------------------------------------------------
+// CALENDAR CONTAINER STYLES
+// ------------------------------------------------
+
+const errorColor = '#ff3333';
+
+export const GroupContainer = styled.div`
+  justify-self: center;
+`;
+
+export const CalendarContainer = styled.div`
+  border-top: none;
+  border-radius: 10px;
+  box-shadow: ${({ error }) =>
+    error
+      ? `0px 0px 8px 1px ${errorColor}`
+      : `0px 0px 8px 1px var(--color-grey-light-4)`};
+  -webkit-box-shadow: ${({ error }) =>
+    error
+      ? `0px 0px 8px 1px ${errorColor}`
+      : `0px 0px 8px 1px var(--color-grey-light-4)`};
+  -moz-box-shadow: ${({ error }) =>
+    error
+      ? `0px 0px 8px 1px ${errorColor}`
+      : `0px 0px 8px 1px var(--color-grey-light-4)`};
+  overflow: hidden;
+`;
+
+export const ErrorText = styled.p`
+  text-align: center;
+  color: ${errorColor};
+  font-size: 1.4rem;
+  margin-left: 5px;
+  margin-top: 1rem;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 1.6rem;
+  }
+`;
+
+// ------------------------------------------------
+// CALENDAR STYLES
+// ------------------------------------------------
+
 export const CalendarWrapper = styled.div``;
 
 export const ChildrenContainer = styled.div`
@@ -46,8 +90,10 @@ export const ChildrenContainer = styled.div`
       }
     }
   }
+  // ------------------------------------------------
+  // MONTH
+  // ------------------------------------------------
 
-  // MONTH ------------------------
   & div.react-datepicker__month {
     height: 100%;
     margin: 0;
@@ -61,8 +107,10 @@ export const ChildrenContainer = styled.div`
     /* grid-gap: 1rem; */
     grid-template-rows: min-content 1fr;
   }
+  // ------------------------------------------------
+  // DAY
+  // ------------------------------------------------
 
-  // DAY ------------------------
   & div.react-datepicker__day,
   div.react-datepicker__day-name {
     font-size: 1.6rem;
@@ -95,7 +143,10 @@ export const ChildrenContainer = styled.div`
     }
   }
 
-  // TIME ---------------------------
+  // ------------------------------------------------
+  // TIME
+  // ------------------------------------------------
+
   & div.react-datepicker__time-container {
     font-size: 1.6rem;
     border: none;
@@ -139,10 +190,14 @@ export const ChildrenContainer = styled.div`
 
     @media only screen and (max-width: 430px) {
       width: 100%;
-      max-height: 25rem;
+      /* max-height: 25rem; */
     }
   }
 `;
+
+// ------------------------------------------------
+// CALENDAR MONTH HEADER
+// ------------------------------------------------
 
 export const CalendarMonthHeader = styled.div`
   display: grid;

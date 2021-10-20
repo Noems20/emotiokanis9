@@ -6,8 +6,8 @@ import 'moment/locale/es-us';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createAppointment,
   cancelAppointment,
+  updateAppointment,
 } from '../../redux/appointments/appointmentsActions';
 import { clearUiErrors } from '../../redux/ui/uiActions';
 import {
@@ -38,7 +38,6 @@ import addDays from 'date-fns/addDays';
 // STYLES
 import {
   Container,
-  ContentWrapper,
   LoaderContainer,
   AppointmentContent,
   ServiceImage,
@@ -63,11 +62,10 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
   const [deleteLoader, setDeleteLoader] = useState(false);
   const [formDescription, setFormDescription] = useState('');
   const [formService, setFormService] = useState('');
-  const [selectedDate, setSelectedDate] = useState(
-    getHours(new Date()) >= 16
-      ? setHours(addDays(new Date(), 1), 0)
-      : setHours(new Date(), 0)
-  );
+  const [selectedDate, setSelectedDate] = useState();
+  // getHours(new Date()) >= 16
+  //   ? setHours(addDays(new Date(), 1), 0)
+  //   : setHours(new Date(), 0)
   const [modalOpen, setModalOpen] = useState(false);
 
   // console.log(service);
@@ -78,7 +76,7 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
   const { servicesData } = useSelector((state) => state.services);
   const {
     uiErrors,
-    loading: { secondLoader },
+    loading: { firstLoader },
   } = useSelector((state) => state.ui);
 
   const containerVariants = {
@@ -96,17 +94,22 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
       x: '100vw',
     },
   };
+  console.log(selectedDate);
 
   // -------------------------- USE EFFECT'S ---------------------
   useEffect(() => {
-    dispatch(fetchServices());
     setFormDescription(activeAppointment.description);
     setFormService(activeAppointment.service._id);
+    setSelectedDate(new Date(activeAppointment.date));
+  }, [activeAppointment]);
+
+  useEffect(() => {
+    dispatch(fetchServices());
 
     return () => {
       dispatch(clearServices());
     };
-  }, [dispatch, activeAppointment]);
+  }, [dispatch]);
 
   // --------------------------- HANDLERS ------------------------
   const filterPassedTime = (time) => {
@@ -116,14 +119,12 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
     return currentDate.getTime() + 120 * 60000 < selectedDate.getTime();
   };
 
-  const handleSubmit = (event) => {
+  const handleUpdateSubmit = (event) => {
     event.preventDefault();
-    if (!formService) {
-      setFormService(servicesData[0]._id);
-    }
     dispatch(
-      createAppointment(
-        formService || servicesData[0]._id,
+      updateAppointment(
+        activeAppointment._id,
+        formService,
         selectedDate.toISOString(),
         formDescription
       )
@@ -137,12 +138,9 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
 
   const handleClose = () => {
     dispatch(clearUiErrors());
-    //   setServiceData({
-    //     formName: name,
-    //     formDescription: description,
-    //     formPriceLapse: priceLapse ? priceLapse : '',
-    //     formPrice: price,
-    //   });
+    setFormDescription(activeAppointment.description);
+    setFormService(activeAppointment.service._id);
+    setSelectedDate(new Date(activeAppointment.date));
     setModalOpen(false);
   };
 
@@ -154,58 +152,60 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
         animate='visible'
         exit='exit'
       >
-        <ContentWrapper>
-          {!loading ? (
-            <LoaderContainer>
-              <TabLoader className={className} />
-            </LoaderContainer>
-          ) : (
-            <>
-              <AppointmentContent>
-                <AppointmentTitle>Cita actual</AppointmentTitle>
-                <ServiceTitle>
-                  <SubTitle>Servicio:</SubTitle> <br />
-                  {activeAppointment.service.name}
-                </ServiceTitle>
-                <ServiceImage src={imageSrc} />
-                <AppointmentDate>
-                  <SubTitle>Fecha y ubicación:</SubTitle> <br />
-                  {moment(activeAppointment.date).format('LLLL')}, <br />
-                  Preparatoria #236 B, Agronoma II, 98068 Zacatecas, Zac.
-                </AppointmentDate>
-                <Description>
-                  <SubTitle>Descripción:</SubTitle> <br />
-                  {activeAppointment.description}
-                </Description>
-                <ButtonsContainer>
-                  <Button
-                    primary
-                    type='submit'
-                    loading={secondLoader}
-                    disabled={secondLoader}
-                    onClick={() => setModalOpen(true)}
-                  >
-                    Editar cita
-                  </Button>
-                  <Button
-                    danger
-                    loading={deleteLoader}
-                    disabled={deleteLoader}
-                    onClick={handleDelete}
-                  >
-                    Cancelar cita
-                  </Button>
-                </ButtonsContainer>
-              </AppointmentContent>
-            </>
-          )}
-        </ContentWrapper>
+        {!loading ? (
+          <LoaderContainer>
+            <TabLoader className={className} />
+          </LoaderContainer>
+        ) : (
+          <>
+            <AppointmentContent>
+              <AppointmentTitle className='animate__animated animate__fadeInDown'>
+                Cita actual
+              </AppointmentTitle>
+              <ServiceTitle className='animate__animated animate__fadeInLeft animate__slow'>
+                <SubTitle>Servicio:</SubTitle> <br />
+                {activeAppointment.service.name}
+              </ServiceTitle>
+              <ServiceImage
+                src={imageSrc}
+                className='animate__animated animate__fadeInRight animate__slow'
+              />
+              <AppointmentDate className='animate__animated animate__fadeInLeft animate__slow'>
+                <SubTitle>Fecha y ubicación:</SubTitle> <br />
+                {moment(activeAppointment.date).format('LLLL')}, <br />
+                Preparatoria #236 B, Agronoma II,
+                <br /> 98068 Zacatecas, Zac.
+              </AppointmentDate>
+              <Description className='animate__animated animate__fadeInLeft animate__slow'>
+                <SubTitle>Descripción:</SubTitle> <br />
+                {activeAppointment.description}
+              </Description>
+              <ButtonsContainer>
+                <Button
+                  primary
+                  type='submit'
+                  onClick={() => setModalOpen(true)}
+                >
+                  Editar cita
+                </Button>
+                <Button
+                  danger
+                  loading={deleteLoader}
+                  disabled={deleteLoader}
+                  onClick={handleDelete}
+                >
+                  Cancelar cita
+                </Button>
+              </ButtonsContainer>
+            </AppointmentContent>
+          </>
+        )}
       </Container>
       {/* ----------------------- MODAL --------------------------------- */}
       <AnimatePresence>
         {modalOpen && (
           <Modal handleClose={handleClose}>
-            <FormContainer onSubmit={handleSubmit}>
+            <FormContainer onSubmit={handleUpdateSubmit}>
               <Title>Actualizar cita</Title>
               <SelectInput
                 label='Servicio'
@@ -223,7 +223,7 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                 type='text'
                 handleChange={(e) => setFormDescription(e.target.value)}
                 value={formDescription}
-                label='Descripción (Num. de mascotas, consideraciones especiales)'
+                label='Descripción (Mascotas, especificaciones)'
                 error={uiErrors.errorsOne.description}
                 rows={3}
                 required
@@ -278,10 +278,10 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
               <Button
                 primary
                 type='submit'
-                loading={loading.secondLoader}
-                disabled={loading.secondLoader}
+                loading={firstLoader}
+                disabled={firstLoader}
               >
-                Actualizar servicio
+                Actualizar cita
               </Button>
             </FormContainer>
           </Modal>

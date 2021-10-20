@@ -28,7 +28,6 @@ import {
 // STYLES
 import {
   Container,
-  ContentWrapper,
   Title,
   FormContainer,
   ButtonContainer,
@@ -40,7 +39,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('es', es);
 
-const CreateAppointment = ({ setTab, loading, className }) => {
+const CreateAppointment = ({ loading, className }) => {
   // --------------------------- STATE AND CONSTANTS ------------------------
   const [description, setDescription] = useState('');
   const [service, setService] = useState('');
@@ -116,83 +115,84 @@ const CreateAppointment = ({ setTab, loading, className }) => {
         animate='visible'
         exit='exit'
       >
-        <ContentWrapper>
-          {!loading ? (
-            <LoaderContainer>
-              <TabLoader className={className} />
-            </LoaderContainer>
-          ) : (
-            <>
-              <Title>Agendar cita</Title>
-              <FormContainer>
-                <SelectInput
-                  label='Servicio'
-                  onChange={(e) => setService(e.target.value)}
-                  value={service}
-                >
-                  {servicesData.map((service) => (
-                    <option key={service._id} value={service._id}>
-                      {service.name}
-                    </option>
-                  ))}
-                </SelectInput>
-                <TextAreaInput
-                  name='description'
-                  type='text'
-                  handleChange={(e) => setDescription(e.target.value)}
-                  value={description}
-                  label='Descripción (Num. de mascotas, consideraciones especiales)'
-                  error={uiErrors.errorsOne.description}
-                  rows={1}
-                  required
-                />
-                <Calendar
-                  renderCustomHeader={({
+        {!loading ? (
+          <LoaderContainer>
+            <TabLoader className={className} />
+          </LoaderContainer>
+        ) : (
+          <>
+            <FormContainer>
+              <Title className='animate__animated animate__fadeInDown'>
+                Agendar cita
+              </Title>
+              <SelectInput
+                label='Servicio'
+                onChange={(e) => setService(e.target.value)}
+                value={service}
+              >
+                {servicesData.map((service) => (
+                  <option key={service._id} value={service._id}>
+                    {service.name}
+                  </option>
+                ))}
+              </SelectInput>
+              <TextAreaInput
+                name='description'
+                type='text'
+                handleChange={(e) => setDescription(e.target.value)}
+                value={description}
+                label='Descripción (Mascotas, especificaciones)'
+                error={uiErrors.errorsOne.description}
+                rows={2}
+                required
+              />
+              <Calendar
+                className='animate__animated animate__zoomIn'
+                renderCustomHeader={({
+                  date,
+                  decreaseMonth,
+                  increaseMonth,
+                  prevMonthButtonDisabled,
+                  nextMonthButtonDisabled,
+                }) => {
+                  return CustomMonthHeader(
                     date,
                     decreaseMonth,
                     increaseMonth,
                     prevMonthButtonDisabled,
-                    nextMonthButtonDisabled,
-                  }) => {
-                    return CustomMonthHeader(
-                      date,
-                      decreaseMonth,
-                      increaseMonth,
-                      prevMonthButtonDisabled,
-                      nextMonthButtonDisabled
-                    );
-                  }}
-                  calendarContainer={CalendarContainer}
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  inline
-                  showTimeSelect
-                  locale='es'
-                  timeFormat='h:mm aaa'
-                  timeCaption={'Horario'}
-                  timeIntervals={60}
-                  minDate={
-                    getHours(new Date()) >= 16
-                      ? addDays(new Date(), 1)
-                      : new Date()
-                  }
-                  maxDate={addDays(new Date(), 29)}
-                  minTime={
-                    getDay(selectedDate) !== 6
-                      ? setHours(setMinutes(new Date(), 0), 9)
-                      : setHours(setMinutes(new Date(), 0), 10)
-                  }
-                  maxTime={
-                    getDay(selectedDate) !== 6
-                      ? setHours(setMinutes(new Date(), 0), 18)
-                      : setHours(setMinutes(new Date(), 0), 14)
-                  }
-                  filterDate={(date) => date.getDay() !== 0}
-                  filterTime={filterPassedTime}
-                  dateFormat='MMMM d, yyyy h:mm aa'
-                  error={uiErrors.errorsOne.date}
-                />
-              </FormContainer>
+                    nextMonthButtonDisabled
+                  );
+                }}
+                calendarContainer={CalendarContainer}
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                inline
+                showTimeSelect
+                locale='es'
+                timeFormat='h:mm aaa'
+                timeCaption={'Horario'}
+                timeIntervals={60}
+                minDate={
+                  getHours(new Date()) >= 16
+                    ? addDays(new Date(), 1)
+                    : new Date()
+                }
+                maxDate={addDays(new Date(), 29)}
+                minTime={
+                  getDay(selectedDate) !== 6
+                    ? setHours(setMinutes(new Date(), 0), 9)
+                    : setHours(setMinutes(new Date(), 0), 10)
+                }
+                maxTime={
+                  getDay(selectedDate) !== 6
+                    ? setHours(setMinutes(new Date(), 0), 18)
+                    : setHours(setMinutes(new Date(), 0), 14)
+                }
+                filterDate={(date) => date.getDay() !== 0}
+                filterTime={filterPassedTime}
+                dateFormat='MMMM d, yyyy h:mm aa'
+                error={uiErrors.errorsOne.date}
+              />
               <ButtonContainer>
                 <Button
                   primary
@@ -204,9 +204,9 @@ const CreateAppointment = ({ setTab, loading, className }) => {
                   Agendar
                 </Button>
               </ButtonContainer>
-            </>
-          )}
-        </ContentWrapper>
+            </FormContainer>
+          </>
+        )}
       </Container>
     </>
   );

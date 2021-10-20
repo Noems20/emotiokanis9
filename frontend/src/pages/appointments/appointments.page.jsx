@@ -67,19 +67,27 @@ const Appointments = () => {
         if (activeAppointment) {
           return (
             <ActiveAppointment
+              key={1}
               loading={userLoaded.tab}
               activeAppointment={activeAppointment}
             />
           );
         }
-        return <CreateAppointment loading={userLoaded.tab} setTab={setTab} />;
+        return (
+          <CreateAppointment key={2} loading={userLoaded.tab} setTab={setTab} />
+        );
       case 'myAppointments':
         return (
-          <UserAppointmentsHistory loading={userLoaded.tab} setTab={setTab} />
+          <UserAppointmentsHistory
+            key={3}
+            loading={userLoaded.tab}
+            setTab={setTab}
+          />
         );
       case 'contact':
         return (
           <ContactSection
+            key={4}
             loading={userLoaded.tab}
             initial={{ x: '-100vw' }}
             animate={{ x: 0 }}
@@ -110,7 +118,11 @@ const Appointments = () => {
         );
       default:
         return (
-          <UserAppointmentsHistory loading={userLoaded.tab} setTab={setTab} />
+          <UserAppointmentsHistory
+            key={3}
+            loading={userLoaded.tab}
+            setTab={setTab}
+          />
         );
     }
   };

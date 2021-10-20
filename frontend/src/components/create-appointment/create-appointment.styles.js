@@ -5,7 +5,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import { TitleSm } from '../general.styles';
 
 export const LoaderContainer = styled.div`
-  margin: 20rem 0;
+  margin: 30rem 0;
   @media only screen and (max-width: 700px) {
     margin: 25rem 0;
   }
@@ -14,7 +14,8 @@ export const LoaderContainer = styled.div`
 export const Container = styled(motion.div)`
   grid-column: center-start / center-end;
   border-radius: 5px;
-  margin: 4rem 0;
+  margin: auto 0;
+  overflow: hidden;
 
   -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
@@ -22,12 +23,8 @@ export const Container = styled(motion.div)`
   display: grid;
   justify-content: center;
   align-content: center;
-  grid-template-columns: 0.95fr;
-  grid-template-rows: 0.95fr;
-
-  @media only screen and (max-width: 1200px) {
-    padding: 3rem;
-  }
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 
   @media only screen and (min-height: 800px) and (max-width: 1280px) {
     margin: 10vh 0px;
@@ -36,17 +33,13 @@ export const Container = styled(motion.div)`
   @media only screen and (min-height: 800px) and (max-width: 430px) {
     margin: 4rem 0;
   }
+  @media only screen and (max-width: 1200px) {
+    margin: 4rem 0;
+  }
 
   @media only screen and (max-width: 600px) {
     grid-column: full-start / full-end;
   }
-`;
-
-export const ContentWrapper = styled.div`
-  display: grid;
-  grid-gap: 3rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, max-content);
 `;
 
 export const Title = styled(TitleSm)``;
@@ -54,7 +47,12 @@ export const Title = styled(TitleSm)``;
 export const FormContainer = styled.form`
   display: grid;
   grid-gap: 3rem;
+  padding: 3rem;
   /* align-content: space-evenly; */
+
+  @media only screen and (max-width: 430px) {
+    grid-gap: 5rem;
+  }
 `;
 
 export const ButtonContainer = styled.div`

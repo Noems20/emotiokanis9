@@ -7,9 +7,9 @@ import {
   ErrorText,
 } from './calendar.styles';
 
-const Calendar = ({ error, ...props }) => {
+const Calendar = ({ className, error, ...props }) => {
   return (
-    <GroupContainer>
+    <GroupContainer className={className}>
       <CalendarContainer error={error ? 1 : 0}>
         <DatePicker {...props} />
       </CalendarContainer>

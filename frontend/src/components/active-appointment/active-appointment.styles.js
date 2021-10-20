@@ -5,35 +5,22 @@ import { TitleSm } from '../general.styles';
 import CustomButton from '../custom-button/custom-button.component';
 
 export const LoaderContainer = styled.div`
-  margin: 20rem 0;
+  margin: 61rem 0;
   @media only screen and (max-width: 700px) {
-    margin: 25rem 0;
+    margin: 75rem 0;
   }
 `;
 
 export const Container = styled(motion.div)`
   grid-column: center-start / center-end;
   border-radius: 5px;
-  margin: 4rem 0;
+  margin: auto 0;
+  overflow: hidden;
 
   -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
 
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  grid-template-columns: 0.95fr;
-  /* grid-template-rows: 0.95fr; */
-
   @media only screen and (max-width: 1200px) {
-    padding: 3rem;
-  }
-
-  @media only screen and (min-height: 800px) and (max-width: 1280px) {
-    margin: 10vh 0px;
-  }
-
-  @media only screen and (min-height: 800px) and (max-width: 430px) {
     margin: 4rem 0;
   }
 
@@ -42,24 +29,17 @@ export const Container = styled(motion.div)`
   }
 `;
 
-export const ContentWrapper = styled.div`
-  /* display: grid;
-  grid-gap: 3rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, max-content); */
-`;
-
 // ---------------------------------------------
 // CONTENT
 // ---------------------------------------------
 
 export const AppointmentContent = styled.div`
+  padding: 3rem;
   display: grid;
   grid-gap: 3rem;
   grid-template-columns: max-content 1fr;
-  margin: 0 1rem;
 
-  @media only screen and (max-width: 830px) {
+  @media only screen and (max-width: 960px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -79,7 +59,12 @@ export const ServiceImage = styled.img`
   -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
   -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
 
-  @media only screen and (max-width: 830px) {
+  @media only screen and (min-width: 1900px) {
+    height: 29rem;
+    width: 29rem;
+  }
+
+  @media only screen and (max-width: 960px) {
     grid-column: auto / auto;
     grid-row: auto / auto;
   }
@@ -87,7 +72,7 @@ export const ServiceImage = styled.img`
 
 export const AppointmentTitle = styled(TitleSm)`
   grid-column: 1 / 3;
-  @media only screen and (max-width: 830px) {
+  @media only screen and (max-width: 960px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -104,7 +89,12 @@ export const ServiceTitle = styled.h1`
   font-family: ${tokens.fontPrimary};
   font-weight: 300;
   grid-column: 1 / 2;
-  @media only screen and (max-width: 830px) {
+
+  @media only screen and (min-width: 1900px) {
+    font-size: 3.5rem;
+  }
+
+  @media only screen and (max-width: 960px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -115,7 +105,12 @@ export const AppointmentDate = styled.p`
   color: var(--color-grey-dark-3);
   font-weight: 300;
   grid-column: 1 / 2;
-  @media only screen and (max-width: 830px) {
+
+  @media only screen and (min-width: 1900px) {
+    font-size: 2.5rem;
+  }
+
+  @media only screen and (max-width: 960px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -124,7 +119,12 @@ export const Description = styled.p`
   font-size: 2rem;
   font-weight: 400;
   grid-column: 1 / 3;
-  @media only screen and (max-width: 830px) {
+
+  @media only screen and (min-width: 1900px) {
+    font-size: 2.5rem;
+  }
+
+  @media only screen and (max-width: 960px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -144,7 +144,7 @@ export const Title = styled(TitleSm)`
   }
 `;
 
-export const FormContainer = styled(motion.div)`
+export const FormContainer = styled(motion.form)`
   width: 60vw;
   height: auto;
   padding: 3rem;
@@ -173,7 +173,7 @@ export const ButtonsContainer = styled.div`
 
   grid-template-columns: max-content max-content;
 
-  @media only screen and (max-width: 830px) {
+  @media only screen and (max-width: 960px) {
     justify-self: center;
   }
 `;

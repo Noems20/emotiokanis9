@@ -49,28 +49,25 @@ export const CardHeadingDate = styled.h2`
   background-color: transparent;
 `;
 
-export const CardIcons = styled.div`
+export const StatusHeader = styled.div`
   justify-self: end;
-  cursor: pointer;
-
-  grid-column: 3 / 4;
+  display: flex;
+  align-items: center;
 `;
 
 export const CloseIcon = styled(AiOutlineClose)`
-  transform: scale(1.2);
+  transform: scale(3);
   fill: #f94415;
   border-radius: 100%;
-  padding: 2px;
+  padding: 1px;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  margin: 0 2rem;
 
   &:hover {
     fill: #fff;
     background-color: #f94415;
     transition: all 0.3s ease-in-out;
-  }
-
-  @media only screen and (max-width: 430px) {
-    transform: scale(1.4);
   }
 `;
 

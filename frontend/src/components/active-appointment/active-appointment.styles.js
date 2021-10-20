@@ -44,12 +44,15 @@ export const AppointmentContent = styled.div`
   }
 `;
 
-export const ServiceImage = styled.img`
+export const ServiceImage = styled.div`
+  background-image: ${(props) => `url(${props.url})`};
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; */
   justify-self: center;
   align-self: center;
   height: 27rem;
   width: 27rem;
-  padding: 2.5px;
   border-radius: 50%;
   border: 5px solid var(--color-primary);
   grid-column: 2 / 3;

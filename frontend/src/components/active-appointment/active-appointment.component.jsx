@@ -6,7 +6,7 @@ import 'moment/locale/es-us';
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  cancelAppointment,
+  deleteAppointment,
   updateAppointment,
 } from '../../redux/appointments/appointmentsActions';
 import { clearUiErrors } from '../../redux/ui/uiActions';
@@ -133,7 +133,7 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
 
   const handleDelete = () => {
     setDeleteLoader(true);
-    dispatch(cancelAppointment(activeAppointment.id));
+    dispatch(deleteAppointment(activeAppointment.id));
   };
 
   const handleClose = () => {
@@ -167,7 +167,7 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                 {activeAppointment.service.name}
               </ServiceTitle>
               <ServiceImage
-                src={imageSrc}
+                url={imageSrc}
                 className='animate__animated animate__fadeInRight animate__slow'
               />
               <AppointmentDate className='animate__animated animate__fadeInLeft animate__slow'>

@@ -40,7 +40,9 @@ const Appointments = () => {
 
   const dispatch = useDispatch();
   const { userLoaded } = useSelector((state) => state.user);
-  const { activeAppointment } = useSelector((state) => state.appointments);
+  const { activeAppointment, appointments } = useSelector(
+    (state) => state.appointments
+  );
 
   const containerVariants = {
     hidden: {
@@ -80,6 +82,7 @@ const Appointments = () => {
         return (
           <UserAppointmentsHistory
             key={3}
+            appointments={appointments}
             loading={userLoaded.tab}
             setTab={setTab}
           />
@@ -120,6 +123,7 @@ const Appointments = () => {
         return (
           <UserAppointmentsHistory
             key={3}
+            appointments={appointments}
             loading={userLoaded.tab}
             setTab={setTab}
           />

@@ -140,7 +140,13 @@ export const checkUser = () => async (dispatch) => {
           type: SET_ACTIVE_APPOINTMENT,
           payload: data.pop(),
         });
+      } else {
+        dispatch({
+          type: SET_ACTIVE_APPOINTMENT,
+          payload: null,
+        });
       }
+      // Check after popping last appointment
       if (data.length === 0) {
         dispatch({
           type: SET_APPOINTMENTS,

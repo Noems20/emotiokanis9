@@ -118,7 +118,9 @@ export const updateAppointment = catchAsync(async (req, res, next) => {
 export const getMyAppointments = catchAsync(async (req, res, next) => {
   let appointments = await Appointment.find({
     user: req.user.id,
-  }).sort({ active: 1 });
+  })
+    .sort({ active: 1 })
+    .sort({ date: -1 });
 
   if (!appointments.length) {
     appointments = null;

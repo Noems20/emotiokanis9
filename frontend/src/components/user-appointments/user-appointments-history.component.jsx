@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 
 // COMPONENTS
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
@@ -13,8 +12,7 @@ import {
   NotAppointments,
 } from './user-appointments-history.styles';
 
-const UserAppointments = ({ loading }) => {
-  const [citas, setCitas] = useState(true);
+const UserAppointments = ({ loading, appointments }) => {
   const containerVariants = {
     hidden: {
       x: '-100vw',
@@ -88,20 +86,17 @@ const UserAppointments = ({ loading }) => {
         ) : (
           <AppointmentsContainer variants={childVariants}>
             <Title variants={titleVariants}>Historial de citas</Title>
-            {citas ? (
-              <>
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-                <AppointmentCard variants={cardVariants} />
-              </>
+            {appointments ? (
+              appointments.map((appointment) => (
+                <AppointmentCard
+                  key={appointment._id}
+                  appointment={appointment}
+                  variants={cardVariants}
+                />
+              ))
             ) : (
               <NotAppointments variants={cardVariants}>
-                No tienes citas
+                No tienes citas pasadas
               </NotAppointments>
             )}
           </AppointmentsContainer>

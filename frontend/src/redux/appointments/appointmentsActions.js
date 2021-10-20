@@ -134,7 +134,7 @@ export const updateAppointment =
     }
   };
 // ---------------------------- CANCEL APPOINTMENT ----------------------------
-export const cancelAppointment = (id) => async (dispatch) => {
+export const deleteAppointment = (id) => async (dispatch) => {
   try {
     await axios.delete(`/api/v1/appointments/${id}`);
     batch(() => {

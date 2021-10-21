@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import CustomButton from '../../components/custom-button/custom-button.component';
 import {
   Sidebar,
   SidebarContainer,
@@ -53,7 +52,3 @@ export const SideBarItem = styled(SidebarItem)``;
 export const SideBarContent = styled(SidebarContent)``;
 
 export const SideBarText = styled(SidebarText)``;
-
-export const Button = styled(CustomButton)`
-  justify-self: start;
-`;

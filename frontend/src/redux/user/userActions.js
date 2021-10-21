@@ -394,6 +394,61 @@ export const resetPassword =
     }
   };
 
+// ------------------------ RESET PASSWORD ---------------------------
+export const sendContactEmail =
+  (name, email, subject, message) => async (dispatch) => {
+    try {
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: true },
+      });
+      dispatch({
+        type: SET_SUCCESS,
+        payload: false,
+      });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      await axios.post(
+        `/api/v1/users/sendContactMail`,
+        {
+          name,
+          email,
+          subject,
+          message,
+        },
+        config
+      );
+      batch(() => {
+        dispatch({
+          type: SET_UI_LOADING,
+          payload: { firstLoader: false },
+        });
+        dispatch({
+          type: CLEAR_UI_ERRORS,
+        });
+        dispatch({
+          type: SET_SUCCESS,
+          payload: true,
+        });
+      });
+    } catch (error) {
+      batch(() => {
+        dispatch({
+          type: SET_UI_LOADING,
+          payload: { firstLoader: false },
+        });
+        dispatch({
+          type: SET_UI_ERRORS,
+          payload: { errorsOne: error.response.data.uiErrors },
+        });
+      });
+    }
+  };
+
 // ------------------------------- UTILS --------------------
 export const setUpdatedUser = (value) => (dispatch) => {
   dispatch({

@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { sendContactEmail } from '../../redux/user/userActions';
+import { clearSuccess } from '../../redux/ui/uiActions';
+
+// COMPONENTS
+import ContactSection from '../../components/contact-section/contact-section.component';
+import TextInput from '../../components/form-inputs/text-input/text-input.component';
+import TextAreaInput from '../../components/form-inputs/textarea-input/textarea-input.component';
+import { TitleSm } from '../../components/general.styles';
+
+// STYLES
 import {
   Grid,
   Heading,
@@ -7,28 +19,41 @@ import {
   MapContainer,
   MapTitle,
   Button,
+  Container,
+  Text,
 } from './contact.page.styles';
-import ContactSection from '../../components/contact-section/contact-section.component';
-import TextInput from '../../components/form-inputs/text-input/text-input.component';
-import TextAreaInput from '../../components/form-inputs/textarea-input/textarea-input.component';
+
+// ICONS
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 
 const Contact = () => {
+  // ---------------------- STATE AND CONSTANTS -------------
   const [userCredentials, setUserCredentials] = useState({
-    displayName: '',
-    lastname: '',
+    name: '',
+    subject: '',
     email: '',
     message: '',
   });
-  const { displayName, lastname, email, message } = userCredentials;
+  const { name, subject, email, message } = userCredentials;
 
+  const dispatch = useDispatch();
+  const {
+    success,
+    uiErrors: { errorsOne },
+    loading: { firstLoader },
+  } = useSelector((state) => state.ui);
+
+  // ---------------------- USE EFFECT'S -------------
+  useEffect(() => {
+    return () => {
+      dispatch(clearSuccess());
+    };
+  }, [dispatch]);
+
+  // ---------------------- HANDLERS -------------
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUserCredentials({
-      displayName: '',
-      lastname: '',
-      email: '',
-      message: '',
-    });
+    dispatch(sendContactEmail(name, email, subject, message));
   };
 
   const handleChange = (event) => {
@@ -63,44 +88,70 @@ const Contact = () => {
         <Heading>
           <Title>¿Tienes dudas?</Title>
         </Heading>
-        <ContactSection>
-          <TextInput
-            name='displayName'
-            type='text'
-            handleChange={handleChange}
-            value={displayName}
-            label='Nombre'
-            required
-          />{' '}
-          <TextInput
-            name='lastname'
-            type='text'
-            handleChange={handleChange}
-            value={lastname}
-            label='Apellidos'
-            required
-          />{' '}
-          <TextInput
-            name='email'
-            type='email'
-            handleChange={handleChange}
-            value={email}
-            label='Email'
-            required
-          />
-          <TextAreaInput
-            name='message'
-            type='text'
-            handleChange={handleChange}
-            value={message}
-            label='Mensaje'
-            rows='1'
-            required
-          />
-          <Button primary type='submit' onClick={handleSubmit}>
-            Enviar
-          </Button>
-        </ContactSection>
+        {success ? (
+          <Container
+            initial={{ x: '-100vw' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100vw' }}
+            transition={{ transition: { ease: 'easeInOut' } }}
+          >
+            <TitleSm>Correo enviado</TitleSm>
+            <Text>
+              Correo electrónico enviado correctamente, muchas gracias por
+              ponerte en contacto, responderemos a la brevedad.
+            </Text>
+            <IoMdCheckmarkCircleOutline />
+          </Container>
+        ) : (
+          <ContactSection>
+            <TextInput
+              name='name'
+              type='text'
+              handleChange={handleChange}
+              value={name}
+              label='Nombre'
+              error={errorsOne.name}
+              required
+            />
+            <TextInput
+              name='email'
+              type='email'
+              handleChange={handleChange}
+              value={email}
+              label='Email'
+              error={errorsOne.email}
+              required
+            />
+            <TextInput
+              name='subject'
+              type='text'
+              handleChange={handleChange}
+              value={subject}
+              label='Asunto'
+              error={errorsOne.subject}
+              required
+            />
+            <TextAreaInput
+              name='message'
+              type='text'
+              handleChange={handleChange}
+              value={message}
+              label='Mensaje'
+              error={errorsOne.message}
+              rows='1'
+              required
+            />
+            <Button
+              primary
+              type='submit'
+              onClick={handleSubmit}
+              loading={firstLoader}
+              disabled={firstLoader}
+            >
+              Enviar correo
+            </Button>
+          </ContactSection>
+        )}
         {/* <GoogleMap /> */}
         <MapContainer>
           <MapTitle>Ubícanos</MapTitle>

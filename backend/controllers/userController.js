@@ -1,8 +1,10 @@
 import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
+import Email from '../utils/email.js';
 import multer from 'multer';
 import sharp from 'sharp';
+import { validateMailData } from '../utils/validators.js';
 
 // ----------------- FILE UPLOAD ----------------
 // Store in file system
@@ -112,4 +114,43 @@ export const updateMe = catchAsync(async (req, res, next) => {
 
   req.doc = updatedUser;
   next();
+});
+
+// ------------------- SEND MAIL -------------------
+export const sendContactMail = catchAsync(async (req, res, next) => {
+  const { name, email, subject, message } = req.body;
+
+  // 1) Check Data
+  const { errors, valid } = validateMailData(name, email, subject, message);
+
+  if (!valid) {
+    return next(new AppError('Mail details must be valid', 400, errors));
+  }
+
+  const user = { name, email: process.env.EMAIL_FROM };
+  const content = { subject, message, email };
+
+  const url = `${req.protocol}://localhost:3000/`;
+
+  // 4) Send it to own email
+  try {
+    await new Email(user, url, content).sendContactMail();
+  } catch (error) {
+    console.log(error);
+
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500,
+        {
+          email: 'Ocurrio un error enviando el email',
+        }
+      )
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Mail sent!',
+  });
 });

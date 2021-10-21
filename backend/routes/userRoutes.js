@@ -6,6 +6,7 @@ import {
   updateMe,
   uploadUserPhoto,
   resizeUserPhoto,
+  sendContactMail,
 } from '../controllers/userController.js';
 
 import {
@@ -27,6 +28,7 @@ router.post('/login', login);
 router.get('/logout', logout);
 router.route('/logged').get(isLoggedIn);
 router.post('/forgotPassword', forgotPassword);
+router.post('/sendContactMail', sendContactMail);
 router.patch('/resetPassword/:token', resetPassword);
 
 router.use(protect);

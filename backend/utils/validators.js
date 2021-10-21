@@ -71,3 +71,21 @@ export const validateUpdateUserData = (name, password, confirmPassword) => {
     valid: Object.keys(errors).length === 0 ? true : false,
   };
 };
+
+export const validateMailData = (name, email, subject, message) => {
+  let errors = {};
+
+  if (isEmpty(name)) errors.name = 'No debe estar vacío';
+  if (isEmpty(email)) {
+    errors.email = 'No debe estar vacío';
+  } else if (!isEmail(email)) {
+    errors.email = 'Debe ser un email válido';
+  }
+  if (isEmpty(subject)) errors.subject = 'No debe estar vacío';
+  if (isEmpty(message)) errors.message = 'No debe estar vacío';
+
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0 ? true : false,
+  };
+};

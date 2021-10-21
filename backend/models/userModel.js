@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'No puede estar vacío'],
       unique: true,
-      validate: [validator.isEmail, 'Debe ser un email valido'],
+      validate: [validator.isEmail, 'Debe ser un email válido'],
     },
     photo: { type: String, default: 'default.jpg' },
     role: {

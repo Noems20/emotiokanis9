@@ -11,9 +11,11 @@ const __dirname = dirname(__filename);
 // new Email(user, url).sendWelcome();
 
 class Email {
-  constructor(user, url) {
+  constructor(user, url, message = ' ') {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
+    this.name = user.name;
+    this.message = message;
     this.url = url;
     this.from = `EmotioKanis9 <${process.env.EMAIL_FROM}>`;
   }
@@ -50,6 +52,8 @@ class Email {
       firstName: this.firstName,
       url: this.url,
       subject,
+      name: this.name,
+      message: this.message,
     });
 
     // 2) Define the email options
@@ -74,6 +78,10 @@ class Email {
       'passwordReset',
       'Su token de restablecimiento de contraseña (Valido por 10 minutos)'
     );
+  }
+
+  async sendContactMail() {
+    await this.send('contactMail', 'Correo enviado por formulario de contacto');
   }
 }
 

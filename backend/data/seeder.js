@@ -18,13 +18,13 @@ connectDB();
 
 const importData = async () => {
   try {
-    // await User.deleteMany();
+    await User.deleteMany();
     // await Service.deleteMany();
-    await Award.deleteMany();
+    // await Award.deleteMany();
 
-    // await User.create(users, { validateBeforeSave: false });
+    await User.create(users, { validateBeforeSave: false });
     // await Service.create(services, { validateBeforeSave: false });
-    await Award.create(awards, { validateBeforeSave: false });
+    // await Award.create(awards, { validateBeforeSave: false });
 
     console.log('Data Imported!'.green.inverse);
     process.exit();
@@ -36,9 +36,9 @@ const importData = async () => {
 
 const destroyData = async () => {
   try {
-    // await User.deleteMany();
+    await User.deleteMany();
     // await Service.deleteMany();
-    await Award.deleteMany();
+    // await Award.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);
     process.exit();

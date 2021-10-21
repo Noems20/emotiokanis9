@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAwards, createAward } from '../../../redux/awards/awardsActions';
-import { clearUiErrors } from '../../../redux/ui/uiActions';
+import { clearUiErrors, clearSuccess } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import TextInput from '../../form-inputs/text-input/text-input.component';
@@ -55,6 +55,7 @@ const ManageAwards = () => {
     dispatch(fetchAwards());
     return () => {
       dispatch(clearUiErrors());
+      dispatch(clearSuccess());
     };
   }, [dispatch]);
 

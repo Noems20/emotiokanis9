@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       validate: [validator.isEmail, 'Debe ser un email válido'],
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     photo: { type: String, default: 'default.jpg' },
     role: {
       type: String,
@@ -51,6 +55,7 @@ const userSchema = new mongoose.Schema(
         message: 'Las contraseñas no coinciden',
       },
     },
+    userVerificationToken: String,
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -64,25 +69,33 @@ const userSchema = new mongoose.Schema(
 // --------------------------------------- MIDDLEWARE -----------------------------------------------
 
 // --------------- ENCRYPT PASSWORD -----------------
-userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
-  if (!this.isModified('password')) return next();
+// userSchema.pre('save', async function (next) {
+//   // Only run this function if password was actually modified
+//   if (!this.isModified('password')) return next();
 
-  // Encrypt-hash password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
+//   // Encrypt-hash password with cost of 12
+//   this.password = await bcrypt.hash(this.password, 12);
 
-  // Delete passwordConfirm Field
-  this.passwordConfirm = undefined;
-  next();
-});
+//   // Delete passwordConfirm Field
+//   this.passwordConfirm = undefined;
+//   next();
+// });
 
 // --------------- CHECK ROLE -----------------
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('role')) return next();
-  this.role = 'user';
+// userSchema.pre('save', async function (next) {
+//   if (!this.isModified('role')) return next();
+//   this.role = 'user';
 
-  next();
-});
+//   next();
+// });
+
+// --------------- CHECK VERIFIED -----------------
+// userSchema.pre('save', async function (next) {
+//   if (!this.isModified('verified')) return next();
+//   this.verified = false;
+
+//   next();
+// });
 
 // ------------ CHANGE PASSWORD changedAt ------
 userSchema.pre('save', function (next) {
@@ -122,6 +135,18 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
+};
+
+// --------------- CREATE USER VERIFICATION TOKEN -----------------
+userSchema.methods.createVerificationToken = function () {
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+
+  this.userVerificationToken = crypto
+    .createHash('sha256')
+    .update(verificationToken)
+    .digest('hex');
+
+  return verificationToken;
 };
 
 const User = mongoose.model('User', userSchema);

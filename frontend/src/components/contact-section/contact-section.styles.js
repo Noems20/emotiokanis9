@@ -28,7 +28,7 @@ export const ContactContainer = styled(motion.div)`
     grid-template-rows: 1fr 1fr;
   }
 
-  @media only screen and (max-width: 370px) {
+  @media only screen and (max-width: 550px) {
     grid-column: full-start / full-end;
   }
 `;

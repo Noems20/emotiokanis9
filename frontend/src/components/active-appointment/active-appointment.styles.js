@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import tokens from '../../tokens';
 import { TitleSm } from '../general.styles';
 import CustomButton from '../custom-button/custom-button.component';
+import {
+  CalendarContainer,
+} from '../calendar/calendar.components';
 
 export const LoaderContainer = styled.div`
   margin: 61rem 0;
@@ -166,7 +169,16 @@ export const FormContainer = styled(motion.form)`
   }
   @media only screen and (max-width: 600px) {
     width: 90vw;
-    /* height: 90vh; */
+  }
+
+  @media only screen and (max-width: 430px) {
+    height: 90vh;
+    overflow:auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -185,3 +197,26 @@ export const Button = styled(CustomButton)`
   /* letter-spacing: 2px; */
   text-transform: uppercase;
 `;
+
+
+// -----------------------------------------
+// CALENDAR
+// -----------------------------------------
+export const CalendarContainerModified  = styled(CalendarContainer)`
+& div div.react-datepicker__time-container div.react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item{
+  
+    @media only screen and (max-width: 380px) {
+      font-size: 4vw;
+    }
+}
+
+& div div.react-datepicker__day,
+  div.react-datepicker__day-name {
+
+    @media only screen and (max-width: 380px) {
+      font-size: 4vw;
+      margin: 1vw;
+      width: 8vw;
+    }
+  }
+`

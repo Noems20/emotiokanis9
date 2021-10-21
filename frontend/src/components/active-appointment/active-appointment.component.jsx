@@ -21,10 +21,7 @@ import Modal from '../modal/modal.component';
 import SelectInput from '../form-inputs/select-input/select-input.component';
 import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
-import {
-  CalendarContainer,
-  CustomMonthHeader,
-} from '../calendar/calendar.components';
+import {  CustomMonthHeader} from '../calendar/calendar.components';
 
 // DATEPICKER
 import es from 'date-fns/locale/es';
@@ -37,6 +34,7 @@ import addDays from 'date-fns/addDays';
 
 // STYLES
 import {
+  CalendarContainerModified,
   Container,
   LoaderContainer,
   AppointmentContent,
@@ -244,7 +242,7 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
                     nextMonthButtonDisabled
                   );
                 }}
-                calendarContainer={CalendarContainer}
+                calendarContainer={CalendarContainerModified}
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
                 inline

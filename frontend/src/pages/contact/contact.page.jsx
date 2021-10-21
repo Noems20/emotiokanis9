@@ -24,7 +24,7 @@ import {
 } from './contact.page.styles';
 
 // ICONS
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { RiMailSendLine } from 'react-icons/ri';
 
 const Contact = () => {
   // ---------------------- STATE AND CONSTANTS -------------
@@ -97,10 +97,10 @@ const Contact = () => {
           >
             <TitleSm>Correo enviado</TitleSm>
             <Text>
-              Correo electrónico enviado correctamente, muchas gracias por
-              ponerte en contacto, responderemos a la brevedad.
+              Correo electrónico enviado correctamente, gracias por ponerte en
+              contacto, responderemos a la brevedad.
             </Text>
-            <IoMdCheckmarkCircleOutline />
+            <RiMailSendLine />
           </Container>
         ) : (
           <ContactSection>

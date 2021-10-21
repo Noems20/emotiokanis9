@@ -19,6 +19,7 @@ import {
   updatePassword,
   forgotPassword,
   resetPassword,
+  verifyAccount,
 } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -30,6 +31,7 @@ router.route('/logged').get(isLoggedIn);
 router.post('/forgotPassword', forgotPassword);
 router.post('/sendContactMail', sendContactMail);
 router.patch('/resetPassword/:token', resetPassword);
+router.patch('/verifyAccount/:token', verifyAccount);
 
 router.use(protect);
 

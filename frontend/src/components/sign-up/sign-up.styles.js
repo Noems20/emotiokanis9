@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import tokens from '../../tokens';
+import { motion } from 'framer-motion';
 
 export const Container = styled.div`
   display: grid;
@@ -43,4 +44,36 @@ export const ButtonsContainer = styled.div`
         loading === 'true' ? 'var(--color-primary)' : '#fff'};
     }
   }
+`;
+
+// -----------------------------------------------
+// EMAIL MESSAGE
+// ------------------------------------------------
+export const EmailContainer = styled(motion.div)`
+  padding: 2rem;
+  margin: auto 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+
+  display: grid;
+  grid-gap: 3rem;
+  align-content: center;
+
+  & svg {
+    justify-self: center;
+    font-size: 10rem;
+    color: var(--color-primary-light);
+  }
+
+  @media only screen and (max-width: 1200px) {
+    margin: 6rem 0;
+  }
+`;
+
+export const Text = styled.p`
+  text-align: center;
+  font-size: 2rem;
+  justify-self: center;
 `;

@@ -6,7 +6,7 @@ import {
   fetchServices,
   createService,
 } from '../../../redux/services/servicesActions';
-import { clearUiErrors } from '../../../redux/ui/uiActions';
+import { clearUiErrors, clearSuccess } from '../../../redux/ui/uiActions';
 
 // COMPONENTS
 import TextInput from '../../form-inputs/text-input/text-input.component';
@@ -58,6 +58,7 @@ const ManageServices = () => {
     dispatch(fetchServices());
     return () => {
       dispatch(clearUiErrors());
+      dispatch(clearSuccess());
     };
   }, [dispatch]);
 

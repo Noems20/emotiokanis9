@@ -181,7 +181,7 @@ const CreateAppointment = ({ loading, className }) => {
                 minTime={
                   getDay(selectedDate) !== 6
                     ? setHours(setMinutes(new Date(), 0), 9)
-                    : setHours(setMinutes(new Date(), 0), 10)
+                    : setHours(setMinutes(new Date(), 0), 9)
                 }
                 maxTime={
                   getDay(selectedDate) !== 6

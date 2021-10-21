@@ -14,9 +14,9 @@ import {
 // ICONS
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
-export const CalendarContainer = ({ children }) => {
+export const CalendarContainer = ({ children, className }) => {
   return (
-    <CalendarWrapper>
+    <CalendarWrapper className={className}>
       <ChildrenContainer>{children}</ChildrenContainer>
     </CalendarWrapper>
   );

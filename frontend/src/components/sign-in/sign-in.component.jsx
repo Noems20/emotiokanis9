@@ -56,11 +56,7 @@ const SignIn = () => {
       <SignInTitle>Ya tengo una cuenta</SignInTitle>
       <SignInSubtitle>Inicia sesión con tu email y contraseña.</SignInSubtitle>
       {uiErrors.errorsOne.general && (
-        <Message
-          title='Error'
-          text='Email o contraseña incorrectos'
-          type='error'
-        />
+        <Message title='Error' text={uiErrors.errorsOne.general} type='error' />
       )}
       <FormContainer onSubmit={handleSubmit}>
         <TextInput

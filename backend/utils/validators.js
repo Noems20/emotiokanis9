@@ -75,14 +75,14 @@ export const validateUpdateUserData = (name, password, confirmPassword) => {
 export const validateMailData = (name, email, subject, message) => {
   let errors = {};
 
-  if (isEmpty(name)) errors.name = 'No debe estar vacío';
+  if (isEmpty(name)) errors.name = 'No puede estar vacío';
   if (isEmpty(email)) {
-    errors.email = 'No debe estar vacío';
+    errors.email = 'No puede estar vacío';
   } else if (!isEmail(email)) {
     errors.email = 'Debe ser un email válido';
   }
-  if (isEmpty(subject)) errors.subject = 'No debe estar vacío';
-  if (isEmpty(message)) errors.message = 'No debe estar vacío';
+  if (isEmpty(subject)) errors.subject = 'No puede estar vacío';
+  if (isEmpty(message)) errors.message = 'No puede estar vacío';
 
   return {
     errors,

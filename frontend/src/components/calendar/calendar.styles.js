@@ -27,6 +27,14 @@ export const CalendarContainer = styled.div`
       ? `0px 0px 8px 1px ${errorColor}`
       : `0px 0px 8px 1px var(--color-grey-light-4)`};
   overflow: hidden;
+
+  & div div.react-datepicker{
+    font-family: ${tokens.fontDisplay};
+    border: none;
+    border-radius: 0;
+    display: block;
+
+  }
 `;
 
 export const ErrorText = styled.p`

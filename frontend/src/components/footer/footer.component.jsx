@@ -72,13 +72,14 @@ const Footer = () => {
                   <FooterLinks>
                     <FooterLink to='/citas'>Citas</FooterLink>
                   </FooterLinks>
-                  ,
+                  <FooterLinks>
+                    <FooterLink to='/perfil'>Perfil</FooterLink>
+                  </FooterLinks>
                   <FooterLinks>
                     <CloseSessionButton onClick={() => dispatch(logout())}>
                       Cerrar Sesión
                     </CloseSessionButton>
                   </FooterLinks>
-                  ,
                 </>
               ) : (
                 <FooterLinks>

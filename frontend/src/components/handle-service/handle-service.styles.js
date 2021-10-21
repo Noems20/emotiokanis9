@@ -130,6 +130,10 @@ export const FormContainer = styled(motion.div)`
     width: 90vw;
     /* height: 90vh; */
   }
+  /* @media only screen and (max-width: 430px) {
+    width: 90vw;
+    grid-auto-rows: min-content;
+  } */
 `;
 
 export const Title = styled(TitleSm)`
@@ -139,7 +143,6 @@ export const Title = styled(TitleSm)`
 
   @media only screen and (max-width: 600px) {
     justify-self: center;
-    margin-bottom: 1rem;
   }
 `;
 

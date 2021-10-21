@@ -19,6 +19,7 @@ import Contact from './pages/contact/contact.page';
 import Appointments from './pages/appointments/appointments.page';
 import Profile from './pages/profile/profile.page';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page';
+import VerifyAccount from './pages/verify-account/verify-account.page';
 import ForgotPassword from './pages/forgot-password/forgot-password.page';
 import ResetPassword from './pages/reset-password/reset-password.page';
 import NotFound from './pages/NotFound/not-found.component';
@@ -98,6 +99,13 @@ const App = () => {
                 path='/restablecerContraseña/:token'
                 render={() =>
                   user ? <Redirect to='/perfil' /> : <ResetPassword />
+                }
+              />
+              <Route
+                exact
+                path='/verificarCuenta/:token'
+                render={() =>
+                  user ? <Redirect to='/perfil' /> : <VerifyAccount />
                 }
               />
               <Route path='/' component={NotFound} />

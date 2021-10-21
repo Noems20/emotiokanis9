@@ -151,7 +151,7 @@ const Header = ({ history }) => {
         <HeaderLogoLink to='/'>
           <HeaderLogo src={logo} scrollnav={scrollNav ? 1 : 0} />
         </HeaderLogoLink>
-        <HeaderLetterLogo to='/' onClick={handleClick}>
+        <HeaderLetterLogo to='/'>
           K9
         </HeaderLetterLogo>
         <MobileIcon scrollnav={scrollNav ? 1 : 0} onClick={handleClick}>

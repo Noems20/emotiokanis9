@@ -37,6 +37,7 @@ import {
 } from './handle-service.styles';
 
 const HandleService = ({ id, name, description, priceLapse, price, image }) => {
+  // -------------------------------------- STATE AND CONSTANTS ----------------------
   const imageSrc = `/img/services/${image}`;
   const [deleteLoader, setDeleteLoader] = useState(false);
   const [imageHash, setImageHash] = useState(Date.now());
@@ -55,12 +56,15 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
   const dispatch = useDispatch();
   const { uiErrors, loading, success } = useSelector((state) => state.ui);
 
+  // -------------------------------------- USE EFFECT  ----------------------
   useEffect(() => {
     if (success === true && selectedFile) {
       setImageHash(Date.now());
       dispatch(clearSuccess());
     }
   }, [success, selectedFile, dispatch]);
+
+  // -------------------------------------- HANDLERS ----------------------
 
   const handleOpen = () => {
     dispatch(clearUiErrors());
@@ -145,8 +149,8 @@ const HandleService = ({ id, name, description, priceLapse, price, image }) => {
         {modalOpen && (
           <Modal handleClose={handleClose}>
             <FormContainer>
-              <Title>Actualizar servicio</Title>
               <form onSubmit={handleServiceSubmit}>
+              <Title>Actualizar servicio</Title>
                 <TextInput
                   name='formName'
                   type='text'

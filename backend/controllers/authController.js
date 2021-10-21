@@ -18,6 +18,16 @@ const signToken = (id) => {
   });
 };
 
+// ------------------ FILTER OBJECT -------------
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
+// ------------------------------ PUT COOKIE (LOG USER) ----------------------
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
@@ -44,11 +54,84 @@ const createSendToken = (user, statusCode, res) => {
 
 // --------------------- SIGN UP ---------------------------------------
 export const signup = catchAsync(async (req, res) => {
-  const newUser = await User.create(req.body);
+  // 1) Filtered out unwanted fields names that are not allowed to be set
+  const filteredBody = filterObj(
+    req.body,
+    'name',
+    'email',
+    'password',
+    'passwordConfirm'
+  );
+
+  // 2) Create user
+  const newUser = await User.create(filteredBody);
   // const url = `${req.protocol}://${req.get('host')}/perfil`;
-  const url = `${req.protocol}://localhost:3000/perfil`;
-  await new Email(newUser, url).sendWelcome();
-  createSendToken(newUser, 201, res);
+  // const url = `${req.protocol}://localhost:3000/perfil`;
+  // await new Email(newUser, url).sendWelcome();
+
+  // 3) Generate the random verification token
+  const verificationToken = newUser.createVerificationToken();
+  await newUser.save({ validateBeforeSave: false });
+
+  // 4) Send it to user's email
+  try {
+    const verificationUrl = `${req.protocol}://localhost:3000/verificarCuenta/${verificationToken}`;
+    // const verificationUrl = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/v1/users/verificationPassword/${verificationToken}`;
+    await new Email(newUser, verificationUrl).sendWelcome();
+  } catch (error) {
+    console.log(error);
+    newUser.userVerificationToken = undefined;
+    await newUser.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500,
+        {
+          email: 'Ocurrio un error enviando el email',
+        }
+      )
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Token send to email',
+  });
+
+  // createSendToken(newUser, 201, res);
+});
+
+// --------------------- VERIFY ACCOUNT ------------------------------
+export const verifyAccount = catchAsync(async (req, res, next) => {
+  // 1) Get user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    userVerificationToken: hashedToken,
+  });
+
+  // 2) If token has not expired, and there is user, set the new password
+  if (!user) {
+    return next(
+      new AppError('Token is invalid or has expired', 400, {
+        general:
+          'El token no es válido o ha caducado, por favor intenta de nuevo',
+      })
+    );
+  }
+
+  user.verified = true;
+  user.userVerificationToken = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  // 4) Log the user and send JWT to client
+  createSendToken(user, 200, res);
 });
 
 // --------------------- LOG IN -----------------------------------------
@@ -75,7 +158,16 @@ export const login = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 3) If everything ok, send token to client
+  // 3) Check if account is verified
+  if (!user.verified) {
+    return next(
+      new AppError('Account not verified', 401, {
+        general: 'Cuenta no verificada, por favor revisa tu Email',
+      })
+    );
+  }
+
+  // 4) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
 
@@ -233,7 +325,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   // 2) Get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
 
-  if (!user) {
+  if (!user || user.verified === false) {
     return next(
       new AppError('There is no user with this email address.', 404, {
         email: 'No existe cuenta con este email',

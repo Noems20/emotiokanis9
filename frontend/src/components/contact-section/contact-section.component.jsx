@@ -43,7 +43,7 @@ const ContactSection = ({ children, loading = true, ...otherProps }) => {
               </InfoImgContainer>
               <InfoText>
                 Email: <br />
-                contacto@emotio.com
+                contacto@emotiokanis9.com
               </InfoText>
               {/* <InfoImgContainer>
                 <BiWorld />

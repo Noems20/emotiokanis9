@@ -16,7 +16,7 @@ import { TitleSm } from '../general.styles';
 import { Container, Text } from './appointment-contact.styles';
 
 // ICONS
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { RiMailSendLine } from 'react-icons/ri';
 
 const AppointmentContact = ({ loading, user }) => {
   // ---------------------- STATE AND CONSTANTS -----------------------
@@ -63,10 +63,10 @@ const AppointmentContact = ({ loading, user }) => {
         >
           <TitleSm>Correo enviado</TitleSm>
           <Text>
-            Correo electrónico enviado correctamente, muchas gracias por ponerte
-            en contacto, responderemos a la brevedad.
+            Correo electrónico enviado correctamente, gracias por ponerte en
+            contacto, responderemos a la brevedad.
           </Text>
-          <IoMdCheckmarkCircleOutline />
+          <RiMailSendLine />
         </Container>
       ) : (
         <ContactSection
@@ -103,7 +103,7 @@ const AppointmentContact = ({ loading, user }) => {
             disabled={firstLoader}
             style={{ justifySelf: 'start' }}
           >
-            Enviar correo
+            Enviar mensaje
           </CustomButton>
         </ContactSection>
       )}

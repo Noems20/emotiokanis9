@@ -13,7 +13,10 @@ class APIFeatures {
 
     // 2) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt|ne)\b/g,
+      (match) => `$${match}`
+    );
 
     // { duration: { gte: '5' }, difficulty: 'easy' } -> from query
     // { duration: { $gte: '5' }, difficulty: 'easy' } -> Regulara expression

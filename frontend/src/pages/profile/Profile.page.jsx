@@ -8,8 +8,9 @@ import { checkUser } from '../../redux/user/userActions';
 // COMPONENTS
 import TabLoader from '../../components/loaders/tab-loader/tab-loader.component';
 import UserSettings from '../../components/profile-components/settings/settings.component';
-import ManageServices from '../../components/profile-components/manage-services/manage-services.component';
+import ManageUsers from '../../components/profile-components/manage-users/manage-users.component';
 import ManageAwards from '../../components/profile-components/manage-awards/manage-awards.component';
+import ManageServices from '../../components/profile-components/manage-services/manage-services.component';
 import ManageAppointments from '../../components/profile-components/manage-appointments/manage-appointments.component';
 
 // STYLES
@@ -63,8 +64,11 @@ const containerVariants2 = {
 };
 
 const Profile = () => {
+  // ------------------------------- STATE AND CONSTANTS ----------------------
   const [tab, setTab] = useState('settings');
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { user, userLoaded } = useSelector((state) => state.user);
 
   // ----------------------------- RENDER TAB ----------------------
   const renderSwitch = (tab) => {
@@ -77,14 +81,14 @@ const Profile = () => {
         return <ManageAwards />;
       case 'manageAppointments':
         return <ManageAppointments />;
+      case 'manageUsers':
+        return <ManageUsers id={user._id} />;
       default:
         return <UserSettings />;
     }
   };
 
-  // ---------------------- REDUX AND EXTRA CONFIGURATION ------------
-  const dispatch = useDispatch();
-  const { user, userLoaded } = useSelector((state) => state.user);
+  // ---------------------- EXTRA CONFIGURATION ------------
 
   useEffect(() => {
     dispatch(checkUser());

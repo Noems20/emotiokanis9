@@ -2,24 +2,24 @@ import React, { useEffect } from 'react';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchAppointments,
-  clearAppointments,
-} from '../../../redux/appointments/appointmentsActions';
-import HandleAppointment from '../../handle-appointment/handle-appointment.component';
+import { fetchUsers, clearUsers } from '../../../redux/user/userActions';
+import HandleUser from '../../handle-user/handle-user.component';
 
 // COMPONENTS
 import TabLoader from '../../loaders/tab-loader/tab-loader.component';
 
 // STYLES
-import { ManageItems, Title } from '../managers.styles.js';
-import { TabContainerModified } from './manage-appointments.styles';
+import { Title } from '../managers.styles.js';
+import {
+  TabContainerModified,
+  ManageItemsModified,
+} from './manage-users.styles';
 
-const ManageAppointments = () => {
+const ManageUsers = ({ id }) => {
   // -------------------------- STATE AND CONSTANTS ---------------
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.ui);
-  const { appointments } = useSelector((state) => state.appointments);
+  const { users } = useSelector((state) => state.user);
 
   const containerVariants = {
     hidden: {
@@ -36,11 +36,11 @@ const ManageAppointments = () => {
 
   // ------------------------- USE EFFECT ---------------------
   useEffect(() => {
-    dispatch(fetchAppointments());
+    dispatch(fetchUsers(id));
     return () => {
-      dispatch(clearAppointments());
+      dispatch(clearUsers());
     };
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   // ------------------------- HANDLERS ---------------------
 
@@ -51,24 +51,18 @@ const ManageAppointments = () => {
       animate='visible'
       exit='hidden'
     >
-      <ManageItems loading={loading.fetchLoader ? 'true' : 'false'}>
-        <Title>Administrar citas</Title>
+      <ManageItemsModified loading={loading.fetchLoader ? 'true' : 'false'}>
+        <Title>Administrar usuarios</Title>
         {loading.fetchLoader ? (
           <TabLoader />
-        ) : appointments.length > 0 ? (
-          appointments.map(({ _id, ...otherProps }) => (
-            <HandleAppointment
-              key={_id}
-              id={_id}
-              {...otherProps}
-            ></HandleAppointment>
-          ))
         ) : (
-          <Title>No hay citas activas</Title>
+          users.map(({ _id, ...otherProps }) => (
+            <HandleUser key={_id} id={_id} {...otherProps}></HandleUser>
+          ))
         )}
-      </ManageItems>
+      </ManageItemsModified>
     </TabContainerModified>
   );
 };
 
-export default ManageAppointments;
+export default ManageUsers;

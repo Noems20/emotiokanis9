@@ -34,9 +34,12 @@ const serviceSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function (value) {
-        return validator.isAlphanumeric(value.split(' ').join(''), 'es-ES', {
-          ignore: ',.',
-        });
+        if (value !== '') {
+          return validator.isAlphanumeric(value.split(' ').join(''), 'es-ES', {
+            ignore: ',.',
+          });
+        }
+        return true;
       },
       message: 'Solo puede contener caracteres y números',
     },

@@ -127,6 +127,9 @@ export const SidebarAdminItems = styled(motion.div)`
           @media only screen and (max-width: 700px) {
             display: block;
           }
+          @media only screen and (max-width: 430px) {
+            font-size: 1.6rem;
+          }
         }
 
         &:hover {

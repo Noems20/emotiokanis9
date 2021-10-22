@@ -7,6 +7,8 @@ import {
   uploadUserPhoto,
   resizeUserPhoto,
   sendContactMail,
+  deleteUser,
+  changeUserRole,
 } from '../controllers/userController.js';
 
 import {
@@ -36,11 +38,13 @@ router.patch('/verifyAccount/:token', verifyAccount);
 router.use(protect);
 
 router.patch('/updateMyPassword', updatePassword);
+router.patch('/changeUserRole/:id', restrictTo('admin'), changeUserRole);
 // router.get('/me', getMe, getUser);
 router.patch('/updateMe', uploadUserPhoto, updateMe, resizeUserPhoto);
 // router.delete('/deleteMe', deleteMe);
 
 // ----------- GENERIC ROUTES --------
-router.route('/').get(restrictTo('admin', 'employee'), getAllUsers);
+router.route('/').get(restrictTo('admin'), getAllUsers);
+router.route('/:id').delete(restrictTo('admin'), deleteUser);
 
 export default router;

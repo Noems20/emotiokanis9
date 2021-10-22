@@ -92,7 +92,6 @@ const ActiveAppointment = ({ loading, className, activeAppointment }) => {
       x: '100vw',
     },
   };
-  console.log(selectedDate);
 
   // -------------------------- USE EFFECT'S ---------------------
   useEffect(() => {

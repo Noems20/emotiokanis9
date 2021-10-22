@@ -11,8 +11,7 @@ import { deleteItem } from '../utils/reducerUtils';
 
 const initialState = {
   activeAppointment: null,
-  appointments: null,
-  activeAppointments: null,
+  appointments: [],
 };
 
 const appointmentsReducer = (state = initialState, action) => {

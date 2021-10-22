@@ -78,6 +78,7 @@ export const TabButton = styled(CustomButton)`
 export const ManageItems = styled(TabSubContainer)`
   height: 100%;
   padding: 0 8rem;
+  padding-bottom: 1rem;
   position: relative;
 
   @media only screen and (max-width: 1200px) {

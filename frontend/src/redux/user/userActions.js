@@ -1,4 +1,12 @@
-import { SET_USER, SET_UPDATED_USER, SET_USER_LOADED } from './userTypes';
+import {
+  SET_USER,
+  SET_USERS,
+  CLEAR_USERS,
+  SET_UPDATED_USER,
+  SET_USER_LOADED,
+  UPDATE_USER,
+  DELETE_USER,
+} from './userTypes';
 import {
   SET_APPOINTMENTS,
   SET_ACTIVE_APPOINTMENT,
@@ -12,6 +20,38 @@ import {
 import axios from 'axios';
 
 import { batch } from 'react-redux';
+
+// ---------------------------- CLEAR APPOINTMENTS ----------------------------
+export const clearUsers = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_USERS,
+  });
+};
+
+// ---------------------------- FETCH USERS ----------------------------
+export const fetchUsers = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_UI_LOADING,
+      payload: { fetchLoader: true },
+    });
+
+    const { data } = await axios.get(`/api/v1/users?_id[ne]=${id}&sort=role`);
+
+    batch(() => {
+      dispatch({
+        type: SET_USERS,
+        payload: data.data,
+      });
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { fetchLoader: false },
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // ------------------------ LOG IN ---------------------------
 export const login = (email, password) => async (dispatch) => {
@@ -132,7 +172,7 @@ export const checkUser = () => async (dispatch) => {
       data: { data },
     } = await axios.get('/api/v1/appointments/MyAppointments');
 
-    if (!data) {
+    if (data.length === 0) {
       dispatch({
         type: SET_APPOINTMENTS,
         payload: null,
@@ -235,6 +275,52 @@ export const updateMe = (email, name, photo) => async (dispatch) => {
       } else {
         window.location.reload();
       }
+    }
+  }
+};
+
+// ------------------------ CHANGE USER ROLE ---------------------------
+export const changeUserRole = (id, role) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_UI_LOADING,
+      payload: { firstLoader: `user-${id}` },
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.patch(
+      `/api/v1/users/changeUserRole/${id}`,
+      {
+        role,
+      },
+      config
+    );
+
+    batch(() => {
+      dispatch({
+        type: UPDATE_USER,
+        payload: data.data,
+      });
+      dispatch({
+        type: SET_UI_LOADING,
+        payload: { firstLoader: false },
+      });
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_UI_LOADING,
+      payload: { firstLoader: false },
+    });
+    if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      window.location.reload();
     }
   }
 };
@@ -494,6 +580,26 @@ export const sendContactEmail =
       });
     }
   };
+
+// ---------------------------- DELETE USER --------------------
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/v1/users/${id}`);
+    batch(() => {
+      dispatch({
+        type: DELETE_USER,
+        payload: id,
+      });
+    });
+  } catch (error) {
+    if (
+      error.response.data.message ===
+      'You are not logged in! Please log in to get access'
+    ) {
+      window.location.reload();
+    }
+  }
+};
 
 // ------------------------------- UTILS --------------------
 export const setUpdatedUser = (value) => (dispatch) => {

@@ -1,9 +1,12 @@
 import User from '../models/userModel.js';
+import Appointment from '../models/appointmentModel.js';
+
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/appError.js';
 import Email from '../utils/email.js';
 import multer from 'multer';
 import sharp from 'sharp';
+import { getAll, deleteOne } from './handlerFactory.js';
 import { validateMailData } from '../utils/validators.js';
 
 // ----------------- FILE UPLOAD ----------------
@@ -80,14 +83,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 // ------------------ GET ALL USERS --------------
-export const getAllUsers = async (req, res, next) => {
-  const users = await User.find();
-
-  res.status(200).json({
-    results: users.length,
-    users,
-  });
-};
+export const getAllUsers = getAll(User);
 
 // ------------------- UPDATE USER -------------------
 export const updateMe = catchAsync(async (req, res, next) => {
@@ -103,7 +99,7 @@ export const updateMe = catchAsync(async (req, res, next) => {
 
   // console.log(req.body);
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(req.body, 'name');
   if (req.file) filteredBody.photo = `user-${req.user.id}.jpg`;
 
   // 3) Update user document
@@ -153,4 +149,39 @@ export const sendContactMail = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'Mail sent!',
   });
+});
+
+// ------------------------------- CHANGE USER ROLE --------------------------------
+export const changeUserRole = catchAsync(async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    { role: req.body.role },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedUser) {
+    return next(new AppError('No document found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: updatedUser,
+  });
+});
+
+// ------------------------------- DELETE USER AND HIS APPOINTMENTS --------------------
+export const deleteUser = catchAsync(async (req, res, next) => {
+  const userDeleted = await User.findByIdAndDelete(req.params.id);
+
+  if (!userDeleted) {
+    return next(new AppError('No document found with that ID', 404));
+  }
+  await Appointment.deleteMany({
+    user: req.params.id,
+  });
+
+  res.status(204).json({ status: 'success', data: null });
 });

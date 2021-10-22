@@ -51,6 +51,13 @@ export const FormInputContainer = styled.input`
     outline: none;
   }
 
+  &:disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px 10px 0 0;
+    cursor: not-allowed;
+    margin-top: 3px;
+  }
+
   @media only screen and (max-width: 430px) {
     font-size: 2.5rem;
   }

@@ -15,6 +15,7 @@ export const Grid = styled(PageGrid)`
 
 export const Container = styled.div`
   grid-column: center-start / center-end;
+  /* overflow: hidden; */
   /* background: red; */
 
   display: grid;

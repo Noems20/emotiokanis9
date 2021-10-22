@@ -70,6 +70,10 @@ export const DescriptionTitle = styled.h1`
 `;
 export const Description = styled.p`
   font-size: 1.6rem;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 1.8rem;
+  }
 `;
 
 export const ServicePrice = styled.div`

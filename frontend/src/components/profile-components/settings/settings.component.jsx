@@ -128,6 +128,7 @@ const UserSettings = () => {
             value={email}
             label='Email'
             error={uiErrors.errorsOne.email}
+            disabled
           />
           <ChangeImage>
             <UserImage src={`${userImageSrc}?${imageHash}`} />

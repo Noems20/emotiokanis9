@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-import CustomButton from '../custom-button/custom-button.component';
 import tokens from '../../tokens';
-import { TitleSm } from '../general.styles';
-import { motion } from 'framer-motion';
 
 export const Container = styled.div``;
 
@@ -80,6 +77,10 @@ export const Description = styled.p`
   @media only screen and (max-width: 1200px) {
     text-align: center;
   }
+
+  @media only screen and (max-width: 476px) {
+    font-size: 1.8em;
+  }
 `;
 
 export const Date = styled.p`
@@ -117,46 +118,4 @@ export const UserImage = styled.div`
 
 export const Username = styled.p`
   font-size: 2rem;
-`;
-
-// -------------------- FORM STYLES --------------
-export const FormContainer = styled(motion.div)`
-  width: 60vw;
-  padding: 5rem;
-  border-radius: 8px;
-  background-color: #fff;
-
-  display: grid;
-  grid-gap: 3rem;
-
-  @media only screen and (max-width: 1400px) {
-    width: 75vw;
-  }
-  @media only screen and (max-width: 1200px) {
-    width: 80vw;
-    padding: 3rem;
-    grid-gap: 1rem;
-  }
-  @media only screen and (max-width: 600px) {
-    width: 90vw;
-    /* height: 90vh; */
-  }
-  /* @media only screen and (max-width: 430px) {
-    width: 90vw;
-    grid-auto-rows: min-content;
-  } */
-`;
-
-export const Title = styled(TitleSm)`
-  justify-self: start;
-  font-size: 2.6rem;
-  text-transform: uppercase;
-
-  @media only screen and (max-width: 600px) {
-    justify-self: center;
-  }
-`;
-
-export const UpdateServiceButton = styled(CustomButton)`
-  justify-self: ${({ loading }) => loading && 'center'};
 `;

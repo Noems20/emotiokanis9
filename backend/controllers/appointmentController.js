@@ -132,6 +132,29 @@ export const getMyAppointments = catchAsync(async (req, res, next) => {
   });
 });
 
+// ----------------------- COMPLETE APPOINTMENT -----------------------
+
+export const completeAppointment = catchAsync(async (req, res, next) => {
+  const completedAppointment = await Appointment.findByIdAndUpdate(
+    req.params.id,
+    {
+      active: false,
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!completedAppointment) {
+    return next(new AppError('Not found appointment with that id', 400));
+  }
+
+  return res.status(200).json({
+    status: 'success',
+    data: completedAppointment,
+  });
+});
+
 export const getAllAppointments = getAll(Appointment);
 export const getAppointment = getOne(Appointment);
 export const createAppointment = createOne(Appointment);

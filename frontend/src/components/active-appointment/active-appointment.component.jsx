@@ -21,7 +21,7 @@ import Modal from '../modal/modal.component';
 import SelectInput from '../form-inputs/select-input/select-input.component';
 import TextAreaInput from '../form-inputs/textarea-input/textarea-input.component';
 import TabLoader from '../loaders/tab-loader/tab-loader.component';
-import {  CustomMonthHeader} from '../calendar/calendar.components';
+import { CustomMonthHeader } from '../calendar/calendar.components';
 
 // DATEPICKER
 import es from 'date-fns/locale/es';

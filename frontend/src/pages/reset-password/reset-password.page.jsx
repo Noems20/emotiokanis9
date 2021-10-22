@@ -99,7 +99,7 @@ const ResetPassword = () => {
               disabled={loading.firstLoader || loading.secondLoader}
               primary
             >
-              Enviar correo
+              Restablecer contraseña
             </CustomButton>
           </Container>
         )}

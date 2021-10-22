@@ -10,6 +10,7 @@ import TabLoader from '../../components/loaders/tab-loader/tab-loader.component'
 import UserSettings from '../../components/profile-components/settings/settings.component';
 import ManageServices from '../../components/profile-components/manage-services/manage-services.component';
 import ManageAwards from '../../components/profile-components/manage-awards/manage-awards.component';
+import ManageAppointments from '../../components/profile-components/manage-appointments/manage-appointments.component';
 
 // STYLES
 import {
@@ -74,6 +75,8 @@ const Profile = () => {
         return <ManageServices />;
       case 'manageAwards':
         return <ManageAwards />;
+      case 'manageAppointments':
+        return <ManageAppointments />;
       default:
         return <UserSettings />;
     }

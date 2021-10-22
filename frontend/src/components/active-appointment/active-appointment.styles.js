@@ -3,13 +3,11 @@ import { motion } from 'framer-motion';
 import tokens from '../../tokens';
 import { TitleSm } from '../general.styles';
 import CustomButton from '../custom-button/custom-button.component';
-import {
-  CalendarContainer,
-} from '../calendar/calendar.components';
+import { CalendarContainer } from '../calendar/calendar.components';
 
 export const LoaderContainer = styled.div`
   margin: 61rem 0;
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 1200px) {
     margin: 75rem 0;
   }
 `;
@@ -42,7 +40,7 @@ export const AppointmentContent = styled.div`
   grid-gap: 3rem;
   grid-template-columns: max-content 1fr;
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -70,7 +68,7 @@ export const ServiceImage = styled.div`
     width: 29rem;
   }
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     grid-column: auto / auto;
     grid-row: auto / auto;
   }
@@ -78,7 +76,7 @@ export const ServiceImage = styled.div`
 
 export const AppointmentTitle = styled(TitleSm)`
   grid-column: 1 / 3;
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -100,7 +98,7 @@ export const ServiceTitle = styled.h1`
     font-size: 3.5rem;
   }
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -116,7 +114,7 @@ export const AppointmentDate = styled.p`
     font-size: 2.5rem;
   }
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -130,7 +128,7 @@ export const Description = styled.p`
     font-size: 2.5rem;
   }
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     text-align: center;
     grid-column: auto / auto;
   }
@@ -173,7 +171,7 @@ export const FormContainer = styled(motion.form)`
 
   @media only screen and (max-width: 430px) {
     height: 90vh;
-    overflow:auto;
+    overflow: auto;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
@@ -188,7 +186,7 @@ export const ButtonsContainer = styled.div`
 
   grid-template-columns: max-content max-content;
 
-  @media only screen and (max-width: 960px) {
+  @media only screen and (max-width: 1200px) {
     justify-self: center;
   }
 `;
@@ -198,25 +196,28 @@ export const Button = styled(CustomButton)`
   text-transform: uppercase;
 `;
 
-
 // -----------------------------------------
 // CALENDAR
 // -----------------------------------------
-export const CalendarContainerModified  = styled(CalendarContainer)`
-& div div.react-datepicker__time-container div.react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item{
-  
+export const CalendarContainerModified = styled(CalendarContainer)`
+  &
+    div
+    div.react-datepicker__time-container
+    div.react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item {
     @media only screen and (max-width: 380px) {
       font-size: 4vw;
     }
-}
+  }
 
-& div div.react-datepicker__day,
+  & div div.react-datepicker__day,
   div.react-datepicker__day-name {
-
     @media only screen and (max-width: 380px) {
       font-size: 4vw;
       margin: 1vw;
       width: 8vw;
     }
   }
-`
+`;

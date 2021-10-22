@@ -69,17 +69,17 @@ const userSchema = new mongoose.Schema(
 // --------------------------------------- MIDDLEWARE -----------------------------------------------
 
 // --------------- ENCRYPT PASSWORD -----------------
-// userSchema.pre('save', async function (next) {
-//   // Only run this function if password was actually modified
-//   if (!this.isModified('password')) return next();
+userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
 
-//   // Encrypt-hash password with cost of 12
-//   this.password = await bcrypt.hash(this.password, 12);
+  // Encrypt-hash password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
 
-//   // Delete passwordConfirm Field
-//   this.passwordConfirm = undefined;
-//   next();
-// });
+  // Delete passwordConfirm Field
+  this.passwordConfirm = undefined;
+  next();
+});
 
 // --------------- CHECK ROLE -----------------
 // userSchema.pre('save', async function (next) {

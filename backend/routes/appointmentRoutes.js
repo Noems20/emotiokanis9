@@ -6,6 +6,7 @@ import {
   createAppointment,
   deleteAppointment,
   updateAppointment,
+  completeAppointment,
   setUserIds,
   checkIfAuthor,
   checkIfActive,
@@ -20,6 +21,11 @@ const router = express.Router({ mergeParams: true });
 router.use(protect);
 
 router.get('/MyAppointments', getMyAppointments);
+router.patch(
+  '/completeAppointment/:id',
+  restrictTo('admin'),
+  completeAppointment
+);
 
 router
   .route('/')

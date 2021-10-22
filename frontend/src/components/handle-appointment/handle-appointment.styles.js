@@ -46,6 +46,7 @@ export const ServiceTitle = styled.h1`
 export const ContentContainer = styled.div`
   margin-top: 2rem;
   display: grid;
+  grid-gap: 2rem;
   grid-template-columns: 0.5fr 0.5fr;
 
   @media only screen and (max-width: 1100px) {
@@ -61,51 +62,61 @@ export const ServiceDescription = styled.div`
   grid-auto-rows: min-content;
   align-items: start;
   justify-items: start;
+
+  @media only screen and (max-width: 1200px) {
+    justify-items: center;
+  }
 `;
-export const DescriptionTitle = styled.h1`
+export const DetailsTitle = styled.h1`
   font-family: ${tokens.fontPrimary};
   font-weight: 300;
   font-size: 2rem;
   color: var(--color-primary);
 `;
+
 export const Description = styled.p`
   font-size: 1.6rem;
+
+  @media only screen and (max-width: 1200px) {
+    text-align: center;
+  }
 `;
 
-export const ServicePrice = styled.div`
+export const Date = styled.p`
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-grey-dark-3);
+
+  @media only screen and (max-width: 1200px) {
+    text-align: center;
+  }
+`;
+
+export const UserDetails = styled.div`
   display: grid;
   grid-gap: 2rem;
   grid-auto-rows: min-content;
   align-items: start;
   justify-items: center;
 `;
-export const PriceTitle = styled.h1`
-  font-family: ${tokens.fontPrimary};
+
+export const UserImage = styled.div`
+  background-image: ${(props) => `url(${props.url})`};
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; */
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+
+  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+`;
+
+export const Username = styled.p`
   font-size: 2rem;
-  font-weight: 300;
-  color: var(--color-primary);
-`;
-
-export const PriceLapse = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  color: var(--color-grey-dark-3);
-
-  margin-top: -1rem;
-`;
-
-export const Price = styled.p`
-  font-size: 3rem;
-`;
-
-export const ButtonsContainer = styled.div`
-  display: grid;
-  grid-gap: 2rem;
-  justify-items: center;
-
-  @media only screen and (max-width: 1100px) {
-    grid-template-columns: max-content max-content;
-  }
 `;
 
 // -------------------- FORM STYLES --------------

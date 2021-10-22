@@ -3,11 +3,16 @@ import {
   SET_APPOINTMENTS,
   SET_ACTIVE_APPOINTMENT,
   DELETE_APPOINTMENT,
+  CLEAR_APPOINTMENTS,
+  COMPLETE_APPOINTMENT,
 } from './appointmentsTypes';
+
+import { deleteItem } from '../utils/reducerUtils';
 
 const initialState = {
   activeAppointment: null,
   appointments: null,
+  activeAppointments: null,
 };
 
 const appointmentsReducer = (state = initialState, action) => {
@@ -32,6 +37,13 @@ const appointmentsReducer = (state = initialState, action) => {
         ...state,
         activeAppointment: null,
       };
+    case COMPLETE_APPOINTMENT:
+      return {
+        ...state,
+        appointments: deleteItem(action.payload, state.appointments),
+      };
+    case CLEAR_APPOINTMENTS:
+      return initialState;
     default:
       return state;
   }

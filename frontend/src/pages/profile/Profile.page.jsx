@@ -17,6 +17,7 @@ import ManageAppointments from '../../components/profile-components/manage-appoi
 import {
   Grid,
   Container,
+  SoonText,
   SideBar,
   SideBarContainer,
   SideBarAdmin,
@@ -75,6 +76,10 @@ const Profile = () => {
     switch (tab) {
       case 'settings':
         return <UserSettings />;
+      case 'pets':
+        return <SoonText>Proximamente</SoonText>;
+      case 'billing':
+        return <SoonText>Proximamente</SoonText>;
       case 'manageServices':
         return <ManageServices />;
       case 'manageAwards':

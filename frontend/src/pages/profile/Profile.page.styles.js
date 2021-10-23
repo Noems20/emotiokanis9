@@ -9,6 +9,7 @@ import {
   SidebarAdminItems,
   SidebarAdmin,
   SidebarAdminText,
+  TitleSm,
 } from '../../components/general.styles';
 
 export const Grid = styled(PageGrid)``;
@@ -63,4 +64,9 @@ export const Content = styled.div`
   overflow: auto;
   margin: 7rem 0;
   position: relative;
+`;
+
+export const SoonText = styled(TitleSm)`
+  display: block;
+  font-size: 5rem;
 `;

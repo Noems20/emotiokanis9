@@ -22,7 +22,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import VerifyAccount from './pages/verify-account/verify-account.page';
 import ForgotPassword from './pages/forgot-password/forgot-password.page';
 import ResetPassword from './pages/reset-password/reset-password.page';
-import NotFound from './pages/NotFound/not-found.component';
+import NotFound from './pages/NotFound/not-found.page';
 
 //  COMPONENTS
 import Header from './components/header/header.component';

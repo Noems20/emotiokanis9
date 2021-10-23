@@ -1,5 +1,9 @@
 import React from 'react';
 
+// COMPONENTS
+import ButtonLink from '../button-link/button-link.component';
+
+// STYLES
 import {
   ServiceHeading,
   ServiceTitle,
@@ -11,7 +15,6 @@ import {
   PriceTitle,
   PriceLapse,
   Price,
-  Button,
 } from './service.styles';
 
 const Service = ({ name, description, priceLapse, price, image }) => {
@@ -30,7 +33,7 @@ const Service = ({ name, description, priceLapse, price, image }) => {
           {priceLapse && <PriceLapse>{priceLapse}</PriceLapse>}
 
           <Price>${price}</Price>
-          <Button primary>Agendar cita</Button>
+          <ButtonLink to='/citas'>Agendar cita</ButtonLink>
         </ServicePrice>
       </ContentContainer>
     </>

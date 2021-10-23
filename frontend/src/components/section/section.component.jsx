@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../custom-button/custom-button.component';
+import ButtonLink from '../button-link/button-link.component';
 
 import {
   SectionContainer,
@@ -23,6 +23,7 @@ const Section = ({
   headline,
   description,
   buttonLabel,
+  linkUrl,
   decoration,
 }) => {
   return (
@@ -33,7 +34,7 @@ const Section = ({
             <Subtitle>{topLine}</Subtitle>
             <Heading lightBg={lightBg}>{headline}</Heading>
             <Description lightBg={lightBg}>{description}</Description>
-            <CustomButton primary>{buttonLabel}</CustomButton>
+            <ButtonLink to={linkUrl}>{buttonLabel}</ButtonLink>
           </ColumnOne>
           <ColumnTwo>
             <ImageWrapper>

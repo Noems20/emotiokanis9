@@ -119,6 +119,10 @@ export const CustomButtonContainer = styled(motion.button)`
     cursor: not-allowed;
   }
 
+  @media only screen and (max-width: 430px) {
+    font-size: 2.2rem;
+  }
+
   ${getButtonStyles}
 `;
 

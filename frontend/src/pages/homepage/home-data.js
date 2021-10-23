@@ -10,6 +10,7 @@ export const homeObjOne = {
   description:
     'Tenemos hotel canino, servicio de paseo, entrenamiento personalizado, veterinaria y mucho mas..',
   buttonLabel: 'Saber mas',
+  linkUrl: '/servicios',
   decoration: false,
 };
 
@@ -24,7 +25,8 @@ export const homeObjTwo = {
   headline: 'Agenda tu cita con uno de nuestros expertos',
   description:
     'Crea tu cuenta o inicia sesión para poder agendar una cita desde la comodidad de tu casa.',
-  buttonLabel: 'Iniciar sesión',
+  buttonLabel: 'Agendar',
+  linkUrl: '/citas',
   decoration: false,
 };
 
@@ -40,5 +42,6 @@ export const homeObjThree = {
   description:
     'Hemos sido ganadores de multiples competencias a nivel nacional, no hay mejor lugar para tu mascota.',
   buttonLabel: 'Saber mas',
+  linkUrl: '/nosotros',
   decoration: false,
 };

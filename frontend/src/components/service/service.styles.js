@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import CustomButton from '../custom-button/custom-button.component';
 import tokens from '../../tokens';
 
 export const ServiceHeading = styled.div`
@@ -72,6 +71,10 @@ export const DescriptionTitle = styled.h1`
 `;
 export const Description = styled.p`
   font-size: 2rem;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.2rem;
+  }
 `;
 
 export const ServicePrice = styled.div`
@@ -99,5 +102,3 @@ export const PriceLapse = styled.h1`
 export const Price = styled.p`
   font-size: 4rem;
 `;
-
-export const Button = styled(CustomButton)``;

@@ -26,9 +26,8 @@ dotenv.config();
 
 const app = express();
 
-// Serving static files
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
+app.enable('trust proxy');
+
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, '/backend/public')));
 

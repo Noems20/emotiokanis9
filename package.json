@@ -9,7 +9,8 @@
     "data:destroy": "node backend/data/seeder -d",
     "server:prod": "SET NODE_ENV=production&& nodemon backend/server",
     "server": "nodemon backend/server",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Noe Munoz Sanchez",
   "license": "ISC",

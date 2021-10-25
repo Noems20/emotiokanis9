@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 // SECURITY
 import rateLimit from 'express-rate-limit';
@@ -26,10 +27,10 @@ dotenv.config();
 const app = express();
 
 // Serving static files
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.use(express.static(path.join(__dirname, 'public')));
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/backend/public')));
 
 // ---------------------------- MIDDLEWARES ---------------------------
 const limiter = rateLimit({
@@ -39,7 +40,54 @@ const limiter = rateLimit({
 });
 
 // Set security http headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
+        baseUri: ["'self'"],
+        fontSrc: ["'self'", 'https:', 'data:'],
+        scriptSrc: [
+          "'self'",
+          'https:',
+          'http:',
+          'blob:',
+          'https://*.mapbox.com',
+          'https://js.stripe.com',
+          'https://m.stripe.network',
+          'https://*.cloudflare.com',
+        ],
+        frameSrc: ["'self'", 'https://js.stripe.com'],
+        objectSrc: ["'none'"],
+        styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
+        workerSrc: [
+          "'self'",
+          'data:',
+          'blob:',
+          'https://*.tiles.mapbox.com',
+          'https://api.mapbox.com',
+          'https://events.mapbox.com',
+          'https://m.stripe.network',
+        ],
+        childSrc: ["'self'", 'blob:'],
+        imgSrc: ["'self'", 'data:', 'blob:'],
+        formAction: ["'self'"],
+        connectSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'data:',
+          'blob:',
+          'https://*.stripe.com',
+          'https://*.mapbox.com',
+          'https://*.cloudflare.com/',
+          'https://bundle.js:*',
+          'ws://127.0.0.1:*/',
+        ],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
 
 // Limit request from same API
 app.use('/api', limiter);
@@ -74,6 +122,7 @@ app.use(
     ],
   })
 );
+// app.use(compression);
 
 app.use(cookieParser());
 
@@ -82,6 +131,16 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/services', serviceRouter);
 app.use('/api/v1/awards', awardRouter);
 app.use('/api/v1/appointments', appointmentRouter);
+
+// --------------------------- SERVE REACT STATIC'S ----------------
+if (process.env.NODE_ENV === 'production') {
+  // console.log(__dirname);
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+}
 
 // ---------------------------- ERRORS ---------------------------
 

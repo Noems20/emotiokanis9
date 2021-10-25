@@ -39,15 +39,32 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('es', es);
 
+const getAvailableDate = (date) => {
+  if (getDay(date) === 0) {
+    // Check if sunday
+    return setHours(addDays(date, 1), 0);
+  } else if (getDay(date) === 6) {
+    // Check if saturday
+    if (getHours(date) >= 11) return setHours(addDays(date, 1), 0);
+  } else {
+    if (getHours(date) >= 16) return setHours(addDays(date, 1), 0);
+  }
+
+  return date;
+};
+
 const CreateAppointment = ({ loading, className }) => {
   // --------------------------- STATE AND CONSTANTS ------------------------
   const [description, setDescription] = useState('');
   const [service, setService] = useState('');
   const [selectedDate, setSelectedDate] = useState(
-    getHours(new Date()) >= 16
-      ? setHours(addDays(new Date(), 1), 0)
-      : setHours(new Date(), 0)
+    getAvailableDate(new Date())
   );
+  // const [selectedDate, setSelectedDate] = useState(
+  //   getHours(new Date()) >= 16
+  //     ? setHours(addDays(new Date(), 1), 0)
+  //     : setHours(new Date(), 0)
+  // );
 
   // console.log(service);
   // console.log(getDay(selectedDate));
@@ -186,7 +203,7 @@ const CreateAppointment = ({ loading, className }) => {
                 maxTime={
                   getDay(selectedDate) !== 6
                     ? setHours(setMinutes(new Date(), 0), 18)
-                    : setHours(setMinutes(new Date(), 0), 14)
+                    : setHours(setMinutes(new Date(), 0), 13)
                 }
                 filterDate={(date) => date.getDay() !== 0}
                 filterTime={filterPassedTime}

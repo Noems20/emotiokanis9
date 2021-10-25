@@ -61,6 +61,20 @@ export const checkIfActive = catchAsync(async (req, res, next) => {
 
 // ----------------------- CHECK DATE -----------------------
 
+const availableHoursWeekday = [
+  '9:0',
+  '10:0',
+  '11:0',
+  '12:0',
+  '13:0',
+  '14:0',
+  '15:0',
+  '16:0',
+  '17:0',
+  '18:0',
+];
+const availableHoursSaturday = ['9:0', '10:0', '11:0', '12:0', '13:0'];
+
 export const checkDate = catchAsync(async (req, res, next) => {
   // Check if date of appointment is valid
   if (req.body.date && !validator.isISO8601(req.body.date)) {
@@ -70,16 +84,35 @@ export const checkDate = catchAsync(async (req, res, next) => {
       })
     );
   }
+
   const date = moment(req.body.date);
-  const lowerLimit = moment(date.toISOString()).hour(8).startOf('hour');
-  const upperLimit = moment(date.toISOString()).hour(19).startOf('hour');
-  // console.log(lowerLimit.toString());
-  // console.log(upperLimit.toString());
-  // console.log(date.day());
+  // console.log(`${date.hour()}:${date.minutes()}`);
+
+  // let lowerLimit = moment(date.toISOString()).hour(8).startOf('hour');
+  // let upperLimit = moment(date.toISOString()).hour(19).startOf('hour');
+  if (date.day() === 6) {
+    // upperLimit = moment(date.toISOString()).hour(14).startOf('hour');
+    if (!availableHoursSaturday.includes(`${date.hour()}:${date.minutes()}`)) {
+      return next(
+        new AppError(`Must be a valid date`, 400, {
+          date: 'Debe ser una fecha válida',
+        })
+      );
+    }
+  } else {
+    if (!availableHoursWeekday.includes(`${date.hour()}:${date.minutes()}`)) {
+      return next(
+        new AppError(`Must be a valid date`, 400, {
+          date: 'Debe ser una fecha válida',
+        })
+      );
+    }
+  }
+
   if (
     !(
       date.isBefore(moment().add(30, 'day').startOf('day')) && // Checks if appointment before 30 days after current time
-      date.isBetween(lowerLimit, upperLimit) && // Checks between hours 8-19
+      // date.isBetween(lowerLimit, upperLimit) && // Checks between hours 8-19
       date.isAfter(moment().add(2, 'hour')) && // Checks if two hours after current time
       date.day() !== 0
     ) // Checks if is not sunday

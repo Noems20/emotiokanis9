@@ -69,22 +69,31 @@ export const MapContainer = styled.div`
   align-content: center;
   /* align-items: center; */
 
-  & iframe {
-    -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.73);
-    box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.73);
-    border: 5px solid var(--color-primary);
-    width: 100%;
-    min-height: 350px;
-    max-height: 700px;
-    border-radius: 5px;
-
-    @media only screen and (max-width: 700px) {
-      border: none;
-    }
-  }
-
   @media only screen and (max-width: 700px) {
     grid-column: full-start / full-end;
+  }
+`;
+
+export const Map = styled.div`
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -webkit-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+  -moz-box-shadow: 0px 0px 8px 1px var(--color-grey-light-4);
+`;
+
+export const PopupLabel = styled.h2`
+  color: var(--color-primary);
+  @media only screen and (max-width: 430px) {
+    font-size: 1.8rem;
+  }
+`;
+export const PopupDescription = styled.p`
+  font-size: 1.3rem;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 1.6rem;
   }
 `;
 

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +19,9 @@ import {
   Heading,
   Title,
   MapContainer,
+  Map,
+  PopupLabel,
+  PopupDescription,
   MapTitle,
   Button,
   Container,
@@ -25,6 +30,7 @@ import {
 
 // ICONS
 import { RiMailSendLine } from 'react-icons/ri';
+import { SiGooglemaps } from 'react-icons/si';
 
 const Contact = () => {
   // ---------------------- STATE AND CONSTANTS -------------
@@ -35,6 +41,14 @@ const Contact = () => {
     message: '',
   });
   const { name, subject, email, message } = userCredentials;
+  const [viewport, setViewport] = useState({
+    width: '100%',
+    height: 400,
+    longitude: -102.55540879898437,
+    latitude: 22.76889481968826,
+    zoom: 13,
+  });
+  const [showPopup, togglePopup] = useState(true);
 
   const dispatch = useDispatch();
   const {
@@ -155,12 +169,50 @@ const Contact = () => {
         {/* <GoogleMap /> */}
         <MapContainer>
           <MapTitle>Ubícanos</MapTitle>
-          <iframe
+          {/* <iframe
             title='Map'
             frameBorder='0'
             scrolling='no'
             src='https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=Copias%20No%C3%A9+(Mi%20nombre%20de%20egocios)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed'
-          ></iframe>
+          ></iframe> */}
+          <Map>
+            <ReactMapGL
+              {...viewport}
+              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+              onViewportChange={(nextViewport) => setViewport(nextViewport)}
+              mapStyle='mapbox://styles/noeking/ckv4yy4bk4ms315qty2z0h6gu'
+            >
+              <Marker
+                latitude={22.76889481968826}
+                longitude={-102.55540879898437}
+                offsetLeft={-20}
+                offsetTop={-10}
+              >
+                <SiGooglemaps
+                  style={{
+                    fontSize: viewport.zoom * 3,
+                    color: 'var(--color-primary)',
+                  }}
+                />
+              </Marker>
+              {showPopup && (
+                <Popup
+                  latitude={22.76889481968826}
+                  longitude={-102.55540879898437}
+                  closeButton={true}
+                  closeOnClick={false}
+                  onClose={() => togglePopup(false)}
+                  anchor='left'
+                >
+                  <PopupLabel>Emotiokanis9</PopupLabel>
+                  <PopupDescription>
+                    Preparatoria #236 B, Agronoma II, <br /> 98068 Zacatecas,
+                    Zac.
+                  </PopupDescription>
+                </Popup>
+              )}
+            </ReactMapGL>
+          </Map>
         </MapContainer>
       </Grid>
     </>

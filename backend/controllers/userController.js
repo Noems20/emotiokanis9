@@ -125,8 +125,12 @@ export const sendContactMail = catchAsync(async (req, res, next) => {
 
   const user = { name, email: process.env.EMAIL_FROM };
   const content = { subject, message, email };
-
-  const url = `${req.protocol}://localhost:3000/`;
+  let url;
+  if (process.env.NODE_ENV === 'development') {
+    url = `${req.protocol}://localhost:3000/`;
+  } else {
+    url = `${req.protocol}://${req.get('host')}/`;
+  }
 
   // 4) Send it to own email
   try {

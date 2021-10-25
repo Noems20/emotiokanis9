@@ -65,9 +65,6 @@ export const signup = catchAsync(async (req, res) => {
 
   // 2) Create user
   const newUser = await User.create(filteredBody);
-  // const url = `${req.protocol}://${req.get('host')}/perfil`;
-  // const url = `${req.protocol}://localhost:3000/perfil`;
-  // await new Email(newUser, url).sendWelcome();
 
   // 3) Generate the random verification token
   const verificationToken = newUser.createVerificationToken();
@@ -75,10 +72,15 @@ export const signup = catchAsync(async (req, res) => {
 
   // 4) Send it to user's email
   try {
-    const verificationUrl = `${req.protocol}://localhost:3000/verificarCuenta/${verificationToken}`;
-    // const verificationUrl = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/v1/users/verificationPassword/${verificationToken}`;
+    let verificationUrl;
+    if (process.env.NODE_ENV === 'development') {
+      verificationUrl = `${req.protocol}://localhost:3000/verificarCuenta/${verificationToken}`;
+    } else {
+      verificationUrl = `${req.protocol}://${req.get(
+        'host'
+      )}/verificarCuenta/${verificationToken}`;
+    }
+
     await new Email(newUser, verificationUrl).sendWelcome();
   } catch (error) {
     console.log(error);
@@ -339,10 +341,15 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 
   // 4) Send it to user's email
   try {
-    const resetUrl = `${req.protocol}://localhost:3000/restablecerContraseña/${resetToken}`;
-    // const resetUrl = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/v1/users/resetPassword/${resetToken}`;
+    let resetUrl;
+    if (process.env.NODE_ENV === 'development') {
+      resetUrl = `${req.protocol}://localhost:3000/restablecerContraseña/${resetToken}`;
+    } else {
+      resetUrl = `${req.protocol}://${req.get(
+        'host'
+      )}/restablecerContraseña/${resetToken}`;
+    }
+
     await new Email(user, resetUrl).sendPasswordReset();
   } catch (error) {
     console.log(error);

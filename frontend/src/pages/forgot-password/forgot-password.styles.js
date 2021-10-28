@@ -46,6 +46,10 @@ export const Title = styled(TitleSm)``;
 
 export const Text = styled.p`
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 2rem;
   justify-self: center;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.3rem;
+  }
 `;

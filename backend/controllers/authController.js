@@ -28,17 +28,19 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 // ------------------------------ PUT COOKIE (LOG USER) ----------------------
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-
-  // Put cookie in browser
-  res.cookie('jwt', token, {
+  const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+      // Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwared-proto'] === 'https',
-  });
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  // Put cookie in browser
+  res.cookie('jwt', token, cookieOptions);
 
   // Remove password from output
   user.password = undefined;
@@ -131,7 +133,7 @@ export const verifyAccount = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 4) Log the user and send JWT to client
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
 
 // --------------------- LOG IN -----------------------------------------
@@ -168,7 +170,7 @@ export const login = catchAsync(async (req, res, next) => {
   }
 
   // 4) If everything ok, send token to client
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
 
 // --------------------- LOG OUT -----------------------------------------
@@ -301,7 +303,7 @@ export const updatePassword = catchAsync(async (req, res, next) => {
   // User.findByIdAndUpdate will NOT work as intended!
 
   // 1) Log user in, send JWT
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
 
 // --------------------- FORGOT PASSWORD -----------------------------------------
@@ -404,5 +406,5 @@ export const resetPassword = catchAsync(async (req, res, next) => {
   // 3) Update changedPasswordAt property for the user
 
   // 4) Log the user and send JWT to client
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });

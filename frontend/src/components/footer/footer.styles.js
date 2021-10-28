@@ -123,7 +123,7 @@ export const WebsiteRights = styled.p`
   text-align: center;
   font-size: 1.5rem;
   color: #fff;
-  @media only screen and (max-width: 430px){
+  @media only screen and (max-width: 430px) {
     /* margin-bottom: 2rem; */
   }
 `;

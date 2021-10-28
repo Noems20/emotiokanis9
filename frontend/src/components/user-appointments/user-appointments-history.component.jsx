@@ -86,7 +86,7 @@ const UserAppointments = ({ loading, appointments }) => {
         ) : (
           <AppointmentsContainer variants={childVariants}>
             <Title variants={titleVariants}>Historial de citas</Title>
-            {appointments ? (
+            {appointments.length > 0 ? (
               appointments.map((appointment) => (
                 <AppointmentCard
                   key={appointment._id}

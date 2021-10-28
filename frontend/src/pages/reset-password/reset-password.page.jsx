@@ -84,7 +84,7 @@ const ResetPassword = () => {
               value={password}
               label='Contraseña'
               error={uiErrors.errorsOne.password}
-            />{' '}
+            />
             <TextInput
               name='passwordConfirm'
               type='password'

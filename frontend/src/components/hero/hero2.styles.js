@@ -132,6 +132,15 @@ export const Dot = styled.span`
     border-radius: 50%;
     border: 3px solid #fff;
     cursor: pointer;
+
+    @media only screen and (max-width: 480px) {
+      height: 2.3rem;
+      width: 2.3rem;
+    }
+    @media only screen and (max-width: 430px) {
+      height: 2.6rem;
+      width: 2.6rem;
+    }
   }
 
   &.selected,
@@ -153,6 +162,15 @@ export const Dot = styled.span`
       width: 2.4rem;
       background-color: var(--color-primary);
       border-radius: 50%;
+
+      @media only screen and (max-width: 480px) {
+        height: 2.7rem;
+        width: 2.7rem;
+      }
+      @media only screen and (max-width: 430px) {
+        height: 3rem;
+        width: 3rem;
+      }
     }
   }
 `;

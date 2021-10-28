@@ -51,10 +51,10 @@ app.use(
           'https:',
           'http:',
           'blob:',
+          "'unsafe-inline'",
           'https://*.mapbox.com',
           'https://js.stripe.com',
           'https://m.stripe.network',
-          'https://*.cloudflare.com',
         ],
         frameSrc: ["'self'", 'https://js.stripe.com'],
         objectSrc: ["'none'"],
@@ -78,8 +78,6 @@ app.use(
           'blob:',
           'https://*.stripe.com',
           'https://*.mapbox.com',
-          'https://*.cloudflare.com/',
-          'https://bundle.js:*',
           'ws://127.0.0.1:*/',
         ],
         upgradeInsecureRequests: [],
@@ -87,6 +85,18 @@ app.use(
     },
   })
 );
+
+//  app.use(
+//    helmet.contentSecurityPolicy({
+//      directives: {
+//        defaultSrc: ["'self'", 'https:', 'http:', 'data:', 'ws:'],
+//        baseUri: ["'self'"],
+//        fontSrc: ["'self'", 'https:', 'http:', 'data:'],
+//        scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
+//        styleSrc: ["'self'", "'unsafe-inline'", 'https:', 'http:'],
+//      },
+//    })
+//  );
 
 // Limit request from same API
 app.use('/api', limiter);

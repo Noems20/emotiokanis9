@@ -11,7 +11,10 @@ export const Grid = styled(PageGrid)`
   }
 
   @media only screen and (max-width: 800px) {
-    height: calc(100vh - 5.5rem);
+    min-height: auto;
+  }
+  @media only screen and (max-height: 630px) {
+    margin: 7rem 0;
   }
 `;
 
@@ -47,8 +50,12 @@ export const Title = styled(TitleSm)``;
 
 export const Text = styled.p`
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 2rem;
   justify-self: center;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.3rem;
+  }
 `;
 
 export const Message = styled(Alert)`

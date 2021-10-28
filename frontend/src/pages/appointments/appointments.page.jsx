@@ -22,7 +22,8 @@ import {
 } from './appointments.page.styles';
 
 // ICONS
-import { BsFillCalendarFill, BsClockHistory } from 'react-icons/bs';
+import { BsClockHistory } from 'react-icons/bs';
+import { IoCalendar } from 'react-icons/io5';
 import { MdContactPhone } from 'react-icons/md';
 import AppointmentContact from '../../components/appointment-contact/appointment-contact.component';
 
@@ -113,7 +114,7 @@ const Appointments = () => {
             className={tab === 'activeAppointments' ? 'active' : ''}
           >
             <SideBarContent>
-              <BsFillCalendarFill />
+              <IoCalendar />
               <SideBarText>Cita</SideBarText>
             </SideBarContent>
           </SideBarItem>

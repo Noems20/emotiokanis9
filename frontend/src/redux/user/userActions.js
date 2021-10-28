@@ -175,7 +175,7 @@ export const checkUser = () => async (dispatch) => {
     if (data.length === 0) {
       dispatch({
         type: SET_APPOINTMENTS,
-        payload: null,
+        payload: [],
       });
       dispatch({
         type: SET_ACTIVE_APPOINTMENT,
@@ -197,7 +197,7 @@ export const checkUser = () => async (dispatch) => {
       if (data.length === 0) {
         dispatch({
           type: SET_APPOINTMENTS,
-          payload: null,
+          payload: [],
         });
       } else {
         dispatch({

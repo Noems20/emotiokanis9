@@ -28,12 +28,11 @@ export const CalendarContainer = styled.div`
       : `0px 0px 8px 1px var(--color-grey-light-4)`};
   overflow: hidden;
 
-  & div div.react-datepicker{
+  & div div.react-datepicker {
     font-family: ${tokens.fontDisplay};
     border: none;
     border-radius: 0;
     display: block;
-
   }
 `;
 
@@ -46,6 +45,10 @@ export const ErrorText = styled.p`
 
   @media only screen and (max-width: 700px) {
     font-size: 1.6rem;
+  }
+
+  @media only screen and (max-width: 430px) {
+    font-size: 1.8rem;
   }
 `;
 

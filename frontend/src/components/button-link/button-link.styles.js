@@ -10,7 +10,7 @@ export const CustomButtonContainer = styled(Link)`
   background-color: var(--color-primary);
   border: 0.2px solid var(--color-primary);
   font-family: ${tokens.fontPrimary};
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 300;
   text-decoration: none;
   padding: 1rem 2rem;
@@ -35,7 +35,7 @@ export const CustomButtonContainer = styled(Link)`
   }
 
   @media only screen and (max-width: 430px) {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
 `;
 

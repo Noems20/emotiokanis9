@@ -62,6 +62,10 @@ export const Description = styled.p`
   color: ${({ lightBg }) => (lightBg ? '#000' : '#fff')};
   margin-top: 2rem;
   margin-bottom: 2rem;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.2rem;
+  }
 `;
 
 export const ImageWrapper = styled.div``;

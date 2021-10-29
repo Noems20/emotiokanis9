@@ -9,10 +9,9 @@ import {
   ServiceTitle,
   ContentContainer,
   ServiceDescription,
-  DescriptionTitle,
+  Title,
   Description,
   ServicePrice,
-  PriceTitle,
   PriceLapse,
   Price,
 } from './service.styles';
@@ -25,11 +24,11 @@ const Service = ({ name, description, priceLapse, price, image }) => {
       </ServiceHeading>
       <ContentContainer>
         <ServiceDescription>
-          <DescriptionTitle>Descripción</DescriptionTitle>
+          <Title>Descripción</Title>
           <Description>{description}</Description>
         </ServiceDescription>
         <ServicePrice>
-          <PriceTitle>Precio</PriceTitle>
+          <Title>Precio</Title>
           {priceLapse && <PriceLapse>{priceLapse}</PriceLapse>}
 
           <Price>${price}</Price>

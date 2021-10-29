@@ -63,12 +63,7 @@ export const ServiceDescription = styled.div`
   align-items: start;
   justify-items: start;
 `;
-export const DescriptionTitle = styled.h1`
-  font-family: ${tokens.fontPrimary};
-  font-weight: 300;
-  font-size: 3rem;
-  color: var(--color-primary);
-`;
+
 export const Description = styled.p`
   font-size: 2rem;
 
@@ -84,7 +79,7 @@ export const ServicePrice = styled.div`
   align-items: start;
   justify-items: center;
 `;
-export const PriceTitle = styled.h1`
+export const Title = styled.h1`
   font-family: ${tokens.fontPrimary};
   font-size: 3rem;
   font-weight: 300;
@@ -97,6 +92,10 @@ export const PriceLapse = styled.h1`
   color: var(--color-grey-dark-3);
 
   margin-top: -1rem;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.5rem;
+  }
 `;
 
 export const Price = styled.p`

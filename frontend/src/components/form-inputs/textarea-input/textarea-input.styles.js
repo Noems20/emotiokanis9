@@ -115,4 +115,8 @@ export const ErrorText = styled.p`
   @media only screen and (max-width: 700px) {
     font-size: 1.6rem;
   }
+
+  @media only screen and (max-width: 430px) {
+    font-size: 1.8rem;
+  }
 `;

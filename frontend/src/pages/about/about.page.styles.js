@@ -75,6 +75,10 @@ export const SectionText = styled.p`
   font-size: 2rem;
   font-weight: 300;
   text-align: center;
+
+  @media only screen and (max-width: 430px) {
+    font-size: 2.2rem;
+  }
 `;
 
 export const Gallery = styled.div`

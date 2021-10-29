@@ -98,7 +98,7 @@ const getButtonStyles = (props) => {
 
 export const CustomButtonContainer = styled(motion.button)`
   font-family: ${tokens.fontPrimary};
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 300;
   text-decoration: none;
   padding: 1rem 2rem;
@@ -120,7 +120,7 @@ export const CustomButtonContainer = styled(motion.button)`
   }
 
   @media only screen and (max-width: 430px) {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
 
   ${getButtonStyles}
@@ -143,7 +143,12 @@ export const GoogleContainer = styled.div`
 `;
 
 export const ButtonLoader = styled(Loader)`
-  /* font-size: 10rem; */
   margin: 0 auto;
-  font-size: 0.5rem;
+
+  /* & div {
+    @media only screen and (max-width: 430px) {
+      width: 1.2em;
+      height: 1.2em;
+    }
+  } */
 `;
